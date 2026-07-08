@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmad M. Ilyas - Interactive CV</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Bangers&family=Orbit&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    
+    <style>
+        :root {
+            /* Gen-Z / Cyber / Experimental Palette */
+            --bg-color: #09090b;
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            
+            /* Neon Accents */
+            --acid-green: #d9f522;
+            --electric-cyan: #00f0ff;
+            --hyper-pink: #ff0055;
+            --deep-purple: #7000ff;
+
+            /* Glassmorphism settings */
+            --card-bg: rgba(24, 24, 27, 0.4);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --glass-blur: blur(16px);
+
+            /* Typography */
+            --font-display: 'Orbit', sans-serif;
+            --font-unica: 'Unica One', display;
+            --font-body: 'Google Sans Flex', 'Google Sans', sans-serif;
+            --font-asap: 'Asap', sans-serif;
+            --font-bangers: 'Bangers', display;
+            --font-sharetech: 'Share Tech', sans-serif;
+            --font-roboto: 'Roboto', sans-serif;
+        }
+
+        /* --- MOBILE OPTIMIZATION: Global Box-Sizing --- */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative;
+            -webkit-text-size-adjust: 100%; /* Prevents iOS text scaling bug */
+        }
+
+        /* Experimental Multi-Gradient & Radar Pattern Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0; /* Optimized: Replaced 100vw/100vh to prevent mobile address bar jump glitch */
+            z-index: -2;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(112, 0, 255, 0.15), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(0, 240, 255, 0.1), transparent 40%),
+                radial-gradient(circle at 50% 90%, rgba(217, 245, 34, 0.08), transparent 50%);
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0; /* Optimized: Replaced 100vw/100vh */
+            z-index: -1;
+            opacity: 0.3;
+            /* Aviation Radar / Grid Pattern */
+            background-image: 
+                radial-gradient(circle at center, transparent 49%, rgba(46, 129, 185, 0.2) 50%, transparent 51%),
+                radial-gradient(circle at center, transparent 69%, rgba(46, 129, 185, 0.1) 70%, transparent 71%),
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 600px 600px, 900px 900px, 40px 40px, 40px 40px;
+            background-position: center center;
+            pointer-events: none;
+        }
+
+        /* --- NEW DYNAMIC AVIATION BACKGROUND STYLES --- */
+        .scenic-background {
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0; /* Optimized: Replaced 100vw/100vh */
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* HUD Graphics */
+        .hud-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.55;
+            mix-blend-mode: screen;
+        }
+        @keyframes rotateHUD {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .hud-ring-slow { transform-origin: 50px 40px; animation: rotateHUD 40s linear infinite; }
+        .hud-ring-fast { transform-origin: 50px 40px; animation: rotateHUD 20s linear infinite reverse; }
+
+        /* Clouds */
+        @keyframes driftCloud {
+            from { transform: translateX(-15vw); }
+            to { transform: translateX(115vw); }
+        }
+        .cloud {
+            position: absolute;
+            fill: rgba(255, 255, 255, 0.04);
+            filter: blur(4px);
+            will-change: transform; /* Optimized: GPU acceleration */
+        }
+        .cloud-1 { top: 15%; width: 25vw; animation: driftCloud 45s linear infinite; }
+        .cloud-2 { top: 35%; width: 35vw; animation: driftCloud 70s linear infinite; animation-delay: -25s; opacity: 0.7;}
+        .cloud-3 { top: 5%; width: 15vw; animation: driftCloud 30s linear infinite; animation-delay: -10s;}
+        .cloud-4 { top: 50%; width: 45vw; animation: driftCloud 90s linear infinite; animation-delay: -50s; opacity: 0.5;}
+
+        /* Runway 3D Environment */
+        .runway-scene {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+        }
+        
+        @keyframes strobeALS {
+            0% { stroke-dashoffset: 4; }
+            100% { stroke-dashoffset: 0; }
+        }
+        .als-lights {
+            animation: strobeALS 0.8s linear infinite;
+        }
+        
+        @keyframes pulseRunwayEdge {
+            0%, 100% { opacity: 0.2; stroke-width: 0.15; filter: drop-shadow(0 0 0px #D72626); }
+            50% { opacity: 1; stroke-width: 0.3; filter: drop-shadow(0 0 2px #D72626); }
+        }
+        .runway-edge-lights {
+            animation: pulseRunwayEdge 2s infinite;
+        }
+
+        /* Plane Flight Sequences */
+        @keyframes landPlane {
+            0% { transform: translate(49.5vw, 20vh) scale(0.01) rotate(0deg); opacity: 0; }
+            5% { opacity: 1; filter: drop-shadow(0 2px 2px rgba(166, 217, 160, 0.8)); }
+            60% { transform: translate(49.5vw, 65vh) scale(0.8) rotate(0deg); } /* Touchdown */
+            80% { transform: translate(49.5vw, 85vh) scale(1.3) rotate(0deg); } /* Rollout */
+            90% { transform: translate(55vw, 95vh) scale(1.5) rotate(-45deg); opacity: 1; } /* Taxi off */
+            95% { transform: translate(60vw, 105vh) scale(1.6) rotate(-45deg); opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        @keyframes takeoffPlane {
+            0% { transform: translate(35vw, 105vh) scale(1.6) rotate(45deg); opacity: 0; }
+            5% { transform: translate(40vw, 95vh) scale(1.5) rotate(45deg); opacity: 1; } /* Taxi on */
+            15% { transform: translate(49.5vw, 85vh) scale(1.3) rotate(0deg); } /* Line up */
+            40% { transform: translate(49.5vw, 65vh) scale(0.8) rotate(0deg); } /* V1 / Rotate */
+            90% { transform: translate(49.5vw, 25vh) scale(0.02) rotate(0deg); filter: drop-shadow(0 2px 2px rgba(46, 129, 185, 0.8)); opacity: 1; } /* Fly away */
+            95% { transform: translate(49.5vw, 20vh) scale(0.01); opacity: 0; }
+            100% { opacity: 0; }
+        }
+
+        .landing-plane {
+            position: absolute; width: 60px; height: 60px;
+            left: 0; top: 0; margin-left: -30px; margin-top: -30px;
+            animation: landPlane 22s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            filter: drop-shadow(0 15px 15px rgba(0,0,0,0.6));
+            will-change: transform, opacity; /* Optimized: GPU acceleration */
+        }
+        
+        .takeoff-plane {
+            position: absolute; width: 60px; height: 60px;
+            left: 0; top: 0; margin-left: -30px; margin-top: -30px;
+            animation: takeoffPlane 22s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            animation-delay: 11s; /* Perfectly interleaves with landing */
+            filter: drop-shadow(0 15px 15px rgba(0,0,0,0.6));
+            will-change: transform, opacity; /* Optimized: GPU acceleration */
+        }
+        
+        @keyframes radarSweep {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .atc-tower-enhanced {
+            position: absolute;
+            bottom: 0; right: 5%;
+            width: 150px; height: 300px;
+            opacity: 0.85;
+            z-index: -1;
+            overflow: visible;
+        }
+        
+        .radar-beam {
+            transform-origin: 50px 12px;
+            animation: radarSweep 4s linear infinite;
+            will-change: transform; /* Optimized: GPU acceleration */
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .plane-container {
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0; /* Optimized: Replaced 100vw/100vh */
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .dotted-plane {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.4);
+            stroke-width: 1.5;
+            stroke-dasharray: 6 6;
+            animation: flyPlane 18s linear infinite;
+        }
+
+        .atc-tower {
+            position: fixed;
+            bottom: 0;
+            right: 8%;
+            width: 160px;
+            height: 320px;
+            z-index: -1;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .radar-beam {
+            transform-origin: 50px 12px;
+            animation: radarSweep 4.5s linear infinite;
+        }
+
+        header {
+            padding: 5rem 1rem 3rem;
+            text-align: center;
+            position: relative;
+            border-bottom: 1px solid var(--card-border);
+            background: linear-gradient(to bottom, rgba(9,9,11,0.9), transparent);
+        }
+
+        header h1 {
+            font-family: var(--font-display);
+            margin: 0 0 10px 0;
+            font-size: 5.5rem;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            /* Experimental Gradient Text */
+            background: linear-gradient(90deg, var(--text-main), var(--acid-green), var(--electric-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header h2 {
+            font-family: var(--font-unica);
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin: 0 0 20px 0;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .contact-pill {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 50px;
+            padding: 6px 22px 6px 6px;
+            text-decoration: none;
+            
+            /* Premium Bold Gradient Bezel Effect */
+            border: 1px solid transparent;
+            background-image: 
+                linear-gradient(145deg, rgba(5, 10, 15, 0.95), rgba(0, 0, 0, 1)), 
+                linear-gradient(135deg, #D4AF37 0%, #0047AB 50%, #00F0FF 100%);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            
+            /* Bezel 3D Lighting */
+            box-shadow: 
+                inset 0 1px 2px rgba(212, 175, 55, 0.4), 
+                inset 0 -1px 2px rgba(0,0,0,0.8), 
+                0 5px 15px rgba(0,0,0,0.6);
+            
+            backdrop-filter: blur(8px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-pill:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 
+                inset 0 1px 2px rgba(212, 175, 55, 0.8), 
+                inset 0 -1px 2px rgba(0,0,0,0.8), 
+                0 10px 25px rgba(0, 240, 255, 0.4);
+        }
+
+        .contact-pill .icon-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 36px;
+            height: 36px;
+            background: rgba(0, 71, 171, 0.25);
+            color: #D4AF37;
+            border-radius: 50%;
+            margin-right: 12px;
+            box-shadow: inset 0 0 8px rgba(0, 240, 255, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .contact-pill:hover .icon-box {
+            color: #00F0FF;
+            box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.8);
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        .contact-pill .contact-text {
+            font-family: var(--font-sharetech);
+            font-size: 1.15rem;
+            color: var(--text-main);
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+        }
+
+        .section-card {
+            background: var(--card-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            transform: translateZ(0); /* Optimized: Forces iOS Safari to use GPU for glassmorphism during scroll */
+            will-change: transform, opacity; /* Optimized: GPU hint */
+        }
+
+        .section-card:nth-of-type(1) { animation-delay: 0.1s; }
+        .section-card:nth-of-type(2) { animation-delay: 0.25s; }
+        .section-card:nth-of-type(3) { animation-delay: 0.4s; }
+        .section-card:nth-of-type(4) { animation-delay: 0.55s; }
+
+        .section-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px rgba(0, 240, 255, 0.15);
+            border-color: rgba(0, 240, 255, 0.3);
+        }
+
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--electric-cyan), transparent);
+            opacity: 0.5;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            color: var(--acid-green);
+            margin-top: 0;
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 2rem;
+        }
+
+        /* Cyber-punk dash next to titles */
+        .section-title::after {
+            content: '';
+            height: 2px;
+            flex-grow: 1;
+            background: repeating-linear-gradient(90deg, var(--card-border) 0, var(--card-border) 10px, transparent 10px, transparent 20px);
+        }
+
+        .timeline-item {
+            margin-bottom: 3rem;
+            position: relative;
+            padding-left: 20px;
+            border-left: 1px dashed var(--card-border);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 5px;
+            width: 9px;
+            height: 9px;
+            background-color: var(--hyper-pink);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--hyper-pink);
+        }
+
+        .job-header {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+            margin-bottom: 15px;
+        }
+
+        .job-title {
+            font-family: var(--font-asap);
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .job-company {
+            font-family: var(--font-sharetech);
+            font-weight: 400;
+            color: var(--electric-cyan);
+            font-size: 1.45rem;
+            letter-spacing: 0.5px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Overrides inline HTML styles to scale with enlarged text */
+        .job-company .material-symbols-outlined {
+            font-size: 1.8rem !important;
+        }
+
+        .job-date {
+            font-family: var(--font-sharetech);
+            color: var(--acid-green);
+            font-size: 1.25rem;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        /* Overrides inline HTML styles to scale with enlarged text */
+        .job-date .material-symbols-outlined {
+            font-size: 1.6rem !important;
+        }
+
+        .bezel-tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .bezel-tag, .tag {
+            font-family: var(--font-asap);
+            color: var(--text-main);
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: default;
+            
+            /* Premium Bold Gradient Bezel Effect */
+            border: 1px solid transparent;
+            background-image: 
+                linear-gradient(145deg, rgba(5, 10, 15, 0.95), rgba(0, 0, 0, 1)), 
+                linear-gradient(135deg, #D4AF37 0%, #0047AB 50%, #00F0FF 100%);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            
+            /* Bezel 3D Lighting */
+            box-shadow: 
+                inset 0 1px 2px rgba(212, 175, 55, 0.4), 
+                inset 0 -1px 2px rgba(0,0,0,0.8), 
+                0 5px 15px rgba(0,0,0,0.6);
+            
+            backdrop-filter: blur(8px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .bezel-tag:hover, .tag:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                inset 0 1px 2px rgba(212, 175, 55, 0.8), 
+                inset 0 -1px 2px rgba(0,0,0,0.8), 
+                0 8px 20px rgba(0, 240, 255, 0.4);
+        }
+
+        .bezel-tag {
+            padding: 6px 14px;
+            font-size: 0.75rem;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            padding: 8px 16px;
+            font-size: 0.8rem;
+        }
+
+        .content {
+            padding: 20px 20px 20px 30px;
+            background-color: transparent;
+            border-left: 2px solid var(--electric-cyan);
+            margin-top: 10px;
+            margin-left: 10px;
+            font-family: var(--font-roboto);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .content ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .content li {
+            margin-bottom: 15px;
+            position: relative;
+            color: var(--text-muted);
+        }
+
+        .content li::before {
+            content: '\e5cc'; /* Material Symbols chevron_right */
+            font-family: 'Material Symbols Outlined';
+            color: var(--hyper-pink);
+            font-size: 1.6rem;
+            position: absolute;
+            left: -28px;
+            top: 0px;
+        }
+
+        .job-company, .job-date {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .icon-align {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            vertical-align: bottom;
+        }
+
+        .language-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+        }
+
+        .language-table th {
+            background-color: rgba(255,255,255,0.03);
+            color: var(--text-main);
+            padding: 15px;
+            text-align: center;
+            font-family: var(--font-asap);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .language-table th:first-child {
+            border-right: 1px solid var(--card-border);
+        }
+
+        .language-table td {
+            padding: 15px;
+            text-align: center;
+            vertical-align: middle;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+            transition: background 0.3s ease;
+        }
+
+        .language-table tr:hover td {
+            background: rgba(0, 240, 255, 0.03);
+        }
+
+        .language-table td:first-child {
+            color: var(--text-main);
+            font-size: 1rem;
+            font-weight: 600;
+            border-right: 1px solid var(--card-border);
+        }
+
+        .lang-prof-main {
+            display: block;
+            font-family: var(--font-asap);
+            color: var(--text-main);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .lang-prof-sub {
+            display: block;
+            font-family: var(--font-body);
+            color: var(--text-muted);
+            font-style: italic;
+            font-size: 0.85rem;
+        }
+
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        /* --- SKILLS GRID STYLES (Match Image) --- */
+        .skills-header {
+            border-bottom: 2px solid var(--electric-cyan);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+
+        .skills-header .section-title {
+            margin-bottom: 0;
+        }
+
+        .skills-header .section-title::after {
+            display: none; /* Hide dash to allow full solid bottom border */
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 40px;
+            row-gap: 30px;
+        }
+
+        .skill-item {
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* Subtle divider */
+        }
+
+        .skill-item-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--electric-cyan);
+            font-family: var(--font-asap);
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .skill-item-icon {
+            font-size: 2rem !important;
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover .skill-item-icon {
+            transform: scale(1.2) translateY(-2px);
+            color: var(--acid-green);
+        }
+
+        .skill-item-tools {
+            color: var(--text-muted);
+            font-family: var(--font-roboto);
+            font-size: 1rem;
+            margin-left: calc(2rem + 12px); /* Perfectly indents text under the header title */
+        }
+
+        @media (max-width: 768px) {
+            .grid-2-col, .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            header {
+                padding: 3rem 1rem 2rem;
+            }
+            header h1 {
+                font-size: clamp(2.5rem, 8vw, 3.2rem);
+            }
+            header h2 {
+                font-size: clamp(1rem, 4vw, 1.2rem);
+            }
+            .contact-info {
+                gap: 12px;
+            }
+            .contact-pill {
+                padding: 4px 16px 4px 4px;
+            }
+            .contact-pill .icon-box {
+                width: 30px;
+                height: 30px;
+                margin-right: 8px;
+            }
+            .contact-pill .contact-text {
+                font-size: 0.95rem;
+            }
+            .section-card {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+            .section-title {
+                font-size: 1.6rem;
+                gap: 10px;
+            }
+            .section-title span.material-symbols-outlined {
+                font-size: 2.2rem !important;
+            }
+            .job-title {
+                font-size: 1.2rem;
+            }
+            .job-company {
+                font-size: 1.2rem;
+                align-items: flex-start; /* Allows text to wrap neatly under the icon */
+            }
+            .job-company .material-symbols-outlined {
+                font-size: 1.4rem !important;
+                margin-top: 3px;
+            }
+            .content {
+                padding: 10px 10px 10px 20px;
+            }
+            .content li::before {
+                left: -20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2.4rem;
+            }
+            .contact-pill {
+                width: 100%; /* Full width for easier thumb tapping */
+                justify-content: center;
+            }
+            .bezel-tag {
+                font-size: 0.7rem;
+                padding: 5px 10px;
+            }
+            .tag-container, .bezel-tag-container {
+                gap: 8px;
+            }
+        }
+
+        /* --- PDF EXPORT & PRINT RULES --- */
+        @media print {
+            .scenic-background {
+                display: none !important;
+            }
+
+            .section-card, .contact-pill, .bezel-tag, .tag {
+                animation: none !important;
+                transition: none !important;
+                transform: none !important;
+                opacity: 1 !important;
+            }
+
+            body {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                background-color: var(--bg-color) !important;
+            }
+
+            /* Prevent page breaks inside cards, jobs, lists, and table rows */
+            .section-card, 
+            .timeline-item, 
+            .content li, 
+            .language-table tr,
+            .language-table {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            /* Add a bit of space before cards if they drop to a new page */
+            .section-card {
+                margin-bottom: 2rem !important;
+                box-shadow: none !important; /* Removes shadow in PDF for cleaner rendering */
+                border: 1px solid var(--card-border) !important;
+            }
+
+            /* Ensure backgrounds and gradients render */
+            body::before, 
+            body::after,
+            header {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            .container {
+                margin: 0 auto !important;
+                padding: 0 !important;
+                max-width: 100% !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ANIMATED BACKGROUND ELEMENTS -->
+    <div class="scenic-background">
+        
+        <!-- Interactive HUD Overlay -->
+        <svg class="hud-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <!-- Glideslope Crosshairs (Targeting the Horizon at Y=40) -->
+            <path d="M 40 40 L 48 40 M 52 40 L 60 40 M 50 30 L 50 38 M 50 42 L 50 50" stroke="rgba(245, 165, 91, 0.5)" stroke-width="0.1" />
+            <circle cx="50" cy="40" r="1.5" fill="none" stroke="#F5A55B" stroke-width="0.1"/>
+            
+            <!-- Pitch Ladder -->
+            <path d="M 46 35 L 54 35 M 47 30 L 53 30 M 45 45 L 55 45 M 44 50 L 56 50" stroke="rgba(166, 217, 160, 0.4)" stroke-width="0.1" stroke-dasharray="0.5 0.5" />
+            
+            <!-- Telemetry Rings (Animated in CSS) -->
+            <circle class="hud-ring-slow" cx="50" cy="40" r="25" fill="none" stroke="rgba(46, 129, 185, 0.25)" stroke-width="0.1" stroke-dasharray="2 4 1 2" />
+            <circle class="hud-ring-fast" cx="50" cy="40" r="30" fill="none" stroke="rgba(215, 38, 38, 0.2)" stroke-width="0.1" stroke-dasharray="5 15" />
+            
+            <!-- Tech Interface Brackets -->
+            <path d="M 15 25 L 12 25 L 12 55 L 15 55" fill="none" stroke="rgba(46, 129, 185, 0.5)" stroke-width="0.2" />
+            <path d="M 85 25 L 88 25 L 88 55 L 85 55" fill="none" stroke="rgba(46, 129, 185, 0.5)" stroke-width="0.2" />
+            
+            <!-- Data Node Lines connecting to horizon -->
+            <line x1="12" y1="40" x2="35" y2="40" stroke="rgba(46, 129, 185, 0.2)" stroke-width="0.1" stroke-dasharray="1 1" />
+            <line x1="88" y1="40" x2="65" y2="40" stroke="rgba(46, 129, 185, 0.2)" stroke-width="0.1" stroke-dasharray="1 1" />
+        </svg>
+
+        <!-- Drifting Clouds -->
+        <svg class="cloud cloud-1" viewBox="0 0 100 50"><path d="M10,30 Q20,10 40,20 Q60,5 80,25 Q95,20 90,40 Q80,50 50,45 Q20,50 10,30 Z"/></svg>
+        <svg class="cloud cloud-2" viewBox="0 0 100 50"><path d="M15,25 Q25,5 50,15 Q75,0 90,20 Q105,35 85,45 Q50,55 15,40 Q-5,35 15,25 Z"/></svg>
+        <svg class="cloud cloud-3" viewBox="0 0 100 50"><path d="M20,35 Q30,15 50,25 Q70,10 85,30 Q95,45 75,48 Q40,50 20,45 Q5,40 20,35 Z"/></svg>
+        <svg class="cloud cloud-4" viewBox="0 0 100 50"><path d="M10,20 Q30,-5 60,15 Q85,-5 95,20 Q105,40 80,45 Q40,55 10,40 Q-10,30 10,20 Z"/></svg>
+
+        <!-- 3D Perspective Runway -->
+        <svg class="runway-scene" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <defs>
+                <linearGradient id="rw-surface" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="rgba(0,0,0,0)"/>
+                    <stop offset="50%" stop-color="rgba(46, 129, 185, 0.05)"/>
+                    <stop offset="100%" stop-color="rgba(46, 129, 185, 0.25)"/>
+                </linearGradient>
+            </defs>
+            
+            <!-- Runway Asphalt Base -->
+            <polygon points="20,100 80,100 52,40 48,40" fill="url(#rw-surface)" stroke="rgba(46, 129, 185, 0.4)" stroke-width="0.1"/>
+            
+            <!-- Touchdown Zone / Threshold Blocks (Perspective simulated via Y coordinates) -->
+            <polygon points="48,50 52,50 51.5,48 48.5,48" fill="rgba(166, 217, 160, 0.2)"/>
+            <polygon points="46,65 54,65 53,62 47,62" fill="rgba(166, 217, 160, 0.3)"/>
+            <polygon points="40,85 60,85 58,80 42,80" fill="rgba(166, 217, 160, 0.4)"/>
+            
+            <!-- Centerline (Soft Orange) -->
+            <line x1="50" y1="100" x2="50" y2="40" stroke="#F5A55B" stroke-width="0.25" stroke-dasharray="1.5 2"/>
+            
+            <!-- Runway Edge Lights (Crimson Red) -->
+            <line x1="20" y1="100" x2="48" y2="40" stroke="#D72626" stroke-width="0.15" stroke-dasharray="0.5 1.5" class="runway-edge-lights"/>
+            <line x1="80" y1="100" x2="52" y2="40" stroke="#D72626" stroke-width="0.15" stroke-dasharray="0.5 1.5" class="runway-edge-lights"/>
+            
+            <!-- Approach Lighting System (ALS) (Mint Green Strobes) -->
+            <line x1="50" y1="40" x2="50" y2="20" stroke="#A6D9A0" stroke-width="0.2" stroke-dasharray="0.5 1" class="als-lights"/>
+
+            <!-- PAPI Lights (Red & White dots near touchdown) -->
+            <circle cx="47" cy="63.5" r="0.25" fill="#D72626"/>
+            <circle cx="46.3" cy="63.5" r="0.25" fill="#D72626"/>
+            <circle cx="45.6" cy="63.5" r="0.25" fill="#fff"/>
+            <circle cx="44.9" cy="63.5" r="0.25" fill="#fff"/>
+        </svg>
+
+        <!-- Planes Container -->
+        <div class="landing-plane">
+            <!-- Mint Green Plane Landing (Rotated to point downwards along approach path) -->
+            <svg viewBox="0 0 24 24" style="transform: rotate(180deg);">
+                <path fill="#A6D9A0" d="M21,16V14L13,9V3.5A1.5,1.5 0 0,0 11.5,2A1.5,1.5 0 0,0 10,3.5V9L2,14V16L10,13.5V19L8,20.5V22L11.5,21L15,22V20.5L13,19V13.5L21,16Z" />
+            </svg>
+        </div>
+        
+        <div class="takeoff-plane">
+            <!-- Cerulean Blue Plane Taking Off (Points upwards) -->
+            <svg viewBox="0 0 24 24">
+                <path fill="#2E81B9" d="M21,16V14L13,9V3.5A1.5,1.5 0 0,0 11.5,2A1.5,1.5 0 0,0 10,3.5V9L2,14V16L10,13.5V19L8,20.5V22L11.5,21L15,22V20.5L13,19V13.5L21,16Z" />
+            </svg>
+        </div>
+
+        <!-- Enhanced ATC Tower -->
+        <svg class="atc-tower-enhanced" viewBox="0 0 100 200" preserveAspectRatio="xMidYMax meet" style="overflow: visible;">
+            <defs>
+                <linearGradient id="radarGradientNew" x1="0%" y1="50%" x2="100%" y2="50%">
+                    <stop offset="0%" stop-color="rgba(166, 217, 160, 0.4)" />
+                    <stop offset="100%" stop-color="rgba(166, 217, 160, 0)" />
+                </linearGradient>
+            </defs>
+            <!-- Radar Beam -->
+            <polygon class="radar-beam" points="50,12 850,-388 850,412" fill="url(#radarGradientNew)" />
+            <!-- Base Structure -->
+            <path d="M30 200 L42 70 L58 70 L70 200 Z" fill="rgba(46, 129, 185, 0.05)" stroke="rgba(46, 129, 185, 0.2)" stroke-width="1"/>
+            <!-- Cab/Control Room -->
+            <polygon points="20 70, 80 70, 85 40, 15 40" fill="rgba(24, 24, 27, 0.95)" stroke="#F5A55B" stroke-width="1.5"/>
+            <!-- Windows -->
+            <line x1="20" y1="70" x2="15" y2="40" stroke="#2E81B9" stroke-width="1"/>
+            <line x1="80" y1="70" x2="85" y2="40" stroke="#2E81B9" stroke-width="1"/>
+            <line x1="35" y1="70" x2="32" y2="40" stroke="#2E81B9" stroke-width="1"/>
+            <line x1="50" y1="70" x2="50" y2="40" stroke="#2E81B9" stroke-width="1"/>
+            <line x1="65" y1="70" x2="68" y2="40" stroke="#2E81B9" stroke-width="1"/>
+            <!-- Radome -->
+            <path d="M25 40 Q 50 5 75 40 Z" fill="rgba(255,255,255,0.05)" stroke="#A6D9A0" stroke-width="0.5"/>
+            <!-- Beacon -->
+            <circle cx="50" cy="12" r="3.5" fill="#D72626">
+                <animate attributeName="opacity" values="1;0.2;1" dur="1s" repeatCount="indefinite" />
+            </circle>
+        </svg>
+    </div>
+
+    <header>
+        <h1>Ahmad M. Ilyas</h1>
+        <h2>Aviation CX Strategist &nbsp;|&nbsp; Corporate Communications &nbsp;|&nbsp; Operational Excellence</h2>
+        <div class="contact-info">
+            <a href="mailto:ahmedelyasb@gmail.com" class="contact-pill">
+                <span class="icon-box"><span class="material-symbols-outlined">alternate_email</span></span>
+                <span class="contact-text">ahmedelyasb@gmail.com</span>
+            </a>
+            <a href="tel:+17097021176" class="contact-pill">
+                <span class="icon-box"><span class="material-symbols-outlined">phone_iphone</span></span>
+                <span class="contact-text">+17097021176</span>
+            </a>
+            <a href="https://www.linkedin.com/in/ahmedelyas/" target="_blank" rel="noopener noreferrer" class="contact-pill">
+                <span class="icon-box">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                </span>
+                <span class="contact-text">LinkedIn Profile</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <section class="section-card">
+            <h3 class="section-title"><span class="material-symbols-outlined" style="font-size: 2.8rem;">psychology</span> Career Summary</h3>
+            <p>Hands-on Customer Experience professional grounded in conventional principles of building a customer-centric culture. Leverages data-driven customer segmentation and meticulous journey mapping to identify and optimize every customer touchpoint. Expert in seamlessly integrating these foundational approaches with modern, innovative techniques, utilizing predictive analytics and AI-powered platforms to move beyond reactive models and drive hyper-personalization and proactive service delivery. Drives customer-centric transformations by establishing strong CX governance, fostering a culture of empathy, and building a powerful Voice of the Customer (VOC) program.</p>
+            
+            <div class="tag-container" style="margin-top: 25px;">
+                <span class="tag">Crisis Communications</span>
+                <span class="tag">Strategic Project Management</span>
+                <span class="tag">Customer Experience</span>
+                <span class="tag">Corporate Communications</span>
+                <span class="tag">Stakeholder Management</span>
+                <span class="tag">Human-Centric Community Building</span>
+            </div>
+        </section>
+
+        <section class="section-card">
+            <h3 class="section-title"><span class="material-symbols-outlined" style="font-size: 2.8rem;">flight_takeoff</span> Professional Experience</h3>
+
+            <div class="timeline-item">
+                <div class="job-header">
+                    <p class="job-title">Lead CX Consultant <span style="font-weight: 400;">(Advisory Role)</span></p>
+                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;">corporate_fare</span> Masterise Aviation Infrastructure JSC | Gia Binh International Airport Project</p>
+                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;">event</span> April 2026 – Present</p>
+                </div>
+                <div class="bezel-tag-container">
+                    <span class="bezel-tag">CX for People & Planet</span>
+                    <span class="bezel-tag">AI-Powered Predictive CX</span>
+                    <span class="bezel-tag">Hyper-Personalization</span>
+                    <span class="bezel-tag">Empathetic Journey Mapping</span>
+                    <span class="bezel-tag">Passenger Personas & Customer Segmentation</span>
+                    <span class="bezel-tag">Cross-Functional Alignment</span>
+                    <span class="bezel-tag">Crisis Adaptability & Resilience</span>
+                </div>
+                <div class="content">
+                    <ul>
+                        <li>Architecting the end-to-end master journey maps and digital-physical touchpoints for a state-of-the-art, ICAO 4F greenfield hub; embedding "people and planet" design principles to seamlessly transition 30M annual passengers through low-carbon, biophilic spaces that balance strict Skytrax 5-star hospitality with aggressive sustainability targets.</li>
+                        <li>Driving strategic coalition-building across fragmented stakeholders including Masterise executives, state aviation authorities, joint-venture contractors, border control, and retail concessionaires, to establish a unified, 5-star service delivery framework aligned with global Skytrax Top 10 evaluation criteria.</li>
+                        <li>Spearheading the design of a centralized, real-time passenger sentiment and operational throughput analytics engine; translating predictive data into actionable design refinements across check-in, security, and baggage claim to systematically eliminate friction before operations scale.</li>
+                        <li>Authoring the airport's CX playbook, engineering dynamic problem-solving protocols and mobile care team strategies to safeguard the passenger experience during catastrophic operational disruptions, weather events, or high-volume congestion points.</li>
+                        <li>Pioneering the integration of generative AI and predictive analytics to architect a seamless experience. Designing proactive customer engagement models that utilize real-time flight and behavioral data to anticipate traveler needs, deploying hyper-personalized digital wayfinding, automated multilingual support, and tailored retail offerings to ensure passengers receive individualized, 5-star care before they ever have to ask.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="job-header">
+                    <p class="job-title">Strategic Project Lead <span style="font-weight: 400;">(REMOTE)</span></p>
+                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;">corporate_fare</span> Mercor</p>
+                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;">event</span> Jan 2026 – Present</p>
+                </div>
+                <div class="bezel-tag-container">
+                    <span class="bezel-tag">Decentralized Governance & Quality Assurance</span>
+                    <span class="bezel-tag">Cross-Functional Product Integration</span>
+                    <span class="bezel-tag">Strategic Stakeholder Synthesis</span>
+                    <span class="bezel-tag">Algorithmic Community Telemetry</span>
+                    <span class="bezel-tag">Adaptive Resource Allocation</span>
+                </div>
+                <div class="content">
+                    <ul>
+                        <li>Pioneering world-class research and strategy to architect the future of travel, we are fusing AI-driven innovation with human-centric design to create a precedent-setting blueprint that empowers airports and airlines worldwide to redefine the global standard for passenger experience, CX excellence, and operational efficiency.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="job-header">
+                    <p class="job-title">Customer Experience Expert - AI Trainer <span style="font-weight: 400;">(REMOTE)</span></p>
+                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;">corporate_fare</span> micro1</p>
+                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;">event</span> Oct 2024 – Present</p>
+                </div>
+                <div class="bezel-tag-container">
+                    <span class="bezel-tag">RLHF & LLM</span>
+                    <span class="bezel-tag">Customer Experience</span>
+                    <span class="bezel-tag">AI Training</span>
+                    <span class="bezel-tag">Data-Driven Governance</span>
+                    <span class="bezel-tag">Human-Centricity</span>
+                </div>
+                <div class="content">
+                    <ul>
+                        <li>Transforming complex human interactions into actionable intelligence by bridging the gap between empathetic service design and cutting-edge AI innovation.</li>
+                        <li>Systematically evaluated and labeled large-scale datasets of prompt-response pairs using granular rubrics for factual grounding and persona constraints; improved the model's semantic understanding of nuanced customer intent through rigorous RLHF grading.</li>
+                        <li>Meticulously audited AI outputs for CX precision and professional etiquette to ensure every response reflects a high-performing, customer-centric voice.</li>
+                        <li>Applied psycholinguistic principles to refine the model's empathetic resonance and tonal alignment that mirror human-to-human service excellence.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="job-header">
+                    <p class="job-title">CEO Office - Research & Analysis Chief</p>
+                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;">corporate_fare</span> Tibah Airports Operation Co. | TAV Airports (a member of Groupe ADP)</p>
+                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;">event</span> Jan 2024 – June 2024</p>
+                </div>
+                <div class="bezel-tag-container">
+                    <span class="bezel-tag">Cross-Functional Collaborations</span>
+                    <span class="bezel-tag">Strategic Portfolio Alignment</span>
+                    <span class="bezel-tag">Executive Communication & Data Storytelling</span>
+                    <span class="bezel-tag">Project Management</span>
+                    <span class="bezel-tag">Financial Management & Budgeting</span>
+                    <span class="bezel-tag">Methodological Versatility</span>
+                </div>
+                <div class="content">
+                    <ul>
+                        <li>Served as CEO Office - Research & Analysis Chief (operating in a dual-role while concurrently serving as Chief of Digital, CX, and Innovation), acting as a strategic force multiplier to the CEO on the $430M (SAR 1.6B) Madinah Airport Phase II Expansion project. Successfully steered this complex mega-project from inception through groundbreaking, laying the foundational infrastructure to scale terminal capacity to 18 million passengers annually.</li>
+                        <li>Developed a comprehensive project governance strategy and engagement framework that harmonized the interests of shareholders and stakeholders. This involved managing external relations, preparing high-stakes presentations for GACA and the Ministry of Transport and Logistic Services, and developing high-impact PR collateral (press releases, project briefs, digital content, and videos) for local and international media and industry partners. Simultaneously, spearheaded high-speed organizational alignment by running weekly internal progress reviews across all departments utilizing agile methodologies.</li>
+                        <li>Worked in tandem with project leadership and senior executives to shape the preliminary Heads of Terms (HoT) and navigate the rigorous, multi-stage review of a highly complex EPC contract, safeguarding strict fiscal discipline across this massive investment.</li>
+                        <li>Led the deployment of project's Common Data Environment (CDE), establishing an unalterable audit trail of all project correspondence, executive decisions, and file exchanges to automate workflows, enforce strict accountability, and proactively mitigate stakeholder disputes with high-level precision.</li>
+                        <li>During the pre-construction phase, overseeing the arrangement and execution of monthly Design Progress Meetings and coordinating with the Technical, Operations, and Commercial teams on ADRM-anchored design reviews before sharing final internal evaluations with the CEO on monthly basis. Expedited site readiness by accelerating mandatory topographical, hydrological, and geotechnical surveys; ensured timely completion of the Environmental & Social Impact Assessment (ESIA) study, and reviewed the subsequently submitted Environmental and Social Management Plan (ESMP) with the internal Sustainability & ESG team, while driving the appointment of the QS Consultant, LEED Assessor, and Independent Engineer.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="job-header">
+                    <p class="job-title">Chief of Digital, Customer Experience, and Innovation</p>
+                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;">corporate_fare</span> Tibah Airports Operation Co. | TAV Airports (a member of Groupe ADP)</p>
+                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;">event</span> Nov 2021 – Aug 2024</p>
+                </div>
+                <div class="bezel-tag-container">
+                    <span class="bezel-tag">Customer Experience</span>
+                    <span class="bezel-tag">Predictive Analytics & Trend Forecasting</span>
+                    <span class="bezel-tag">Regulatory Compliance & Auditing</span>
+                    <span class="bezel-tag">Data Analysis & Reporting</span>
+                    <span class="bezel-tag">Accessibility & Universal Design</span>
+                    <span class="bezel-tag">Journey Mapping</span>
+                    <span class="bezel-tag">Wayfinding Design & Strategy</span>
+                    <span class="bezel-tag">Operational Excellence</span>
+                </div>
+                <div class="content">
+                    <ul>
+                        <li>Held direct and comprehensive responsibility for CX Strategy execution across the entire commercial portfolio (Retail, F&B, Duty-Free, Parking, Digital Advertisement, etc.) while defining the Digital and CX Roadmap, and overseeing the UI/UX design and continuous feature evolution of the mobile application and website to drive high adoption & engagement.</li>
+                        <li>Led the adoption of human-centric design methodologies, applying detailed customer segmentation and developing comprehensive passenger personas to address the distinct service needs of key demographics and minimize the complaint rate. Established a centralized, full-cycle Customer Feedback and Complaints Management System (CFMS), ensuring ISO 10002 compliance for handling, resolution, and root-cause analysis of all passenger feedback.</li>
+                        <li>Strategically governed and continuously optimized the seamless omni-channel passenger flow across all digital channels, the physical terminal, and the full end-to-end journey lifecycle, ensuring high digital design acceptance.</li>
+                        <li>Drove the implementation of real-time passenger support via AI and GenAI systems (e.g., chatbots, virtual assistants) integrated with the CDP, allowing for instantaneous, multi-lingual assistance and proactive service intervention.</li>
+                        <li>Oversaw the implementation and integration of IATA Smart Airport and shared-use processing initiatives, including self-service technologies (e.g., CUPPS, CUSS, SBD, SBG) and Real-Time Data for operational efficiency and passenger flow optimization.</li>
+                        <li>Championed holistic enhancements to the CX, integrating improvements in the physical terminal environment (intuitive wayfinding signage, innovative spatial design, and engaging terminal ambiance/aesthetics, cleanliness, and operational readiness across airside/landside facilities, including Wi-Fi connectivity, etc.) with a unified CX Culture.</li>
+                        <li>Governed performance across critical global service quality and CX benchmarks including ACI Airport Service Quality (ASQ), ACI World's CX Accreditation program, "Voice of the Customer" (VoC) recognition, and Skytrax World Airport Survey.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="job-header">
+                    <p class="job-title">Senior Specialist Corporate Communications</p>
+                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;">corporate_fare</span> Tibah Airports Operation Co. | TAV Airports (a member of Groupe ADP)</p>
+                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;">event</span> Oct 2016 – Nov 2021</p>
+                </div>
+                <div class="bezel-tag-container">
+                    <span class="bezel-tag">Strategic Communications</span>
+                    <span class="bezel-tag">Airport Marketing</span>
+                    <span class="bezel-tag">Public Relations</span>
+                    <span class="bezel-tag">Social Media</span>
+                    <span class="bezel-tag">Crisis Communication</span>
+                    <span class="bezel-tag">Reputation Management</span>
+                    <span class="bezel-tag">Employee Engagement</span>
+                    <span class="bezel-tag">Content Creation & Story Telling</span>
+                </div>
+                <div class="content">
+                    <ul>
+                        <li>Driving global PR & Marketing initiatives, crafting compelling internal and external narratives, and cultivating robust media relations to shape public perception. Directing social media strategy, the development of mobile app (MED Airport), and the administration of the official website in both English and Arabic, ensuring a cohesive digital presence. The development of all marketing collateral and video productions was also overseen, from conceptualization to final delivery. Strategic planning, execution, and oversight of all major events, ensuring flawless execution and impactful messaging.</li>
+                        <li>Oversight of PR, marketing, and crisis communication shaped public perception and brand identity. Led the development of Corporate Identity Manual, successful launch of the MED Airport App and website, and executed major events like the inauguration of new Madinah Airport by H.R.H. King Salman. Successfully engaged with local government representatives during airport expansion projects, gaining practical insights into public sector regulatory processes, community consultation requirements, and public service delivery models.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="job-header">
+                    <p class="job-title">Corporate Communications Specialist</p>
+                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;">corporate_fare</span> Tibah Airports Operation Co. | TAV Airports (a member of Groupe ADP)</p>
+                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;">event</span> Oct 2013 – Sep 2016</p>
+                </div>
+                <div class="bezel-tag-container">
+                    <span class="bezel-tag">Events Management</span>
+                    <span class="bezel-tag">Internal Communications</span>
+                    <span class="bezel-tag">Employee Engagement</span>
+                    <span class="bezel-tag">Media and Public Relations</span>
+                    <span class="bezel-tag">Digital Communications</span>
+                    <span class="bezel-tag">Social Media Management</span>
+                    <span class="bezel-tag">Content Creation & Strategic Storytelling</span>
+                </div>
+                <div class="content">
+                    <ul>
+                        <li>Comprehensive communication strategies were developed and implemented within the dynamic airport environment. PR & Marketing initiatives, meticulous internal and external communications, and robust media relations were managed. Social media management and official website administration were also led, alongside the development of diverse marketing collateral and video productions.</li>
+                        <li>This role was instrumental in the strategic planning and execution of key events, ensuring consistent messaging, enhancing reputation, managing media relations, securing impactful coverage and enhancing brand reputation and maintaining complete operational clarity.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="job-header">
+                    <p class="job-title">Human Resources Specialist</p>
+                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;">corporate_fare</span> Tibah Airports Operation Co. | TAV Airports (a member of Groupe ADP)</p>
+                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;">event</span> Oct 2012 – Oct 2014</p>
+                </div>
+                <div class="bezel-tag-container">
+                    <span class="bezel-tag">Compensation & Benefits</span>
+                    <span class="bezel-tag">Employee Relations</span>
+                    <span class="bezel-tag">Recruitment & Talent Acquisition</span>
+                    <span class="bezel-tag">Training & Development</span>
+                    <span class="bezel-tag">Compliance & Policy Administration</span>
+                </div>
+                <div class="content">
+                    <ul>
+                        <li>Over 300 critical positions were successfully sourced and filled within a highly accelerated 10-month timeframe through targeted recruitment strategies.</li>
+                        <li>High-impact training and development initiatives were spearheaded to accelerate professional growth, while strict HR compliance and rigorous policy administration were maintained to safeguard operational integrity.</li>
+                        <li>Seamless personnel onboarding was ensured through close, strategic coordination with the ORAT (Operational Readiness and Airport Transfer) team.</li>
+                        <li>Dynamic employee engagement initiatives including annual team-building retreats, competitive sports tournaments, and company-wide volunteer days were introduced to significantly boost workforce morale and cultivate a thriving organizational culture.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="job-header">
+                    <p class="job-title">Service Quality Evaluator / Customer Insight Analyst</p>
+                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;">corporate_fare</span> ISC-CX / Helion Market Research / BARE International</p>
+                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;">event</span> Jan 2010 – Dec 2012</p>
+                </div>
+                <div class="bezel-tag-container">
+                    <span class="bezel-tag">Data Analytics & Interpretation</span>
+                    <span class="bezel-tag">Strategic Vision & Business Acumen</span>
+                    <span class="bezel-tag">Performance Measurement</span>
+                </div>
+                <div class="content">
+                    <ul>
+                        <li>Specialized in the discreet assessment of end-to-end customer journeys and brand experiences. Precise reporting and qualitative observations offered invaluable insights into critical touchpoints and potential service gaps. This directly contributed to clients' strategic understanding of customer sentiment and enabled data-driven improvements in their market performance. Proprietary experiential audits were also conducted for clients such as McDonald's, which included a time-based validation of waiting and ordering metrics and a comprehensive sensory analysis of core culinary offerings.</li>
+                        <li>Comprehensive and confidential evaluations of customer service protocols and operational efficiency across a diverse range of industries. Objective findings and actionable recommendations were instrumental in empowering global clients to refine their customer-facing processes. The derived insights were paramount for deep analytical synthesis of customer journey nuances, enabling clients to elevate their operational excellence and achieve a sustained competitive advantage.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card">
+            <h3 class="section-title"><span class="material-symbols-outlined" style="font-size: 2.8rem;">school</span> Education & Certifications</h3>
+
+            <div class="grid-2-col">
+                <div>
+                    <h4 style="font-family: var(--font-display); color: var(--electric-cyan); text-transform: uppercase; font-size: 1.6rem; margin-bottom: 15px;" class="icon-align"><span class="material-symbols-outlined" style="font-size: 2.2rem;">workspace_premium</span> Degree/Diploma/Course</h4>
+                    <ul style="color: var(--text-muted);">
+                        <li style="margin-bottom: 10px;"><strong style="color: var(--text-main);">Bachelor of Science (Hons.) in Psychology</strong><br>Government College University, Lahore</li>
+                        <li style="margin-bottom: 10px;"><strong style="color: var(--text-main);">Diploma in Project Management</strong><br>XSIQ x Alison</li>
+                        <li style="margin-bottom: 10px;"><strong style="color: var(--text-main);">Arctic Peoples and Cultures</strong><br>University of Alberta</li>
+                        <li style="margin-bottom: 10px;"><strong style="color: var(--text-main);">Love as a Force for Social Justice</strong><br>Stanford University</li>
+                        <li style="margin-bottom: 10px;"><strong style="color: var(--text-main);">Communicating to Diverse Audiences</strong><br>University of Minnesota</li>
+                        <li><strong style="color: var(--text-main);">Negotiation, Mediation and Conflict Resolution</strong><br>ESSEC Business School</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="font-family: var(--font-display); color: var(--electric-cyan); text-transform: uppercase; font-size: 1.6rem; margin-bottom: 15px;" class="icon-align"><span class="material-symbols-outlined" style="font-size: 2.2rem;">verified</span> Key Certifications</h4>
+                    <ul style="color: var(--text-muted);">
+                        <li style="margin-bottom: 10px;"><strong style="color: var(--text-main);">Airport Infrastructure Development Specialization</strong><br>Larsen & Toubro</li>
+                        <li style="margin-bottom: 10px;"><strong style="color: var(--text-main);">McKinsey Forward Program</strong><br>McKinsey Academy</li>
+                        <li style="margin-bottom: 10px;"><strong style="color: var(--text-main);">Airport Customer Experience Specialist</strong><br>Airport Council International (ACI)</li>
+                        <li style="margin-bottom: 10px;"><strong style="color: var(--text-main);">Voice of the Customer (VoC)</strong><br>Coursera</li>
+                        <li><strong style="color: var(--text-main);">Innovation Through Design</strong><br>University of Sydney</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-card">
+            <div style="margin-bottom: 4rem;">
+                <div class="skills-header">
+                    <h3 class="section-title"><span class="material-symbols-outlined" style="font-size: 2.8rem;">terminal</span> Technical Skills</h3>
+                </div>
+                
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <div class="skill-item-header">
+                            <span class="material-symbols-outlined skill-item-icon">task</span>
+                            Productivity
+                        </div>
+                        <div class="skill-item-tools">
+                            Microsoft Office 365, Google Workspace (Advanced)
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-item-header">
+                            <span class="material-symbols-outlined skill-item-icon">database</span>
+                            ERP System
+                        </div>
+                        <div class="skill-item-tools">
+                            Oracle, SAP (Advanced / Intermediate)
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-item-header">
+                            <span class="material-symbols-outlined skill-item-icon">laptop_mac</span>
+                            Core Systems
+                        </div>
+                        <div class="skill-item-tools">
+                            Windows, macOS, Linux (Advanced)
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-item-header">
+                            <span class="material-symbols-outlined skill-item-icon">support_agent</span>
+                            CRM & Service
+                        </div>
+                        <div class="skill-item-tools">
+                            Salesforce, HubSpot, Zendesk (Advanced)
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-item-header">
+                            <span class="material-symbols-outlined skill-item-icon">design_services</span>
+                            UI/UX Design
+                        </div>
+                        <div class="skill-item-tools">
+                            Figma (Intermediate)
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-item-header">
+                            <span class="material-symbols-outlined skill-item-icon">code</span>
+                            Programming
+                        </div>
+                        <div class="skill-item-tools">
+                            Python, HTML (Basic)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="skills-header">
+                    <h3 class="section-title"><span class="material-symbols-outlined" style="font-size: 2.8rem;">translate</span> Languages</h3>
+                </div>
+                
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <div class="skill-item-header">
+                            <span class="material-symbols-outlined skill-item-icon">forum</span>
+                            English
+                        </div>
+                        <div class="skill-item-tools">
+                            <span style="color: var(--text-main); font-weight: 600;">Fluent</span> &nbsp;|&nbsp; IELTS 8.0 / CEFR C1
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-item-header">
+                            <span class="material-symbols-outlined skill-item-icon">forum</span>
+                            Arabic
+                        </div>
+                        <div class="skill-item-tools">
+                            <span style="color: var(--text-main); font-weight: 600;">Fluent</span> &nbsp;|&nbsp; Born & Bred in Saudi Arabia
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-item-header">
+                            <span class="material-symbols-outlined skill-item-icon">forum</span>
+                            Urdu
+                        </div>
+                        <div class="skill-item-tools">
+                            <span style="color: var(--text-main); font-weight: 600;">Fluent</span> &nbsp;|&nbsp; Mother Tongue
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-item-header">
+                            <span class="material-symbols-outlined skill-item-icon">forum</span>
+                            Punjabi
+                        </div>
+                        <div class="skill-item-tools">
+                            <span style="color: var(--text-main); font-weight: 600;">Fluent</span> &nbsp;|&nbsp; Father Tongue
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-item-header">
+                            <span class="material-symbols-outlined skill-item-icon">forum</span>
+                            Hindi
+                        </div>
+                        <div class="skill-item-tools">
+                            <span style="color: var(--text-main); font-weight: 600;">Fluent</span> &nbsp;|&nbsp; Thanks Bollywood!
+                        </div>
+                    </div>
+
+                    <div class="skill-item">
+                        <div class="skill-item-header">
+                            <span class="material-symbols-outlined skill-item-icon">forum</span>
+                            Spanish
+                        </div>
+                        <div class="skill-item-tools">
+                            <span style="color: var(--text-main); font-weight: 600;">Conversational</span> &nbsp;|&nbsp; Hola Amigo!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+</html>
