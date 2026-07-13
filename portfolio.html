@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmad | The Curated Archive</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@400;600;700;900&family=Lexend+Deca:wght@300;400;600&family=IBM+Plex+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-deep: #020611;
+            --bg-panel: rgba(13, 22, 38, 0.75);
+            --accent-gold: #d4af37;
+            --accent-blue: #00e5ff;
+            --text-main: #f0f4f8;
+            --text-muted: #8a9bb2;
+            
+            /* High-end Font Stack */
+            --font-display: 'Doto', sans-serif;
+            --font-body: 'Cascadia Mono', 'Consolas', 'Courier New', monospace;
+            --font-mono: 'Cascadia Mono', 'Consolas', monospace;
+            --font-tag: 'Lexend Deca', sans-serif;
+            --font-meta: 'IBM Plex Sans Devanagari', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); }
+        ::-webkit-scrollbar-thumb { background: var(--accent-blue); border-radius: 4px; }
+
+        h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 5%; position: relative; z-index: 10; }
+
+        .hero-scene {
+            min-height: 100vh;
+            width: 100vw;
+            position: relative;
+            overflow: hidden;
+            /* Direct link to your github repo background */
+            background-image: url('https://ahmadilyasb.github.io/cv/background.jpg');
+            background-size: cover;
+            background-position: center bottom;
+            background-attachment: fixed; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-scene::before {
+            content: ''; 
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(2, 6, 17, 0.4);
+            z-index: 1;
+        }
+
+        .hero-scene::after {
+            content: ''; 
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 40vh; 
+            background: linear-gradient(to bottom, transparent 0%, var(--bg-deep) 100%);
+            z-index: 2; 
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative; z-index: 10;
+            width: 100%; max-width: 900px;
+            text-align: center;
+            margin-top: -5vh; 
+        }
+
+        .hud-glass-box {
+            background: rgba(3, 7, 14, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(0, 229, 255, 0.3);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            padding: 50px 60px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset 0 0 30px rgba(0, 229, 255, 0.05);
+        }
+
+        .hero-title { font-size: 5rem; letter-spacing: -2px; line-height: 1.1; margin-bottom: 10px; text-shadow: 0 4px 20px rgba(0,0,0,0.8); }
+        .hero-title span { color: var(--accent-gold); }
+        .hero-subtitle { font-size: 1.6rem; color: var(--text-main); font-family: var(--font-display); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px; font-weight: 400; }
+        
+        .hero-desc {
+            color: #d1d9e6; font-size: 1.05rem; line-height: 1.8; font-weight: 300;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+            letter-spacing: -0.5px;
+        }
+
+        section { padding: 120px 0; position: relative; }
+        .section-header { margin-bottom: 60px; }
+        .section-header h2 { 
+            font-size: 2.1rem; color: var(--text-main); display: flex; align-items: center; gap: 15px; 
+            white-space: nowrap;
+        }
+        .section-header h2::before { content: '✈'; color: var(--accent-gold); font-size: 1.8rem; transform: rotate(45deg); }
+        
+        .section-desc { 
+            color: var(--text-muted); font-size: 1.15rem; width: 100%; 
+            margin-top: -40px; margin-bottom: 50px; 
+            font-style: normal;
+        }
+
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 40px; }
+        .grid-1 { display: flex; flex-direction: column; gap: 35px; }
+        
+        .boarding-pass {
+            background: var(--bg-panel);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            position: relative;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            overflow: hidden;
+        }
+        
+        .boarding-pass:hover { transform: translateY(-8px); border-color: var(--accent-blue); box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
+
+        .bp-main { padding: 35px; flex: 1; border-right: 2px dashed rgba(255,255,255,0.1); position: relative; }
+        
+        .bp-main::after, .bp-main::before {
+            content: ''; position: absolute; right: -11px;
+            width: 20px; height: 20px; background: var(--bg-deep); border-radius: 50%;
+        }
+        .bp-main::before { top: -10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .bp-main::after { bottom: -10px; border-top: 1px solid rgba(255,255,255,0.05); }
+
+        .bp-stub { width: 100px; padding: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(0,0,0,0.3); }
+
+        .bp-meta { display: flex; justify-content: space-between; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
+        .bp-meta-col span { display: block; font-size: 0.8rem; color: var(--accent-blue); font-family: var(--font-meta); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        .bp-meta-col strong { font-size: 1.15rem; color: var(--accent-gold); font-family: var(--font-meta); font-weight: 700; }
+
+        .bp-title { font-size: 1.6rem; margin-bottom: 15px; color: #fff; line-height: 1.3;}
+        .bp-desc { color: var(--text-muted); font-size: 1rem; line-height: 1.7;}
+
+        .stub-text { writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); color: var(--text-muted); letter-spacing: 4px; font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 15px; }
+        .stub-barcode { width: 100%; height: 60px; background: repeating-linear-gradient(90deg, var(--text-muted), var(--text-muted) 2px, transparent 2px, transparent 4px, var(--text-muted) 4px, var(--text-muted) 6px, transparent 6px, transparent 10px); opacity: 0.3; margin-top: auto; }
+
+        .attachment-trigger {
+            margin-top: 15px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-gold); 
+            display: flex; align-items: center; gap: 8px; opacity: 0.6; transition: opacity 0.3s;
+        }
+        .attachment-trigger::before { content: '📎'; }
+        
+        .bp-dossier {
+            max-height: 0; opacity: 0; overflow: hidden; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; gap: 15px; margin-top: 0; border-top: 1px dashed rgba(255,255,255,0);
+        }
+        
+        .boarding-pass:hover .attachment-trigger,
+        .timeline-item:hover .attachment-trigger { opacity: 1; color: var(--accent-blue); }
+        
+        .boarding-pass:hover .bp-dossier,
+        .timeline-item:hover .bp-dossier {
+            max-height: 250px; opacity: 1; margin-top: 15px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.15);
+        }
+
+        .dossier-img {
+            height: 110px; width: 160px; object-fit: cover; border-radius: 6px; 
+            border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+            transition: transform 0.3s, border-color 0.3s; cursor: crosshair;
+        }
+        .dossier-img-wide { width: 220px; }
+        .dossier-img:hover { transform: scale(1.05); border-color: var(--accent-gold); position: relative; z-index: 10; }
+
+        .media-wrapper {
+            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+            border-radius: 8px; margin-top: 25px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer;
+        }
+        .media-wrapper img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: opacity 0.3s; }
+        .media-wrapper:hover img { opacity: 1; }
+        .play-btn {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 70px; height: 70px; background: rgba(0, 229, 255, 0.2); border: 2px solid var(--accent-blue); border-radius: 50%; display: flex; justify-content: center; align-items: center; backdrop-filter: blur(5px); z-index: 2; transition: all 0.3s ease;
+        }
+        .media-wrapper:hover .play-btn { background: var(--accent-blue); transform: translate(-50%, -50%) scale(1.1); }
+        .play-btn svg { width: 30px; fill: #fff; margin-left: 5px; }
+        .media-wrapper:hover .play-btn svg { fill: #000; }
+        .ife-iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: none; z-index: 3;}
+
+        .timeline { border-left: 2px solid rgba(255,255,255,0.1); padding-left: 45px; margin-top: 20px;}
+        .timeline-item { margin-bottom: 60px; position: relative; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -52px; top: 8px;
+            width: 12px; height: 12px; border-radius: 50%; background: var(--accent-blue); box-shadow: 0 0 15px var(--accent-blue);
+        }
+        .timeline-title { font-size: 1.6rem; margin-bottom: 15px; font-family: var(--font-display); color: var(--accent-gold); }
+
+        .carousel-wrapper {
+            position: relative; width: 100vw; margin-left: -5vw; overflow: hidden; padding: 40px 0;
+            background: rgba(10, 17, 26, 0.5); border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .carousel-wrapper::before, .carousel-wrapper::after { content: ''; position: absolute; top: 0; bottom: 0; width: 15vw; z-index: 2; pointer-events: none; }
+        .carousel-wrapper::before { left: 0; background: linear-gradient(to right, var(--bg-deep), transparent); }
+        .carousel-wrapper::after { right: 0; background: linear-gradient(to left, var(--bg-deep), transparent); }
+
+        .carousel-track { display: flex; gap: 40px; width: max-content; animation: scroll-left 50s linear infinite; }
+        .carousel-track:hover { animation-play-state: paused; }
+
+        .baggage-item {
+            background: var(--bg-panel); border: 1px solid rgba(255,255,255,0.05);
+            padding: 30px 30px 25px 30px; 
+            display: flex; flex-direction: column; position: relative;
+            flex-shrink: 0; box-shadow: 0 15px 35px rgba(0,0,0,0.6); transition: transform 0.3s, border-color 0.3s;
+            margin: 20px 0; 
+        }
+        .baggage-item:hover { transform: translateY(-5px); border-color: var(--accent-gold); box-shadow: 0 20px 40px rgba(0,0,0,0.8); }
+
+        .shape-rect { width: 380px; height: 250px; --wheel-dist: 262px; }
+        .shape-square { width: 290px; height: 290px; --wheel-dist: 172px; }
+        
+        .baggage-item::before {
+            content: ''; position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+            width: 90px; height: 16px;
+            border: 4px solid #1a2639; border-bottom: none; border-radius: 8px 8px 0 0;
+            background: transparent; z-index: 1;
+        }
+        
+        .baggage-item::after {
+            content: ''; position: absolute; bottom: -14px; left: 50px;
+            width: 18px; height: 14px; border-radius: 4px;
+            background: #0d1626;
+            box-shadow: var(--wheel-dist, 262px) 0 0 #0d1626; 
+            z-index: 1;
+        }
+
+        .suitcase-tag {
+            position: absolute; top: -10px; left: 30%; width: 15px; height: 35px; 
+            background: var(--accent-gold); border-radius: 2px; z-index: 3;
+            transform: rotate(-15deg); transform-origin: top center;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+        .suitcase-tag::before {
+            content: ''; position: absolute; top: -15px; left: 50%; transform: translateX(-50%);
+            width: 2px; height: 15px; background: rgba(255,255,255,0.4);
+        }
+
+        .suitcase-1 {
+            border-radius: 20px;
+            background-color: var(--bg-panel);
+            background-image: repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(255,255,255,0.02) 20px, rgba(255,255,255,0.02) 40px);
+            border-top: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .suitcase-2 {
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(15, 25, 42, 0.95) 0%, rgba(5, 11, 20, 0.95) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .suitcase-2 .corner-guard {
+            position: absolute; width: 35px; height: 35px; border-radius: 6px; 
+            border: 1px solid rgba(255,255,255,0.15); background: #080c14; z-index: 0;
+        }
+        .suitcase-2 .cg-tl { top: -2px; left: -2px; border-bottom-right-radius: 20px; border-top-left-radius: 12px; }
+        .suitcase-2 .cg-tr { top: -2px; right: -2px; border-bottom-left-radius: 20px; border-top-right-radius: 12px; }
+        .suitcase-2 .cg-bl { bottom: -2px; left: -2px; border-top-right-radius: 20px; border-bottom-left-radius: 12px; }
+        .suitcase-2 .cg-br { bottom: -2px; right: -2px; border-top-left-radius: 20px; border-bottom-right-radius: 12px; }
+
+        .tag-agency { font-size: 0.8rem; color: var(--text-muted); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; position: relative; z-index: 2; }
+        .tag-agency strong { color: var(--accent-gold); font-size: 0.9rem;}
+        .tag-brand { font-size: 1.5rem; color: var(--text-main); font-family: var(--font-tag); font-weight: 600; margin-bottom: 10px; position: relative; z-index: 2; }
+        .tag-desc { font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-tag); font-weight: 300; line-height: 1.5; margin-bottom: 20px; position: relative; z-index: 2; }
+        
+        .tag-barcode { 
+            position: absolute; bottom: 25px; right: 25px; height: 25px; width: 60px; 
+            background: repeating-linear-gradient(90deg, #fff, #fff 2px, transparent 2px, transparent 4px, #fff 4px, #fff 5px, transparent 5px, transparent 8px); 
+            opacity: 0.7; transform: rotate(-5deg); border: 2px solid #fff; padding: 2px; border-radius: 2px; z-index: 2; 
+        }
+
+        @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-50% - 20px)); } }
+
+        .memory-grid {
+            column-count: 3;
+            column-gap: 25px;
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 1024px) { .memory-grid { column-count: 2; } }
+        @media (max-width: 768px) { .memory-grid { column-count: 1; } }
+
+        .memory-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: crosshair;
+            border: 1px solid rgba(255,255,255,0.05);
+            background: var(--bg-panel);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            
+            /* CRITICAL SAFEGUARDS TO PREVENT IMAGES FROM CUTTING OFF ACROSS COLUMNS */
+            -webkit-column-break-inside: avoid; /* Chrome, Safari, Opera */
+            page-break-inside: avoid; /* Firefox */
+            break-inside: avoid; /* Modern Standard / IE 10+ */
+            
+            margin-bottom: 25px; 
+            display: inline-block; /* Additional safeguard for Safari masonry bug */
+            width: 100%; /* Ensure container fills column width */
+        }
+
+        .memory-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(13, 27, 56, 0.1) 0%, rgba(3, 8, 20, 0.95) 100%);
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+            z-index: 1;
+        }
+        
+        .memory-item img {
+            width: 100%; 
+            height: auto; /* Maintains aspect ratio, relies on inline-block to not cut off */
+            display: block;
+            
+            /* 
+               THE CINEMATIC DEEP BLUE SCALE (Editorial Indigo Wash)
+               - grayscale & sepia & hue-rotate: Creates the rich monochromatic deep blue/cyan base.
+               - contrast: Lowers contrast to flatten shadows into a soft, faded cinematic wash.
+               - brightness: Pushes the highlights back up, illuminating the whites against the blue.
+            */
+            filter: grayscale(100%) sepia(60%) hue-rotate(200deg) contrast(0.85) brightness(1.2); 
+            transition: transform 0.6s ease, filter 0.6s ease;
+        }
+        
+        .memory-item:hover {
+            border-color: var(--accent-gold);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 20px rgba(212, 175, 55, 0.15);
+            transform: translateY(-8px);
+            z-index: 2;
+        }
+        
+        .memory-item:hover img {
+            /* Smoothly fades back into full, true vibrant color on hover, with a subtle zoom */
+            transform: scale(1.05);
+            filter: grayscale(0%) sepia(0%) hue-rotate(0deg) contrast(1) brightness(1);
+        }
+
+        .memory-item:hover::after {
+            opacity: 0; /* Fade out the luxury gradient to reveal the pure photo */
+        }
+
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 1024px) {
+            .section-header h2 { white-space: normal; font-size: 1.8rem; }
+            .section-desc br { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 3.2rem; }
+            .hud-glass-box { padding: 30px; }
+            .bp-stub { display: none; }
+            .bp-main { border-right: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero-scene">
+        <div class="container hero-content">
+            <div class="hud-glass-box reveal">
+                <h1 class="hero-title">The Curated<br><span>Archive</span></h1>
+                <p class="hero-subtitle">Vectors of Growth</p>
+                <p class="hero-desc">
+                    A deep dive into the milestones defining my professional journey. Explore my track record of transforming strategic vision into collaborative execution. This portfolio captures the true scale of my cross-functional competencies through a detailed mapping of key initiatives and high-impact projects. See firsthand how I channel a relentless drive to generate unprecedented value, consistently delivering results that push the boundaries of what is possible...
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <section class="container">
+        <div class="section-header reveal">
+            <h2>Customer Experience & Global Accolades</h2>
+        </div>
+        <p class="section-desc reveal">Engineering world-class passenger experiences, driving unprecedented global ranking ascents,<br>and establishing verifiable, award-winning service architectures.</p>
+        
+        <div class="grid-1">
+            <div class="boarding-pass reveal">
+                <div class="bp-main">
+                    <!-- Updated Top 50 Result -->
+                    <div class="bp-meta"><div class="bp-meta-col"><span>Ranking</span><strong>Skytrax</strong></div><div class="bp-meta-col"><span>Result</span><strong>#50 in Top 100 Airports Worldwide</strong></div></div>
+                    <h3 class="bp-title">Skytrax Audits & Global Ranking Ascent</h3>
+                    <p class="bp-desc">Personally spearheading, on-the-ground, rigorous preparatory internal audits preceding official Skytrax audits, I actively led every phase from preparation through execution. I also directly managed and championed the dual-channel voting campaigns for the annual Skytrax World Airport Awards. My hands-on leadership went beyond oversight; I personally took charge of converting critical audit intelligence into tangible CAPEX projects, directly transforming findings into enhanced airport infrastructure and refined service quality. These strategic investments, which I drove from the front lines, elevated PMIA's global standing from #111 in 2016 to within the top 50 by 2025, an exceptional 61-position advancement over nine years, averaging a climb of more than six ranks annually. Furthermore, the airport successfully maintained its prestigious 4-Star Skytrax rating consecutively, while capturing the coveted "Best Regional Airport in the Middle East" accolade six times.</p>
+                </div>
+                <div class="bp-stub"><div class="stub-text">VERIFIED</div><div class="stub-barcode"></div></div>
+            </div>
+            
+            <div class="boarding-pass reveal" style="transition-delay: 0.1s;">
+                <div class="bp-main">
+                    <div class="bp-meta"><div class="bp-meta-col"><span>Program</span><strong>ACI ASQ</strong></div><div class="bp-meta-col"><span>Metric</span><strong>Quarterly</strong></div></div>
+                    <h3 class="bp-title">ACI ASQ Intelligence & Metric Optimization</h3>
+                    <p class="bp-desc">Managed the systematic deployment of quarterly ACI ASQ Departure Surveys, transforming raw passenger telemetry into an aggressive blueprint for continuous service refinement. Championed relentless cross-functional collaboration between internal departments and external aviation stakeholders to action survey findings, driving a progressive, consistent, and measurable elevation in both overarching Customer Satisfaction (CSAT) and targeted Customer Experience (CX) sentiment scores quarter after quarter.</p>
+                </div>
+                <div class="bp-stub"><div class="stub-text">APPROVED</div><div class="stub-barcode"></div></div>
+            </div>
+
+            <div class="boarding-pass reveal">
+                <div class="bp-main">
+                    <div class="bp-meta"><div class="bp-meta-col"><span>Body</span><strong>ACI</strong></div><div class="bp-meta-col"><span>Status</span><strong>Accredited</strong></div></div>
+                    <h3 class="bp-title">ACI Customer Experience Accreditation</h3>
+                    <p class="bp-desc">Championed the strategic compliance, documentation, and operational frameworks required to successfully secure the prestigious ACI Customer Experience Accreditation.</p>
+                </div>
+                <div class="bp-stub"><div class="stub-text">ACHIEVED</div><div class="stub-barcode"></div></div>
+            </div>
+
+            <div class="boarding-pass reveal" style="transition-delay: 0.1s;">
+                <div class="bp-main">
+                    <div class="bp-meta"><div class="bp-meta-col"><span>Award</span><strong>ACI World</strong></div><div class="bp-meta-col"><span>Scope</span><strong>Global</strong></div></div>
+                    <h3 class="bp-title">Voice of The Customer Recognition</h3>
+                    <p class="bp-desc">Attained elite global recognition for sustained, quantifiable efforts in prioritizing passenger welfare, demonstrating a steadfast commitment to ensuring the customer voice actively dictated operational adjustments.</p>
+                </div>
+                <div class="bp-stub"><div class="stub-text">AWARDED</div><div class="stub-barcode"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="section-header reveal">
+            <h2>Executive Presentations & Strategic Decks</h2>
+        </div>
+        <p class="section-desc reveal">Synthesizing complex operational telemetry and stakeholder intelligence into visionary<br>executive reporting for the highest echelons of corporate governance.</p>
+        
+        <div class="timeline">
+            <div class="timeline-item reveal">
+                <h3 class="timeline-title">BoD Monthly Performance Executive Deck</h3>
+                <p class="bp-desc">Architected a ground-up redesign of the legacy Board of Directors monthly report, transforming a historically static, data-heavy document into a sleek, high-impact executive presentation delivered directly by the CEO. Leveraging comprehensive benchmarking against best-in-class international gateways, I modernized outdated KPIs to establish a high-fidelity read on the airport's financial trajectory. The newly engineered deck seamlessly synthesized critical aeronautical and non-aeronautical revenues, granular airline operational metrics, complex passenger throughput telemetry, and the active lifecycles of both commercial and technical infrastructure projects, delivering a visually dynamic and intellectually rigorous strategic intelligence asset directly to the boardroom.</p>
+            </div>
+            <div class="timeline-item reveal">
+                <h3 class="timeline-title">Cargo & Logistics Ecosystem Expansion Pitch</h3>
+                <p class="bp-desc">Orchestrated a high-stakes strategic pitch and executive workshop designed to aggressively scale PMIA's cargo footprint. Collaborated with London-based management consulting firm TroyAvi to architect a compelling, data-driven business plan. Convened a premier summit of global and regional aviation titans—including GACA leadership, ground handling executives, kingdom airport CEOs, and e-commerce giants like Amazon and SheIn—to definitively prove and pitch the massive, untapped logistics potential of the Madinah region.</p>
+            </div>
+            <div class="timeline-item reveal">
+                <h3 class="timeline-title">Airport Charges Redesign Deck</h3>
+                <p class="bp-desc">Developed a highly nuanced presentation deck to articulate the redesign of PMIA Airport Charges, ensuring absolute transparency and firmly aligning stakeholder communications with the overarching customer experience value proposition.</p>
+            </div>
+            <div class="timeline-item reveal">
+                <h3 class="timeline-title">Expansion Phase II Strategic Blueprint</h3>
+                <p class="bp-desc">Authored the visionary executive presentation for PMIA Expansion Phase II. Conducted rigorous infrastructural research to ensure the narrative and operational frameworks integrated seamlessly with the broader Saudi Aviation Strategy mandates.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="section-header reveal">
+            <h2>Corporate Communications & Event Governance</h2>
+        </div>
+        <p class="section-desc reveal">Directing multimillion-dollar mega-events, pioneering digital architectures, and managing<br>complex stakeholder communications across high-stakes aviation milestones.</p>
+        
+        <div class="timeline">
+            <div class="timeline-item reveal">
+                <h3 class="timeline-title">Madinah Airport ORAT (Operational Readiness) Trials</h3>
+                <p class="bp-desc">Orchestrated a massive, flawlessly executed operational stress test alongside global TAV experts to validate the new 8-million-passenger terminal ahead of its launch. Mobilized over 250 university volunteers, GACA officials, and key governmental stakeholders to simulate full-scale domestic and international passenger lifecycles. Every critical ecosystem—from complex Baggage Handling Systems (BHS) and Flight Information Displays (FIDS) to live aircraft integration provided by Saudia Airlines—was rigorously tested under real-world conditions. This triumphant, large-scale rehearsal guaranteed absolute passenger safety, seamless convenience, and zero-defect operational readiness.</p>
+                <div class="media-wrapper" onclick="loadVideo(this, 'hZ7diKqDYps')">
+                    <img src="https://i.ytimg.com/vi/hZ7diKqDYps/maxresdefault.jpg" onerror="this.onerror=null; this.src='https://i.ytimg.com/vi/hZ7diKqDYps/hqdefault.jpg';" alt="ORAT Trials">
+                    <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal">
+                <h3 class="timeline-title">Trial Operations & Mega-Inauguration</h3>
+                <p class="bp-desc">Directed rigorous communication protocols during critical pre-launch infrastructure stress testing (Trial Operations). Subsequently orchestrated a multimillion-dollar Mega-Inauguration, ensuring flawless event governance and media management under the royal patronage of H.R.H. King Salman.</p>
+                <div class="media-wrapper" onclick="loadVideo(this, 'OpxdMS0myTU')">
+                    <img src="https://i.ytimg.com/vi/OpxdMS0myTU/maxresdefault.jpg" onerror="this.onerror=null; this.src='https://i.ytimg.com/vi/OpxdMS0myTU/hqdefault.jpg';" alt="Trial Operations">
+                    <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal">
+                <h3 class="timeline-title">ISO 10002 Omni-Channel Feedback Architecture</h3>
+                <p class="bp-desc">Deployed a digitized Omni-Channel Feedback System, systematically eradicating antiquated manual paper processes. This revolutionized complaint resolution architecture propelled Madinah Airport to become the first in the Kingdom to achieve and sustain a 100% complaint resolution rate over a multi-year streak on the GACA Passenger Complaints Index.</p>
+            </div>
+
+            <div class="timeline-item reveal">
+                <h3 class="timeline-title">Digital Pioneer (First in Kingdom)</h3>
+                <p class="bp-desc">Revolutionized the digital landscape by activating and establishing official social media architectures, making Madinah Airport the very first airport in the Kingdom to achieve a verified, authoritative digital aviation presence.</p>
+                
+                <div class="attachment-trigger">VIEW ATTACHED DOSSIER</div>
+                <div class="bp-dossier">
+                    <img src="https://ahmadilyasb.github.io/cv/First-Tweet.png" alt="First Tweet in the Kingdom" class="dossier-img dossier-img-wide" onerror="this.src='https://placehold.co/440x440/0d1626/d4af37?text=First+Tweet'">
+                </div>
+            </div>
+
+             <div class="timeline-item reveal">
+                <h3 class="timeline-title">Targeted Corporate Social Responsibility (CSR)</h3>
+                <p class="bp-desc">Orchestrated a highly sensitive, bespoke CSR initiative mobilized via social media outreach. Delivered a world-class, seamless transit experience for three PRM (Passenger with Reduced Mobility) siblings bound to wheelchairs due to muscular dystrophy, facilitating their critical journey to Johns Hopkins.</p>
+                
+                <div class="media-wrapper" onclick="loadVideo(this, 'QSzzVjYr3Eo')">
+                    <img src="https://i.ytimg.com/vi/QSzzVjYr3Eo/maxresdefault.jpg" onerror="this.onerror=null; this.src='https://i.ytimg.com/vi/QSzzVjYr3Eo/hqdefault.jpg';" alt="CSR Initiative Video">
+                    <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal">
+                <h3 class="timeline-title">COVID-19 Health, Safety & Operational Protocols</h3>
+                <p class="bp-desc">Engineered critical pandemic response architecture. Developed the "Safe Return to Work" employee guide through rigorous best-practice research, and authored the definitive "COVID-19 Preventive Health & Safety Measures" manual. This commercial passenger protocol established a measurable standard adopted by other Saudi airports, securing Madinah Airport's initial ACI Airport Health Accreditation and three consecutive successful reaccreditations.</p>
+                
+                <div class="attachment-trigger">VIEW ATTACHED DOSSIER</div>
+                <div class="bp-dossier">
+                    <img src="https://ahmadilyasb.github.io/cv/MED-Health-and-Safety-Measures.png" alt="Health & Safety Measures Manual" class="dossier-img dossier-img-wide" onerror="this.src='https://placehold.co/440x220/0d1626/d4af37?text=Health+Safety+Manual'">
+                </div>
+            </div>
+            
+            <div class="timeline-item reveal">
+                <h3 class="timeline-title">Terminal Ambience Enhancement (Biophilic Design)</h3>
+                <p class="bp-desc">Designed a strategic spatial intervention to mitigate visual monotony and transit fatigue. Drawing inspiration from existing infrastructure, engineered the installation of over 2,000 seat pads utilizing a curated pastel palette. These exact tones were implemented for their scientifically backed calming effects, optimizing aesthetics and establishing a profound sense of place.</p>
+                
+                <div class="attachment-trigger">VIEW ATTACHED DOSSIER</div>
+                <div class="bp-dossier">
+                    <img src="https://ahmadilyasb.github.io/cv/Terminal-Ambience-Enhancement.png" alt="Terminal Ambience Before and Color Theory" class="dossier-img dossier-img-wide" onerror="this.src='https://placehold.co/440x220/0d1626/d4af37?text=Ambience+Theory'">
+                    <img src="https://ahmadilyasb.github.io/cv/Terminal-Ambience-Enhancement2.png" alt="Terminal Ambience After Implementation" class="dossier-img dossier-img-wide" onerror="this.src='https://placehold.co/440x220/0d1626/d4af37?text=Ambience+Result'">
+                </div>
+            </div>
+
+            <div class="grid-2" style="margin-top: 40px;">
+                <div class="boarding-pass reveal">
+                    <div class="bp-main">
+                        <h3 class="bp-title">Corporate Identity & Rebranding</h3>
+                        <p class="bp-desc">Spearheaded the overarching corporate visual identity evolution, directing complex branding and rebranding architectures to elevate the airport's strategic market presence.</p>
+                    </div>
+                </div>
+                <div class="boarding-pass reveal">
+                    <div class="bp-main">
+                        <h3 class="bp-title">Aviation Milestone Activations</h3>
+                        <p class="bp-desc">Directed high-profile aviation ceremonies, orchestrating flawless inaugural flight receptions complete with traditional water cannon salutes for major global carriers, including Etihad Airways.</p>
+                    </div>
+                </div>
+                <div class="boarding-pass reveal">
+                    <div class="bp-main">
+                        <h3 class="bp-title">Corporate Event Sponsorships</h3>
+                        <p class="bp-desc">Led strategic sponsorship acquisition and activation, establishing high-value industry partnerships and elevating global brand positioning.</p>
+                    </div>
+                </div>
+                <div class="boarding-pass reveal">
+                    <div class="bp-main">
+                        <h3 class="bp-title">MED Infobook & Route Asset</h3>
+                        <p class="bp-desc">Authored and developed the "MED Infobook," the definitive aeronautical marketing playbook engineered to pitch Madinah Airport's premier facilities and operational capabilities to global air carriers.</p>
+                    </div>
+                </div>
+                <div class="boarding-pass reveal">
+                    <div class="bp-main">
+                        <h3 class="bp-title">International Aviation Symposiums</h3>
+                        <p class="bp-desc">Designed elite marketing collateral and directed institutional participation in high-stakes global industry exhibitions, including the Dubai Airport Show and Routes.</p>
+                    </div>
+                </div>
+                <div class="boarding-pass reveal">
+                    <div class="bp-main">
+                        <h3 class="bp-title">Annual & Seasonal Terminal Branding</h3>
+                        <p class="bp-desc">Executed continuous, immersive spatial branding across the terminal. Curated high-impact, thematic ecosystems for Hajj and Ramadan, featuring specialized inaugural flight receptions.</p>
+                    </div>
+                </div>
+                <div class="boarding-pass reveal">
+                    <div class="bp-main">
+                        <h3 class="bp-title">National Identity Celebrations</h3>
+                        <p class="bp-desc">Aligned massive celebratory campaigns with strict GEA visual guidelines for Saudi National Day. Cultivated regional synergy through culturally resonant activations for GCC national days.</p>
+                    </div>
+                </div>
+                <div class="boarding-pass reveal">
+                    <div class="bp-main">
+                        <h3 class="bp-title">Hajj Documentary Series</h3>
+                        <p class="bp-desc">Served as Executive Producer for a monumental, decade-spanning visual legacy (2015–2024), capturing the immense operational magnitude and human element of peak seasonal surges.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="section-header reveal">
+            <h2>Human Resources & Strategic Governance</h2>
+        </div>
+        <p class="section-desc reveal">Architecting scalable human capital strategies and internal cultural playbooks<br>to support rigorous operational expansion.</p>
+        
+        <div class="grid-2">
+            <div class="boarding-pass reveal">
+                <div class="bp-main">
+                    <h3 class="bp-title">New Terminal Recruitment Action Plan</h3>
+                    <p class="bp-desc">Architected a comprehensive human capital acquisition strategy to scale workforce capabilities and ensure seamless operational readiness ahead of critical terminal expansion milestones.</p>
+                </div>
+                <div class="bp-stub"><div class="stub-text">TALENT</div><div class="stub-barcode"></div></div>
+            </div>
+            
+            <div class="boarding-pass reveal" style="transition-delay: 0.1s;">
+                <div class="bp-main">
+                    <h3 class="bp-title">Corporate Employee Handbook</h3>
+                    <p class="bp-desc">Engineered the definitive corporate governance and culture playbook. Orchestrated end-to-end development—from rigorous global best-practice research and content architecture to the final conceptualization of high-end print and digital designs.</p>
+                    
+                    <div class="attachment-trigger">VIEW ATTACHED DOSSIER</div>
+                    <div class="bp-dossier">
+                        <img src="https://ahmadilyasb.github.io/cv/tibah-employee-handbook.png" onerror="this.src='https://placehold.co/320x220/0d1626/d4af37?text=Handbook+Cover'" alt="Employee Handbook Cover" class="dossier-img">
+                        <img src="https://ahmadilyasb.github.io/cv/tibah-employee-handbook2.png.png" onerror="this.src='https://placehold.co/320x220/0d1626/d4af37?text=Handbook+Pages'" alt="Employee Handbook Pages" class="dossier-img">
+                    </div>
+                </div>
+                <div class="bp-stub"><div class="stub-text">CULTURE</div><div class="stub-barcode"></div></div>
+            </div>
+        </div>
+
+        <div class="timeline" style="margin-top: 50px;">
+            <div class="timeline-item reveal">
+                <h3 class="timeline-title">Employee Wellness & Engagement: Annual Sports Events</h3>
+                <p class="bp-desc">Orchestrated high-impact internal cultural programming designed to maximize employee retention and organizational morale. Initiatives included conceptualizing and executing competitive Annual Sports Events to foster synergy.</p>
+                <div class="media-wrapper" onclick="loadVideo(this, 'czUTpZ9gVyI')">
+                    <img src="https://i.ytimg.com/vi/czUTpZ9gVyI/maxresdefault.jpg" onerror="this.onerror=null; this.src='https://i.ytimg.com/vi/czUTpZ9gVyI/hqdefault.jpg';" alt="Sports Events">
+                    <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                </div>
+            </div>
+
+            <div class="timeline-item reveal">
+                <h3 class="timeline-title">Employee Wellness & Engagement: Hajj Season Celebration</h3>
+                <p class="bp-desc">Conceptualized and executed specialized Annual Hajj Season Celebration Events to recognize and honor the monumental workforce effort required to manage peak seasonal passenger surges.</p>
+                <div class="media-wrapper" onclick="loadVideo(this, '59l4S7TbdNk')">
+                    <img src="https://i.ytimg.com/vi/59l4S7TbdNk/maxresdefault.jpg" onerror="this.onerror=null; this.src='https://i.ytimg.com/vi/59l4S7TbdNk/hqdefault.jpg';" alt="Hajj Celebration">
+                    <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" style="padding-bottom: 120px;">
+        <div class="section-header reveal">
+            <h2>Service Quality Auditing</h2>
+        </div>
+        <p class="section-desc reveal">Executed comprehensive, proprietary evaluations across global brands via strategic engagements<br>with <strong>ISC-CX</strong>, <strong>Helion Research</strong>, and <strong>BARE International</strong>.</p>
+        
+        <div class="carousel-wrapper reveal">
+            <div class="carousel-track">
+                <div class="baggage-item suitcase-1 shape-rect"><div class="suitcase-tag"></div><div class="tag-agency"><strong>ISC-CX</strong> Engagement</div><div class="tag-brand">Louis Vuitton</div><div class="tag-desc">Absolute zenith of heritage French luxury iconic leatherwork and couture.</div><div class="tag-barcode"></div></div>
+                <div class="baggage-item suitcase-2 shape-square"><div class="corner-guard cg-tl"></div><div class="corner-guard cg-tr"></div><div class="corner-guard cg-bl"></div><div class="corner-guard cg-br"></div><div class="suitcase-tag"></div><div class="tag-agency"><strong>ISC-CX</strong> Engagement</div><div class="tag-brand">Apple</div><div class="tag-desc">The global apex of intuitive consumer technology and minimalist hardware.</div><div class="tag-barcode"></div></div>
+                <div class="baggage-item suitcase-1 shape-rect"><div class="suitcase-tag"></div><div class="tag-agency"><strong>ISC-CX</strong> Engagement</div><div class="tag-brand">Coach</div><div class="tag-desc">American luxury leathercraft merging heritage artisanship with contemporary urban edge.</div><div class="tag-barcode"></div></div>
+                <div class="baggage-item suitcase-2 shape-rect"><div class="corner-guard cg-tl"></div><div class="corner-guard cg-tr"></div><div class="corner-guard cg-bl"></div><div class="corner-guard cg-br"></div><div class="suitcase-tag"></div><div class="tag-agency"><strong>ISC-CX</strong> Engagement</div><div class="tag-brand">Calvin Klein</div><div class="tag-desc">Minimalist provocative fashion house defining global contemporary apparel and aesthetics.</div><div class="tag-barcode"></div></div>
+                <div class="baggage-item suitcase-1 shape-square"><div class="suitcase-tag"></div><div class="tag-agency"><strong>ISC-CX</strong> Engagement</div><div class="tag-brand">Tommy Hilfiger</div><div class="tag-desc">Preeminent global purveyor of premium modern prep Americana lifestyle apparel.</div><div class="tag-barcode"></div></div>
+                <div class="baggage-item suitcase-2 shape-rect"><div class="corner-guard cg-tl"></div><div class="corner-guard cg-tr"></div><div class="corner-guard cg-bl"></div><div class="corner-guard cg-br"></div><div class="suitcase-tag"></div><div class="tag-agency"><strong>Helion Research</strong> Engagement</div><div class="tag-brand">Aston Martin</div><div class="tag-desc">Ultimate synthesis of bespoke British engineering and visceral performance luxury.</div><div class="tag-barcode"></div></div>
+                <div class="baggage-item suitcase-1 shape-rect"><div class="suitcase-tag"></div><div class="tag-agency"><strong>Helion Research</strong> Engagement</div><div class="tag-brand">Sephora</div><div class="tag-desc">Ultimate omnichannel curator of prestige global beauty and visionary cosmetics.</div><div class="tag-barcode"></div></div>
+                <div class="baggage-item suitcase-2 shape-square"><div class="corner-guard cg-tl"></div><div class="corner-guard cg-tr"></div><div class="corner-guard cg-bl"></div><div class="corner-guard cg-br"></div><div class="suitcase-tag"></div><div class="tag-agency"><strong>ISC-CX</strong> Engagement</div><div class="tag-brand">LUSH</div><div class="tag-desc">Disruptive architect of ethically sourced and handmade experiential cosmetic products.</div><div class="tag-barcode"></div></div>
+                <div class="baggage-item suitcase-1 shape-rect"><div class="suitcase-tag"></div><div class="tag-agency"><strong>ISC-CX</strong> Engagement</div><div class="tag-brand">The Face Shop</div><div class="tag-desc">Premium Korean botanical skincare engineered for high performance dermis vitality.</div><div class="tag-barcode"></div></div>
+            </div>
+        </div>
+
+        <div class="section-header reveal" style="margin-top: 120px;">
+            <h2>The Retrospective</h2>
+        </div>
+        <p class="section-desc reveal">A curated gallery of the teams, moments, and milestones that built the foundation.</p>
+
+        <div class="memory-grid">
+            <!-- Memory 1 -->
+            <div class="memory-item reveal">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(1).jpeg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+01'">
+            </div>
+            
+            <!-- Memory 2 -->
+            <div class="memory-item reveal" style="transition-delay: 0.1s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(2).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+02'">
+            </div>
+
+            <!-- Memory 3 -->
+            <div class="memory-item reveal" style="transition-delay: 0.2s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(3).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+03'">
+            </div>
+            
+            <!-- Memory 4 -->
+            <div class="memory-item reveal">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(4).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+04'">
+            </div>
+
+             <!-- Memory 5 -->
+            <div class="memory-item reveal" style="transition-delay: 0.1s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(5).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+05'">
+            </div>
+
+            <!-- Memory 6 -->
+            <div class="memory-item reveal" style="transition-delay: 0.2s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(6).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+06'">
+            </div>
+
+            <!-- Memory 7 -->
+            <div class="memory-item reveal">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(7).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+07'">
+            </div>
+
+            <!-- Memory 8 -->
+            <div class="memory-item reveal" style="transition-delay: 0.1s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(8).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+08'">
+            </div>
+
+            <!-- Memory 9 -->
+            <div class="memory-item reveal" style="transition-delay: 0.2s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(9).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+09'">
+            </div>
+
+            <!-- Memory 10 -->
+            <div class="memory-item reveal">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(10).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+10'">
+            </div>
+            
+            <!-- Memory 11 -->
+            <div class="memory-item reveal" style="transition-delay: 0.1s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(11).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+11'">
+            </div>
+            
+            <!-- Memory 12 -->
+            <div class="memory-item reveal" style="transition-delay: 0.2s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(12).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+12'">
+            </div>
+            
+            <!-- Memory 13 -->
+            <div class="memory-item reveal">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(13).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+13'">
+            </div>
+            
+            <!-- Memory 14 -->
+            <div class="memory-item reveal" style="transition-delay: 0.1s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(14).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+14'">
+            </div>
+            
+            <!-- Memory 15 -->
+            <div class="memory-item reveal" style="transition-delay: 0.2s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(15).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+15'">
+            </div>
+            
+            <!-- Memory 16 -->
+            <div class="memory-item reveal">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(16).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+16'">
+            </div>
+            
+            <!-- Memory 17 -->
+            <div class="memory-item reveal" style="transition-delay: 0.1s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(17).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+17'">
+            </div>
+            
+            <!-- Memory 18 -->
+            <div class="memory-item reveal" style="transition-delay: 0.2s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(18).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+18'">
+            </div>
+            
+            <!-- Memory 19 -->
+            <div class="memory-item reveal">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(19).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+19'">
+            </div>
+            
+            <!-- Memory 20 -->
+            <div class="memory-item reveal" style="transition-delay: 0.1s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(20).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+20'">
+            </div>
+
+            <!-- Memory 21 -->
+            <div class="memory-item reveal" style="transition-delay: 0.2s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(21).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+21'">
+            </div>
+            
+            <!-- Memory 22 -->
+            <div class="memory-item reveal">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(22).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+22'">
+            </div>
+
+            <!-- Memory 23 -->
+            <div class="memory-item reveal" style="transition-delay: 0.1s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(23).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+23'">
+            </div>
+
+            <!-- Memory 24 -->
+            <div class="memory-item reveal" style="transition-delay: 0.2s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(24).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+24'">
+            </div>
+
+            <!-- Memory 25 -->
+            <div class="memory-item reveal">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(25).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+25'">
+            </div>
+
+            <!-- Memory 26 -->
+            <div class="memory-item reveal" style="transition-delay: 0.1s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(26).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+26'">
+            </div>
+
+            <!-- Memory 27 -->
+            <div class="memory-item reveal" style="transition-delay: 0.2s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(27).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+27'">
+            </div>
+
+            <!-- Memory 28 -->
+            <div class="memory-item reveal">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(28).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+28'">
+            </div>
+
+            <!-- Memory 29 -->
+            <div class="memory-item reveal" style="transition-delay: 0.1s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(29).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+29'">
+            </div>
+
+            <!-- Memory 30 -->
+            <div class="memory-item reveal" style="transition-delay: 0.2s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(30).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+30'">
+            </div>
+
+            <!-- Memory 31 -->
+            <div class="memory-item reveal">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(31).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+31'">
+            </div>
+
+            <!-- Memory 32 -->
+            <div class="memory-item reveal" style="transition-delay: 0.1s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(32).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+32'">
+            </div>
+
+            <!-- Memory 33 -->
+            <div class="memory-item reveal" style="transition-delay: 0.2s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(33).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+33'">
+            </div>
+
+            <!-- Memory 34 -->
+            <div class="memory-item reveal">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(34).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+34'">
+            </div>
+
+            <!-- Memory 35 -->
+            <div class="memory-item reveal" style="transition-delay: 0.1s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(35).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+35'">
+            </div>
+
+            <!-- Memory 36 -->
+            <div class="memory-item reveal" style="transition-delay: 0.2s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(36).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+36'">
+            </div>
+
+            <!-- Memory 37 -->
+            <div class="memory-item reveal">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(37).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+37'">
+            </div>
+
+            <!-- Memory 38 -->
+            <div class="memory-item reveal" style="transition-delay: 0.1s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(38).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+38'">
+            </div>
+
+            <!-- Memory 39 -->
+            <div class="memory-item reveal" style="transition-delay: 0.2s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(39).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+39'">
+            </div>
+
+            <!-- Memory 40 -->
+            <div class="memory-item reveal">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(40).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+40'">
+            </div>
+
+            <!-- Memory 41 -->
+            <div class="memory-item reveal" style="transition-delay: 0.1s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(41).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+41'">
+            </div>
+            
+            <!-- Memory 42 -->
+            <div class="memory-item reveal" style="transition-delay: 0.2s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(42).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+42'">
+            </div>
+
+            <!-- Memory 43 -->
+            <div class="memory-item reveal">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(43).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+43'">
+            </div>
+
+            <!-- Memory 44 -->
+            <div class="memory-item reveal" style="transition-delay: 0.1s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(44).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+44'">
+            </div>
+
+            <!-- Memory 45 -->
+            <div class="memory-item reveal" style="transition-delay: 0.2s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(45).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+45'">
+            </div>
+
+            <!-- Memory 46 -->
+            <div class="memory-item reveal">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(46).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+46'">
+            </div>
+
+            <!-- Memory 47 -->
+            <div class="memory-item reveal" style="transition-delay: 0.1s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(47).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+47'">
+            </div>
+
+            <!-- Memory 48 -->
+            <div class="memory-item reveal" style="transition-delay: 0.2s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(48).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+48'">
+            </div>
+
+            <!-- Memory 49 -->
+            <div class="memory-item reveal">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(49).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+49'">
+            </div>
+
+            <!-- Memory 50 -->
+            <div class="memory-item reveal" style="transition-delay: 0.1s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(50).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+50'">
+            </div>
+
+            <!-- Memory 51 -->
+            <div class="memory-item reveal" style="transition-delay: 0.2s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(51).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+51'">
+            </div>
+            
+            <!-- Memory 52 -->
+            <div class="memory-item reveal">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(52).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+52'">
+            </div>
+
+            <!-- Memory 53 -->
+            <div class="memory-item reveal" style="transition-delay: 0.1s;">
+                <img src="https://ahmadilyasb.github.io/cv/Photo-%20(53).jpg" alt="Memory" onerror="this.src='https://placehold.co/800x600/0d1626/d4af37?text=Memory+53'">
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Disable Right-Click (Context Menu) for the entire page to protect assets
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // Safe YouTube iFrame Injector (Bypasses Error 153)
+        function loadVideo(element, videoId) {
+            const iframe = document.createElement('iframe');
+            iframe.className = 'ife-iframe';
+            const origin = window.location.origin || '*';
+            iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&origin=${origin}`;
+            iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+            iframe.allowFullscreen = true;
+            
+            element.appendChild(iframe);
+            element.querySelector('img').style.display = 'none';
+            element.querySelector('.play-btn').style.display = 'none';
+            iframe.style.display = 'block';
+        }
+
+        // Scroll Reveal Animation for all incoming sections
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // Trigger on initial load
+    </script>
+</body>
+</html>
