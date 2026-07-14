@@ -47,7 +47,6 @@
             width: 100vw;
             position: relative;
             overflow: hidden;
-            /* Direct link to your github repo background */
             background-image: url('https://ahmadilyasb.github.io/cv/background.jpg');
             background-size: cover;
             background-position: center bottom;
@@ -211,7 +210,8 @@
         .carousel-wrapper::before { left: 0; background: linear-gradient(to right, var(--bg-deep), transparent); }
         .carousel-wrapper::after { right: 0; background: linear-gradient(to left, var(--bg-deep), transparent); }
 
-        .carousel-track { display: flex; gap: 40px; width: max-content; animation: scroll-left 50s linear infinite; }
+        /* ACCELERATED CAROUSEL: 15s for a much faster pace */
+        .carousel-track { display: flex; gap: 40px; width: max-content; animation: scroll-left 15s linear infinite; }
         .carousel-track:hover { animation-play-state: paused; }
 
         .baggage-item {
@@ -264,6 +264,7 @@
             background: linear-gradient(135deg, rgba(15, 25, 42, 0.95) 0%, rgba(5, 11, 20, 0.95) 100%);
             border: 1px solid rgba(255,255,255,0.1);
         }
+        
         .suitcase-2 .corner-guard {
             position: absolute; width: 35px; height: 35px; border-radius: 6px; 
             border: 1px solid rgba(255,255,255,0.15); background: #080c14; z-index: 0;
