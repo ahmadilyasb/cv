@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Optimized viewport for mobile scaling -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>Vision33 Alignment Matrix | Ahmad M. Ilyas</title>
+    
+    <!-- Cache Buster v1.1.4 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web" defer></script>
+    
+    <style>
+        :root {
+            --color-coral: #FF8243;
+            --color-pink: #FFC0CB;
+            --color-yellow: #FCE883;
+            --color-teal: #069494;
+            
+            --gradient-blue: linear-gradient(135deg, #0A2540 0%, #069494 100%);
+            --gradient-dark-red: linear-gradient(135deg, #590D22 0%, #FF8243 100%);
+            
+            --bg-body: #FAFAFA;
+            --bg-card: #FFFFFF;
+            --text-main: #1A1A24;
+            --text-muted: #5a6b7c;
+            --border-color: rgba(6, 148, 148, 0.2); 
+            
+            --accent-primary: var(--color-teal);
+            --accent-secondary: var(--color-coral);
+            --highlight-bg: rgba(252, 232, 131, 0.15); 
+            --badge-bg: var(--color-pink);
+            --badge-text: #8B1E34; 
+            
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-accent: 'Rajdhani', sans-serif;
+            --font-body: 'Outfit', sans-serif;
+            
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #090C10; 
+            --bg-card: #161B22; 
+            --text-main: #F0F6FC;
+            --text-muted: #8B949E;
+            --border-color: #30363D;
+            
+            --accent-primary: var(--color-yellow);
+            --accent-secondary: var(--color-pink);
+            --highlight-bg: rgba(6, 148, 148, 0.15); 
+            --badge-bg: var(--color-coral);
+            --badge-text: #2D0F00; 
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent; 
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+            transition: var(--transition);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 4rem 2rem;
+            
+            background-image: 
+                radial-gradient(circle at 100% 0%, rgba(255, 130, 67, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 0% 100%, rgba(6, 148, 148, 0.08) 0%, transparent 50%);
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1500px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 5rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--accent-primary);
+        }
+
+        .brand-cluster {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .v33-logo {
+            max-width: 280px;
+            height: auto;
+            transition: var(--transition);
+            filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.1));
+        }
+
+        [data-theme="dark"] .v33-logo {
+            filter: invert(1) brightness(1.5) drop-shadow(0px 4px 10px rgba(255,255,255,0.1));
+        }
+
+        .doc-title {
+            font-family: var(--font-accent);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 3px solid var(--accent-primary);
+            color: var(--text-main);
+            padding: 16px 36px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: var(--transition);
+            box-shadow: 0 0 15px rgba(6, 148, 148, 0.2);
+            touch-action: manipulation;
+        }
+
+        .theme-toggle:focus-visible {
+            outline: 2px solid var(--accent-primary);
+            outline-offset: 4px;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .theme-toggle:hover {
+                background: var(--accent-primary);
+                color: var(--bg-body);
+                transform: translateY(-4px) scale(1.05);
+                box-shadow: 0 10px 25px rgba(6, 148, 148, 0.5);
+                border-color: transparent;
+            }
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.98);
+        }
+
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 5rem;
+            margin-bottom: 6rem;
+            align-items: center;
+        }
+
+        .name-block h1 {
+            font-family: var(--font-display);
+            font-size: 6rem;
+            font-weight: 700;
+            line-height: 0.9;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-blue);
+            -webkit-background-clip: text;
+            background-clip: text; 
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(3px 3px 0px rgba(255, 130, 67, 0.2));
+            letter-spacing: -2px;
+        }
+
+        .name-block h2 {
+            font-family: var(--font-accent);
+            font-size: 2.2rem;
+            color: var(--accent-secondary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 600;
+        }
+        
+        /* Application Meta Block styling (Hyperlinked) */
+        .application-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-top: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, rgba(6, 148, 148, 0.08) 0%, transparent 100%);
+            border-left: 4px solid var(--accent-primary);
+            padding: 1.2rem 1.5rem;
+            border-radius: 0 12px 12px 0;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .application-meta {
+            background: linear-gradient(90deg, rgba(252, 232, 131, 0.08) 0%, transparent 100%);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .application-meta:hover {
+                transform: translateX(8px);
+                background: linear-gradient(90deg, rgba(6, 148, 148, 0.15) 0%, transparent 100%);
+                border-left-width: 6px;
+            }
+            [data-theme="dark"] .application-meta:hover {
+                background: linear-gradient(90deg, rgba(252, 232, 131, 0.15) 0%, transparent 100%);
+            }
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-family: var(--font-body);
+            font-size: 1.15rem;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        .meta-item i {
+            color: var(--accent-secondary);
+            font-size: 1.4rem;
+            margin-top: 2px;
+        }
+
+        .meta-item strong {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: var(--accent-primary);
+        }
+
+        /* Grouping the buttons together */
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--gradient-blue);
+            color: #FFFFFF !important;
+            padding: 18px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            box-shadow: 0 10px 25px rgba(6, 148, 148, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            touch-action: manipulation;
+            border: 2px solid transparent;
+        }
+
+        .contact-btn.whatsapp {
+            background: rgba(6, 148, 148, 0.1);
+            color: var(--text-main) !important;
+            border-color: var(--accent-primary);
+            box-shadow: none;
+        }
+
+        [data-theme="dark"] .contact-btn.whatsapp {
+            color: #F0F6FC !important;
+            background: rgba(252, 232, 131, 0.1);
+        }
+
+        .contact-btn i { font-size: 1.6rem; }
+        
+        @media (hover: hover) and (pointer: fine) {
+            .contact-btn:hover {
+                transform: translateY(-5px) scale(1.05);
+                box-shadow: 0 15px 35px rgba(89, 13, 34, 0.3);
+                background: var(--gradient-dark-red);
+                color: #FFFFFF !important;
+                border-color: transparent;
+            }
+            .contact-btn.whatsapp:hover {
+                background: #25D366; /* Classic WhatsApp Green */
+                color: #FFFFFF !important;
+                box-shadow: 0 15px 35px rgba(37, 211, 102, 0.4);
+                border-color: transparent;
+            }
+        }
+        
+        .contact-btn:focus-visible {
+            outline: 2px solid var(--accent-secondary);
+            outline-offset: 4px;
+        }
+
+        .bio-block p {
+            font-size: 1.4rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            border-left: 6px solid var(--accent-primary);
+            padding-left: 2.5rem;
+            line-height: 1.8;
+            background: linear-gradient(90deg, var(--highlight-bg) 0%, transparent 100%);
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            border-radius: 0 16px 16px 0;
+        }
+
+        .bio-block strong { color: var(--text-main); font-weight: 600; }
+
+        .matrix-header {
+            display: grid;
+            grid-template-columns: 1.2fr 1.4fr 1.4fr;
+            gap: 2.5rem;
+            padding: 0 2rem 1.5rem 2rem;
+            font-family: var(--font-accent);
+            font-size: 1.4rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-secondary);
+            border-bottom: 3px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .matrix-row {
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-card);
+            padding: 2.5rem 3rem;
+            border-radius: 16px;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border-color);
+            border-left: 10px solid var(--color-teal);
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+            z-index: 10;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .matrix-row:hover {
+                transform: scale(1.02) translateY(-5px);
+                border-left-color: #4338CA;
+                box-shadow: 0 25px 50px -12px rgba(6, 148, 148, 0.25), inset 0 0 20px rgba(67, 56, 202, 0.05);
+                background: var(--highlight-bg);
+                z-index: 20; 
+            }
+        }
+
+        .matrix-row.selected, .matrix-row:active {
+            border-left-color: #4338CA;
+            background: var(--highlight-bg);
+            outline: 3px solid rgba(67, 56, 202, 0.4);
+            outline-offset: -3px;
+            box-shadow: 0 0 30px rgba(6, 148, 148, 0.2);
+            z-index: 15;
+        }
+
+        .row-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2rem;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .row-header h3 {
+            font-family: var(--font-display);
+            font-size: 2.4rem;
+            color: var(--text-main);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            white-space: nowrap;
+        }
+
+        .row-header h3 i {
+            color: var(--accent-secondary);
+            font-size: 3.2rem;
+            background: rgba(255, 130, 67, 0.1);
+            padding: 10px;
+            border-radius: 12px;
+            box-shadow: inset 0 0 10px rgba(255, 130, 67, 0.05);
+        }
+
+        .col-subtext::before, .col-content::before {
+            display: block;
+            font-family: var(--font-accent);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            opacity: 0.7;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .col-subtext::before { content: "WHAT YOU NEED"; }
+        .col-content::before { content: "WHAT I BRING"; }
+
+        .col-highlight::before {
+            content: "THE EDGE";
+            display: block;
+            font-family: var(--font-accent);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #4338CA;
+            opacity: 0.9;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        [data-theme="dark"] .col-highlight::before { color: #818CF8; }
+
+        .tag-group { display: flex; flex-wrap: wrap; gap: 10px; flex: 1; }
+        
+        .tag {
+            font-family: var(--font-accent); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px;
+            background: rgba(6, 148, 148, 0.15); color: var(--color-teal); border: 1px solid rgba(6, 148, 148, 0.4);
+            padding: 6px 16px; border-radius: 20px; font-weight: 700; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        [data-theme="dark"] .tag { background: rgba(252, 232, 131, 0.15); color: var(--color-yellow); border-color: rgba(252, 232, 131, 0.4); }
+
+        .row-columns { display: grid; grid-template-columns: 1.2fr 1.4fr 1.4fr; gap: 2.5rem; align-items: start; }
+        
+        .col-subtext, .col-content {
+            border-right: 1px solid var(--border-color); padding-right: 2.5rem; font-size: 1.15rem; color: var(--text-main); line-height: 1.7;
+        }
+        
+        .col-subtext { font-weight: 500; }
+        
+        .col-highlight {
+            font-size: 1.2rem; color: var(--text-main); font-weight: 500;
+            background: linear-gradient(135deg, rgba(67, 56, 202, 0.04) 0%, rgba(99, 102, 241, 0.08) 100%); 
+            padding: 2rem; border-radius: 12px; border: 1px solid rgba(67, 56, 202, 0.15);
+            border-left: 6px solid #4338CA; line-height: 1.7;
+        }
+        
+        [data-theme="dark"] .col-highlight {
+            background: linear-gradient(135deg, rgba(129, 140, 248, 0.1) 0%, rgba(67, 56, 202, 0.2) 100%);
+            border-color: rgba(129, 140, 248, 0.3); border-left-color: #818CF8;
+        }
+
+        .retrospective-section {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            color: inherit;
+            padding: 60px 0;
+            width: 100%;
+            border-top: 1px dashed var(--border-color);
+            margin-top: 4rem;
+        }
+        
+        .section-header { text-align: center; }
+
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: var(--gradient-blue);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 20px rgba(6, 148, 148, 0.3);
+        }
+
+        .section-desc { 
+            text-align: center; 
+            max-width: 800px; 
+            margin: 0 auto 50px auto; 
+            line-height: 1.7; 
+            padding: 0 20px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            opacity: 0.9;
+        }
+
+        .cinematic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            width: 100%;
+            padding: 20px 0;
+            /* Webkit fix for grid expansion bugs */
+            min-width: 0;
+            min-height: 0;
+        }
+
+        .grid-item {
+            position: relative;
+            height: 280px; 
+            /* Webkit fix for layout shifts */
+            min-width: 0; 
+            min-height: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Safari hardware acceleration to fix border-radius clipping */
+            transform: translateZ(0); 
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
+        }
+
+        .grid-item img {
+            height: 100%;
+            width: 100%; 
+            max-width: 100%;
+            object-fit: contain; /* Absolutely no cropping */
+            display: block;
+            border-radius: inherit;
+            /* Subtle warm wash filter applied for perfect cross-browser support */
+            filter: contrast(105%) brightness(105%);
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .cinematic-overlay {
+            position: absolute;
+            inset: 0;
+            /* Simple overlay with 20% opacity and no harsh blend modes */
+            background: linear-gradient(135deg, rgba(236, 107, 115, 0.2) 0%, rgba(249, 236, 126, 0.25) 100%);
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+            z-index: 1;
+        }
+
+        /* Glass Caption */
+        .glass-caption {
+            position: absolute;
+            bottom: -100px; 
+            left: 0;
+            width: 100%;
+            padding: 16px 15px;
+            background: rgba(10, 37, 64, 0.9);
+            /* iOS Safari blur fix via translate3d */
+            transform: translate3d(0, 0, 0); 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(249, 236, 126, 0.5);
+            color: #FFFFFF;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-align: center;
+            letter-spacing: 0.5px;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2;
+            box-sizing: border-box;
+        }
+
+        /* Hover interactions strictly constrained to Desktop (fine pointers) to prevent sticky mobile taps */
+        @media (hover: hover) and (pointer: fine) {
+            .grid-item:hover img { 
+                filter: contrast(115%) brightness(100%); 
+                transform: scale(1.05); 
+            }
+            .grid-item:hover .cinematic-overlay { opacity: 0; }
+            .grid-item:hover .glass-caption { bottom: 0; opacity: 1; }
+            .grid-item:hover {
+                z-index: 10;
+                border-color: var(--accent-primary);
+                box-shadow: 0 15px 40px rgba(6, 148, 148, 0.3);
+            }
+        }
+
+        /* For mobile, permanently display captions inside the card to avoid touch ambiguity */
+        @media (hover: none), (pointer: coarse) {
+            .glass-caption {
+                bottom: 0;
+                opacity: 1;
+                background: rgba(10, 37, 64, 0.85); /* Slightly more transparent on mobile */
+                padding: 10px;
+                font-size: 0.85rem;
+            }
+            .cinematic-overlay {
+                opacity: 0.5; /* Reduce overlay interference on mobile */
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .intro-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .name-block h1 { font-size: 4.5rem; }
+            .matrix-header { display: none; }
+            .matrix-row { padding: 2rem; }
+            .matrix-row::before {
+                content: attr(data-label);
+                font-family: var(--font-accent);
+                color: var(--accent-secondary);
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                font-size: 1rem;
+                display: block;
+                margin-bottom: 1rem;
+                font-weight: 700;
+            }
+            .row-header h3 { white-space: normal; }
+            .row-columns { grid-template-columns: 1fr; gap: 2rem; }
+            .col-subtext, .col-content { border-right: none; padding-right: 0; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 2rem 1rem; }
+            .grid-item { height: 220px; } /* Slightly shorter on mobile */
+            .section-header h2 { font-size: 2.2rem; }
+            .section-desc { font-size: 1.05rem; margin-bottom: 30px; }
+            .cinematic-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+            .name-block h1 { font-size: 3.5rem; }
+            .meta-item { font-size: 1.05rem; }
+            .matrix-row { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <div class="brand-cluster">
+                <img src="https://www.vision33.com/hubfs/Group%2019.svg" alt="Vision33 Logo" class="v33-logo">
+                <div class="doc-title">Strategic Competency Alignment Matrix</div>
+            </div>
+            <button class="theme-toggle" id="themeToggle" tabindex="0" aria-label="Toggle Dark Mode">
+                <span id="themeIcon">☾</span> <span id="themeText">Dark Mode</span>
+            </button>
+        </header>
+
+        <section class="intro-grid">
+            <div class="name-block">
+                <h1>Ahmad M.<br>Ilyas</h1>
+                <h2>Executive Operations Strategist</h2>
+                
+                <!-- Hyperlinked Application Meta Block -->
+                <a href="https://vision33.bamboohr.com/careers/165" target="_blank" rel="noopener noreferrer" class="application-meta" aria-label="View Vision33 Executive Associate Job Posting">
+                    <div class="meta-item">
+                        <i class="ph-bold ph-briefcase"></i>
+                        <span><strong>Application for:</strong> Executive Associate <i class="ph-bold ph-arrow-up-right" style="font-size: 0.85em; margin-left: 4px; color: var(--accent-primary);"></i></span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="ph-bold ph-map-pin"></i>
+                        <span><strong>Location:</strong> Vision33 Headquarters <br>210 Water Street, St. John’s, NL</span>
+                    </div>
+                </a>
+                
+                <div class="button-group">
+                    <a href="mailto:ahmedelyasb@gmail.com" class="contact-btn">
+                        <i class="ph-bold ph-airplane-takeoff"></i> Deploy Ahmad
+                    </a>
+                    
+                    <a href="https://wa.me/17097021176" target="_blank" rel="noopener noreferrer" class="contact-btn whatsapp">
+                        <i class="ph-bold ph-whatsapp-logo"></i> WhatsApp
+                    </a>
+                </div>
+            </div>
+            <div class="bio-block">
+                <p>
+                    I am an elite operations tactician and communications expert, uniquely positioned to serve as a <strong>strategic force multiplier</strong> for Vision33's senior leadership. This matrix demonstrates precisely how my extensive background in executive advisory, agile logistics, and AI-enabled workflows guarantees a zero-friction, ultra-professional command center at the St. John's Headquarters.
+                </p>
+            </div>
+        </section>
+
+        <div class="matrix-wrapper">
+            <div class="matrix-header">
+                <div>Vision33 Strategic Requirement</div>
+                <div>Executive Experience & Capabilities</div>
+                <div>Vision33 Value Proposition</div>
+            </div>
+
+            <div class="matrix-row" data-label="Vision33 Requirement" tabindex="0">
+                <div class="row-header">
+                    <h3><i class="ph-fill ph-calendar-star"></i> Executive Support</h3>
+                    <div class="tag-group">
+                        <span class="tag">Confidentiality / Operational Excellence</span>
+                        <span class="tag">Calendar Architecture</span>
+                        <span class="tag">C-Suite Liaison</span>
+                    </div>
+                </div>
+                <div class="row-columns">
+                    <div class="col-subtext">Support to President/VPs, document preparation, correspondence, confidential information management, expense support, and follow-ups.</div>
+                    <div class="col-content">Served as CEO Office Research & Analysis Chief, acting as a "strategic force multiplier to the CEO". Navigated high-stakes executive calendars, intercepted heavy communications volumes, and successfully managed highly sensitive corporate external relations on a daily basis.</div>
+                    <div class="col-highlight">I will deploy elite calendar governance and communication filtering, ruthlessly protecting the bandwidth of the President and VPs while safeguarding Vision33's most sensitive operational data with uncompromising precision.</div>
+                </div>
+            </div>
+
+            <div class="matrix-row" data-label="Vision33 Requirement" tabindex="0">
+                <div class="row-header">
+                    <h3><i class="ph-fill ph-airplane-tilt"></i> Coordinate Meetings, Travel & Logistics</h3>
+                    <div class="tag-group">
+                        <span class="tag">Global Logistics</span>
+                        <span class="tag">Travel Itineraries</span>
+                        <span class="tag">Boardroom Tech</span>
+                    </div>
+                </div>
+                <div class="row-columns">
+                    <div class="col-subtext">Manage schedules, organize leadership meetings, prepare materials, coordinate room bookings and technology needs, arrange national and international travel, and support courier and facility requests.</div>
+                    <div class="col-content">Arranged and executed "monthly Design Progress Meetings" and spearheaded "weekly internal progress reviews across all departments utilizing agile methodologies". Orchestrated multi-leg international travel for leadership and piloted advanced logistical tech frameworks globally.</div>
+                    <div class="col-highlight">I am a master orchestrator of executive movement. I will ensure every leadership meeting, facility request, and global travel itinerary is executed with military precision, preempting logistical bottlenecks before they occur.</div>
+                </div>
+            </div>
+
+            <div class="matrix-row" data-label="Vision33 Requirement" tabindex="0">
+                <div class="row-header">
+                    <h3><i class="ph-fill ph-buildings"></i> Support Office Operations</h3>
+                    <div class="tag-group">
+                        <span class="tag">Facility & Vendor Management</span>
+                        <span class="tag">Corporate Documentation</span>
+                        <span class="tag">Supply Chain</span>
+                    </div>
+                </div>
+                <div class="row-columns">
+                    <div class="col-subtext">Keep the office well-stocked, organized, and ready for business by supporting supplies, mail, vendor coordination, corporate documentation, project support, and special requests.</div>
+                    <div class="col-content">Deployed an enterprise-grade "Common Data Environment (CDE), establishing an unalterable audit trail of all project correspondence, executive decisions, and file exchanges." Managed multi-million dollar vendor procurement cycles and expedited complex site readiness requirements.</div>
+                    <div class="col-highlight">I bring enterprise-grade operational discipline to the St. John's HQ. I will meticulously govern vendor relations, maintain immaculate corporate documentation, and ensure the facility operates flawlessly at peak readiness.</div>
+                </div>
+            </div>
+
+            <div class="matrix-row" data-label="Vision33 Requirement" tabindex="0">
+                <div class="row-header">
+                    <h3><i class="ph-fill ph-confetti"></i> Plan Team & Corporate Events</h3>
+                    <div class="tag-group">
+                        <span class="tag">Culture & Events</span>
+                        <span class="tag">Executive Off-sites</span>
+                        <span class="tag">Milestone Celebrations</span>
+                    </div>
+                </div>
+                <div class="row-columns">
+                    <div class="col-subtext">Help plan and support executive meetings, corporate events, team get-togethers, celebrations, milestone events, and holiday gatherings.</div>
+                    <div class="col-content">Directed "strategic planning, execution, and oversight of all major events" including the monumental "inauguration of the new Madinah Airport by H.R.H. King Salman". Consistently cultivated corporate culture through meticulously designed team off-sites and organizational milestones.</div>
+                    <div class="col-highlight">My background in corporate communications allows me to scale experiential design flawlessly—from intimate, high-morale team gatherings to massive, high-stakes corporate celebrations that amplify Vision33's brand value.</div>
+                </div>
+            </div>
+
+            <div class="matrix-row" data-label="Vision33 Requirement" tabindex="0">
+                <div class="row-header">
+                    <h3><i class="ph-fill ph-rocket-launch"></i> Keep Priorities Moving</h3>
+                    <div class="tag-group">
+                        <span class="tag">Agile Governance</span>
+                        <span class="tag">Pipeline Tracking</span>
+                        <span class="tag">Predictive Analytics</span>
+                    </div>
+                </div>
+                <div class="row-columns">
+                    <div class="col-subtext">Track action items, follow up on outstanding requests, anticipate needs, and help leaders and team members stay organized in a fast-paced, global environment.</div>
+                    <div class="col-content">Steered a "$430M (SAR 1.6B) Madinah Airport Phase II Expansion project" from inception to groundbreaking. Pioneered the use of predictive analytics and rapid-response frameworks to aggressively track high-priority action items and anticipate C-suite needs proactively.</div>
+                    <div class="col-highlight">I do not merely track tasks; I anticipate and accelerate them. I will drive Vision33's internal momentum by proactively managing action items and neutralizing roadblocks before they ever reach an executive's desk.</div>
+                </div>
+            </div>
+
+            <div class="matrix-row" data-label="Vision33 Requirement" tabindex="0">
+                <div class="row-header">
+                    <h3><i class="ph-fill ph-users-three"></i> Support Stakeholders & Special Requests</h3>
+                    <div class="tag-group">
+                        <span class="tag">Strategic Synthesis</span>
+                        <span class="tag">Ad-Hoc Projects</span>
+                        <span class="tag">Cross-functional Liaison</span>
+                    </div>
+                </div>
+                <div class="row-columns">
+                    <div class="col-subtext">Work with internal and external stakeholders, apply business acumen and creative problem-solving, and support ad hoc projects and requests as needed.</div>
+                    <div class="col-content">Masterminded "strategic coalition-building across fragmented stakeholders" including high-level executives, state aviation authorities, and joint-venture contractors. Consistently navigated complex regulatory environments to pilot high-sensitivity ad-hoc initiatives to successful closure.</div>
+                    <div class="col-highlight">I thrive in highly complex stakeholder ecosystems. I will act as a diplomatic and agile liaison for Vision33, applying high-level business acumen to seamlessly manage competing priorities and ad-hoc executive projects.</div>
+                </div>
+            </div>
+
+            <div class="matrix-row" data-label="Vision33 Requirement" tabindex="0">
+                <div class="row-header">
+                    <h3><i class="ph-fill ph-handshake"></i> First Point of Contact</h3>
+                    <div class="tag-group">
+                        <span class="tag">Brand Ambassador</span>
+                        <span class="tag">Customer Experience</span>
+                        <span class="tag">Concierge Service</span>
+                    </div>
+                </div>
+                <div class="row-columns">
+                    <div class="col-subtext">Respond to inquiries, direct requests, and provide a friendly, professional experience for employees, clients, vendors, and partners.</div>
+                    <div class="col-content">I am a "Hands-on Customer Experience professional" who establishes a "culture of empathy" and focuses on "human-centric design methodologies". Natively engineered to serve as a consummate brand ambassador, dealing directly with VIP clientele and global partners.</div>
+                    <div class="col-highlight">My entire career is anchored in elite CX. I understand the EA is the operational face of the HQ. I guarantee a welcoming, ultra-professional, and distinctly "Vision33" concierge experience for everyone walking through the door.</div>
+                </div>
+            </div>
+
+            <div class="matrix-row" data-label="Vision33 Requirement" tabindex="0">
+                <div class="row-header">
+                    <h3><i class="ph-fill ph-cpu"></i> Tech-Savvy</h3>
+                    <div class="tag-group">
+                        <span class="tag">Digital Workplace</span>
+                        <span class="tag">AI Enablement</span>
+                        <span class="tag">Microsoft 365</span>
+                    </div>
+                </div>
+                <div class="row-columns">
+                    <div class="col-subtext">Advanced proficiency with Microsoft 365 and digital workplace technologies, quickly adopting Smartsheet, Copilot, and workflow automation tools.</div>
+                    <div class="col-content">Advanced proficiency in "Microsoft Office 365" and deep, hands-on experience as a "Customer Experience Expert - AI Enablement" actively grading and training LLMs. I am a practitioner of digital workplace infrastructure, workflow automation, and data system integrations.</div>
+                    <div class="col-highlight">I am ready to immediately operationalize Vision33’s tech stack. My hands-on expertise with AI, Copilot, and workflow automation ensures your office operations will be modernized, automated, and hyper-efficient.</div>
+                </div>
+            </div>
+            
+            <div class="matrix-row" data-label="Vision33 Requirement" tabindex="0">
+                <div class="row-header">
+                    <h3><i class="ph-fill ph-chats-teardrop"></i> Outstanding Communication</h3>
+                    <div class="tag-group">
+                        <span class="tag">Corporate Comms</span>
+                        <span class="tag">Executive Summaries</span>
+                        <span class="tag">PR & Diplomacy</span>
+                    </div>
+                </div>
+                <div class="row-columns">
+                    <div class="col-subtext">Excellent written and verbal communication skills, sound judgment, and a positive, customer-focused approach with employees, executives, clients, and partners.</div>
+                    <div class="col-content">Fluent in multiple languages (English IELTS 8.0 / CEFR C1). Served extensively as a Corporate Communications Specialist, "crafting compelling internal and external narratives," distilling complex operations into precise executive briefs with polished diplomacy.</div>
+                    <div class="col-highlight">Flawless written and verbal communication is my baseline. I will ensure all correspondence emanating from the executive office is articulate, remarkably precise, and perfectly aligned with Vision33's brand voice.</div>
+                </div>
+            </div>
+
+            <div class="matrix-row" data-label="Vision33 Requirement" tabindex="0">
+                <div class="row-header">
+                    <h3><i class="ph-fill ph-arrows-split"></i> Independent and Flexible</h3>
+                    <div class="tag-group">
+                        <span class="tag">Adaptability</span>
+                        <span class="tag">Autonomous Action</span>
+                        <span class="tag">Crisis Resilience</span>
+                    </div>
+                </div>
+                <div class="row-columns">
+                    <div class="col-subtext">Able to work independently, use discretion, adapt when priorities shift, and stay calm, responsive, and solutions-focused when juggling competing needs.</div>
+                    <div class="col-content">Expert in "Crisis Adaptability & Resilience". Authored comprehensive playbooks detailing "dynamic problem-solving protocols" for catastrophic disruptions. I have spent my career navigating high-stakes environments where priorities shift by the minute and autonomous decision-making is required.</div>
+                    <div class="col-highlight">I don't just react to shifting priorities; I flow with them. You can count on me to be a steady, calm, and highly reliable partner, capable of independently juggling competing demands without missing a beat.</div>
+                </div>
+            </div>
+
+            <div class="matrix-row" data-label="Vision33 Requirement" tabindex="0">
+                <div class="row-header">
+                    <h3><i class="ph-fill ph-lock-key"></i> Confidentiality & Follow-Through</h3>
+                    <div class="tag-group">
+                        <span class="tag">Absolute Discretion</span>
+                        <span class="tag">Resourcefulness</span>
+                        <span class="tag">Proactive Solutions</span>
+                    </div>
+                </div>
+                <div class="row-columns">
+                    <div class="col-subtext">Trusted to handle sensitive information with care, notice the small details that make a big difference, and solve problems before they become roadblocks.</div>
+                    <div class="col-content">Routinely conducted "confidential evaluations of customer service protocols" and managed highly sensitive preliminary Heads of Terms (HoT) for massive EPC contracts. I have a long history of functioning as a trusted executive proxy, safeguarding sensitive financial and operational intelligence.</div>
+                    <div class="col-highlight">Your sensitive data is absolutely secure with me. I bring a proactive, "leave it to me" mindset, ensuring absolute discretion and a relentless commitment to tracking every small detail until a solution is firmly in place.</div>
+                </div>
+            </div>
+
+            <div class="matrix-row" data-label="Vision33 Requirement" tabindex="0">
+                <div class="row-header">
+                    <h3><i class="ph-fill ph-sparkle"></i> Positive Vibes</h3>
+                    <div class="tag-group">
+                        <span class="tag">Culture & Energy</span>
+                        <span class="tag">Team Morale</span>
+                        <span class="tag">Approachable Persona</span>
+                    </div>
+                </div>
+                <div class="row-columns">
+                    <div class="col-subtext">A friendly, can-do attitude, professional presence, helpful approach, and excitement to take the lead on new challenges.</div>
+                    <div class="col-content">At my core, I am a people person who thrives on building an uplifting workplace culture. From introducing dynamic team-building retreats to maintaining a warm, enthusiastic energy during high-stress deployments, I believe a positive attitude is a strategic asset that drives exceptional teamwork.</div>
+                    <div class="col-highlight">I am excited to bring a bright, genuinely helpful, and highly approachable energy to the St. John's HQ. I am always ready to roll up my sleeves, dive into new challenges with a smile, and make the office a fantastic place to work.</div>
+                </div>
+            </div>
+        </div>
+
+        <section class="retrospective-section">
+            <div class="section-header">
+                <h2>The Retrospective Archive</h2>
+            </div>
+            <p class="section-desc">
+                This curated gallery immortalizes the people, teams, and milestones, capturing the chaotic, joyful, and testing moments that pushed boundaries, unlocked true potential, and forged an unshakable foundation.
+            </p>
+
+            <div class="cinematic-grid">
+                <!-- Appended ?v=1.1 to force browser cache refresh for images -->
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(1).jpeg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Crushing goals and copious amounts of coffee. ☕</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(2).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">The 'quick sync' that actually changed the world. 🌍</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(3).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Proof that chaos is just a ladder. 🧗</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(4).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Code compiled on the first try. A true miracle. ✨</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(5).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Turning caffeine into groundbreaking architecture. 🏗️</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(6).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Brainstorming so hard the whiteboard caught fire. 🔥</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(7).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Just another Tuesday casually breaking records. 📈</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(8).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Smiling through the deployment errors. 😅</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(9).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">The team that made the impossible look easy. 🧩</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(10).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">100% hustle, 0% idea what time it is. 🕰️</div></div>
+                
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(11).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">When the 'wild idea' actually worked perfectly. 💡</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(12).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Securing the bag and our sanity. 💼</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(13).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Turning 'can we?' into 'we just did'. ✅</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(14).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Legend says we are still celebrating this win. 🥂</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(15).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Our faces when the client said 'perfect, no notes'. 😎</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(16).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">The exact moment greatness was unlocked. 🔓</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(17).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Fueled by pizza and pure unadulterated ambition. 🍕</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(18).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Looking sharp, thinking sharper. 👔</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(19).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">The 'aha!' moment caught on camera. 📸</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(20).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Proof that we actually know what we're doing. 🎯</div></div>
+                
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(21).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Building empires before lunch break. 🏙️</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(22).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Where big dreams met aggressive execution. ⚡</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(23).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">A masterpiece of synergy and sleep deprivation. 🤝</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(24).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">High fives, low bugs, maximum impact. ✋</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(25).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">We came, we saw, we optimized. ⚙️</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(26).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">The milestone that broke the internet. 🌐</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(27).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Smiling because we finally fixed that bug. 🐛</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(28).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Executing strategies with surgical precision. 📐</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(29).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">That time we accidentally created genius. 🧠</div></div>
+                
+                <!-- Explicitly Swapped 30 and 37 -->
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(30).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">The handshake that sealed the legendary deal. 🤝</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(31).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Unlocking achievements like it's a video game. 🏅</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(32).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">The brain trust operating at peak capacity. 🔋</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(33).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Making history look like a walk in the park. 🏛️</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(34).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Pure adrenaline disguised as professional focus. 🗂️</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(35).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">When the squad is undeniably on fire. 🚒</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(36).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Launch day: 50% panic, 50% pure glory. 🛫</div></div>
+                
+                <!-- Explicitly Swapped 30 and 37 -->
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(37).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Taking 'above and beyond' to a new level. 🚀</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(38).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Creating magic with a keyboard and a dream. ⌨️</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(39).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Moving mountains and hitting deadlines. 📅</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(40).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">The MVP of making things happen. 🏆</div></div>
+                
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(41).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">When 'plan B' turned out better than 'plan A'. 🔀</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(42).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Masterminding the next big breakthrough. 🔭</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(43).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Absolute legends in their natural habitat. 🏢</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(44).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Surviving the crunch with style and grace. 🧘‍♂️</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(45).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">The exact second we leveled up. ⬆️</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(46).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Transforming bold visions into concrete reality. 🧱</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(47).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Bringing home the gold, casually. 🥇</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(48).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">A rare photo of us not overthinking it. 💭</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(49).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Setting the standard so high it needs oxygen. 🏔️</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(50).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">The crew that turns strategy into revenue. 💸</div></div>
+                
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(51).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">When the whole team hits that perfect flow state. 🌊</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(52).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">Just out here doing the absolute most. 💫</div></div>
+                <div class="grid-item" tabindex="0"><img loading="lazy" src="https://ahmadilyasb.github.io/cv/Photo-%20(53).jpg?v=1.1" alt="Declassified File"><div class="cinematic-overlay"></div><div class="glass-caption">The final boss of achieving milestones. 👑</div></div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Global Image Error Handler 
+        document.addEventListener('error', function(e) {
+            if (e.target.tagName.toLowerCase() === 'img' && !e.target.dataset.fallback) {
+                e.target.dataset.fallback = 'true';
+                e.target.src = 'https://placehold.co/400x300/161B22/069494?text=Classified+Intel';
+            }
+        }, true);
+
+        // Smooth Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        const body = document.documentElement;
+
+        themeToggle.addEventListener('click', () => {
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeIcon.textContent = '☾';
+                themeText.textContent = 'Dark Mode';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀';
+                themeText.textContent = 'Light Mode';
+            }
+        });
+
+        // Row Click Logic
+        const rows = document.querySelectorAll('.matrix-row');
+        rows.forEach(row => {
+            const toggleRow = () => {
+                const isSelected = row.classList.contains('selected');
+                rows.forEach(r => r.classList.remove('selected'));
+                if (!isSelected) {
+                    row.classList.add('selected');
+                }
+            };
+            
+            row.addEventListener('click', toggleRow);
+            
+            row.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleRow();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
