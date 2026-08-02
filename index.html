@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ahmad M. Ilyas - Interactive CV</title>
+    
+    <script>
+        // Check local storage before DOM loads to prevent unstyled flash of colors
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+        }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Bangers&family=Orbit&display=swap" rel="stylesheet">
@@ -14,7 +23,7 @@
     
     <style>
         :root {
-            /* Gen-Z / Cyber / Experimental Palette */
+            /* Gen-Z / Cyber / Experimental Palette (Dark Mode Default) */
             --bg-color: #09090b;
             --text-main: #f4f4f5;
             --text-muted: #a1a1aa;
@@ -32,13 +41,155 @@
 
             /* Typography */
             --font-display: 'Orbit', sans-serif;
-            --font-unica: 'Unica One', display;
-            --font-body: 'Google Sans Flex', 'Google Sans', sans-serif;
+            --font-unica: 'Unica One', sans-serif;
+            --font-body: 'Google Sans Flex', 'Google Sans', 'Roboto', sans-serif;
             --font-asap: 'Asap', sans-serif;
-            --font-bangers: 'Bangers', display;
+            --font-bangers: 'Bangers', cursive;
             --font-sharetech: 'Share Tech', sans-serif;
             --font-roboto: 'Roboto', sans-serif;
         }
+
+        /* --- LIGHT (MINIMALIST) THEME OVERRIDES --- */
+        html[data-theme='light'] {
+            --bg-color: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #475569;
+            
+            /* Refined Accents for Light Mode Contrast */
+            --acid-green: #047857; /* Deep emerald */
+            --electric-cyan: #0284c7; /* Sky blue */
+            --hyper-pink: #be123c; /* Rose */
+            --deep-purple: #6d28d9;
+
+            /* Solid/Subtle Card settings */
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --glass-blur: blur(0px);
+        }
+
+        /* --- LIGHT MODE BACKGROUND ADJUSTMENTS --- */
+        /* Hide only the deep dark glowing gradients */
+        html[data-theme='light'] body::before {
+            display: none !important;
+        }
+        
+        /* Convert the radar grid from white lines to faint dark lines */
+        html[data-theme='light'] body::after {
+            background-image: 
+                radial-gradient(circle at center, transparent 49%, rgba(46, 129, 185, 0.2) 50%, transparent 51%),
+                radial-gradient(circle at center, transparent 69%, rgba(46, 129, 185, 0.1) 70%, transparent 71%),
+                linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+        }
+
+        /* Invert clouds to faint dark grey so they show up on white */
+        html[data-theme='light'] .cloud {
+            fill: rgba(0, 0, 0, 0.06);
+        }
+
+        /* Change HUD blend mode to ensure colored graphics pop on white */
+        html[data-theme='light'] .hud-overlay {
+            opacity: 0.7;
+            mix-blend-mode: multiply;
+        }
+        
+        html[data-theme='light'] header {
+            background: none;
+            border-bottom: 1px solid var(--card-border);
+        }
+        
+        html[data-theme='light'] .section-card {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--card-border);
+        }
+        
+        html[data-theme='light'] .section-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border-color: #cbd5e1;
+        }
+
+        html[data-theme='light'] .contact-pill,
+        html[data-theme='light'] .bezel-tag,
+        html[data-theme='light'] .tag {
+            background-image: linear-gradient(145deg, #f8fafc, #f1f5f9);
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            color: var(--text-main);
+        }
+        
+        html[data-theme='light'] .contact-pill:hover,
+        html[data-theme='light'] .bezel-tag:hover,
+        html[data-theme='light'] .tag:hover {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+            background-image: linear-gradient(145deg, #ffffff, #f8fafc);
+        }
+        
+        html[data-theme='light'] .contact-pill .icon-box {
+            background: #e0f2fe;
+            color: #0284c7;
+            box-shadow: none;
+        }
+        
+        html[data-theme='light'] .contact-pill:hover .icon-box {
+            background: #bae6fd;
+            color: #0369a1;
+            transform: scale(1.1);
+        }
+        
+        body, .section-card, h1, h2, h3, p, span, .contact-pill, .bezel-tag, header {
+            transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, opacity 0.4s ease;
+        }
+
+        .theme-toggle-wrapper {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .theme-toggle-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            color: var(--text-main);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            padding: 0;
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0, 240, 255, 0.2);
+        }
+
+        html[data-theme='light'] .theme-toggle-btn {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background: #ffffff;
+        }
+        
+        html[data-theme='light'] .theme-toggle-btn:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .theme-toggle-icon {
+            font-size: 1.5rem !important;
+        }
+
+        .icon-moon { display: none; }
+        .icon-sun { display: block; }
+        
+        html[data-theme='light'] .icon-moon { display: block; }
+        html[data-theme='light'] .icon-sun { display: none; }
 
         /* --- MOBILE OPTIMIZATION: Global Box-Sizing --- */
         *, *::before, *::after {
@@ -54,14 +205,14 @@
             padding: 0;
             overflow-x: hidden;
             position: relative;
-            -webkit-text-size-adjust: 100%; /* Prevents iOS text scaling bug */
+            -webkit-text-size-adjust: 100%;
         }
 
         /* Experimental Multi-Gradient & Radar Pattern Background */
         body::before {
             content: '';
             position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0; /* Optimized: Replaced 100vw/100vh to prevent mobile address bar jump glitch */
+            top: 0; left: 0; bottom: 0; right: 0;
             z-index: -2;
             background-image: 
                 radial-gradient(circle at 15% 50%, rgba(112, 0, 255, 0.15), transparent 40%),
@@ -72,10 +223,9 @@
         body::after {
             content: '';
             position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0; /* Optimized: Replaced 100vw/100vh */
+            top: 0; left: 0; bottom: 0; right: 0;
             z-index: -1;
             opacity: 0.3;
-            /* Aviation Radar / Grid Pattern */
             background-image: 
                 radial-gradient(circle at center, transparent 49%, rgba(46, 129, 185, 0.2) 50%, transparent 51%),
                 radial-gradient(circle at center, transparent 69%, rgba(46, 129, 185, 0.1) 70%, transparent 71%),
@@ -86,10 +236,9 @@
             pointer-events: none;
         }
 
-        /* --- NEW DYNAMIC AVIATION BACKGROUND STYLES --- */
         .scenic-background {
             position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0; /* Optimized: Replaced 100vw/100vh */
+            top: 0; left: 0; bottom: 0; right: 0;
             z-index: -1;
             pointer-events: none;
             overflow: hidden;
@@ -118,7 +267,7 @@
             position: absolute;
             fill: rgba(255, 255, 255, 0.04);
             filter: blur(4px);
-            will-change: transform; /* Optimized: GPU acceleration */
+            will-change: transform;
         }
         .cloud-1 { top: 15%; width: 25vw; animation: driftCloud 45s linear infinite; }
         .cloud-2 { top: 35%; width: 35vw; animation: driftCloud 70s linear infinite; animation-delay: -25s; opacity: 0.7;}
@@ -135,35 +284,31 @@
             0% { stroke-dashoffset: 4; }
             100% { stroke-dashoffset: 0; }
         }
-        .als-lights {
-            animation: strobeALS 0.8s linear infinite;
-        }
+        .als-lights { animation: strobeALS 0.8s linear infinite; }
         
         @keyframes pulseRunwayEdge {
             0%, 100% { opacity: 0.2; stroke-width: 0.15; filter: drop-shadow(0 0 0px #D72626); }
             50% { opacity: 1; stroke-width: 0.3; filter: drop-shadow(0 0 2px #D72626); }
         }
-        .runway-edge-lights {
-            animation: pulseRunwayEdge 2s infinite;
-        }
+        .runway-edge-lights { animation: pulseRunwayEdge 2s infinite; }
 
         /* Plane Flight Sequences */
         @keyframes landPlane {
             0% { transform: translate(49.5vw, 20vh) scale(0.01) rotate(0deg); opacity: 0; }
             5% { opacity: 1; filter: drop-shadow(0 2px 2px rgba(166, 217, 160, 0.8)); }
-            60% { transform: translate(49.5vw, 65vh) scale(0.8) rotate(0deg); } /* Touchdown */
-            80% { transform: translate(49.5vw, 85vh) scale(1.3) rotate(0deg); } /* Rollout */
-            90% { transform: translate(55vw, 95vh) scale(1.5) rotate(-45deg); opacity: 1; } /* Taxi off */
+            60% { transform: translate(49.5vw, 65vh) scale(0.8) rotate(0deg); }
+            80% { transform: translate(49.5vw, 85vh) scale(1.3) rotate(0deg); }
+            90% { transform: translate(55vw, 95vh) scale(1.5) rotate(-45deg); opacity: 1; }
             95% { transform: translate(60vw, 105vh) scale(1.6) rotate(-45deg); opacity: 0; }
             100% { opacity: 0; }
         }
 
         @keyframes takeoffPlane {
             0% { transform: translate(35vw, 105vh) scale(1.6) rotate(45deg); opacity: 0; }
-            5% { transform: translate(40vw, 95vh) scale(1.5) rotate(45deg); opacity: 1; } /* Taxi on */
-            15% { transform: translate(49.5vw, 85vh) scale(1.3) rotate(0deg); } /* Line up */
-            40% { transform: translate(49.5vw, 65vh) scale(0.8) rotate(0deg); } /* V1 / Rotate */
-            90% { transform: translate(49.5vw, 25vh) scale(0.02) rotate(0deg); filter: drop-shadow(0 2px 2px rgba(46, 129, 185, 0.8)); opacity: 1; } /* Fly away */
+            5% { transform: translate(40vw, 95vh) scale(1.5) rotate(45deg); opacity: 1; }
+            15% { transform: translate(49.5vw, 85vh) scale(1.3) rotate(0deg); }
+            40% { transform: translate(49.5vw, 65vh) scale(0.8) rotate(0deg); }
+            90% { transform: translate(49.5vw, 25vh) scale(0.02) rotate(0deg); filter: drop-shadow(0 2px 2px rgba(46, 129, 185, 0.8)); opacity: 1; }
             95% { transform: translate(49.5vw, 20vh) scale(0.01); opacity: 0; }
             100% { opacity: 0; }
         }
@@ -174,7 +319,7 @@
             opacity: 0;
             animation: landPlane 22s cubic-bezier(0.4, 0, 0.6, 1) infinite;
             filter: drop-shadow(0 15px 15px rgba(0,0,0,0.6));
-            will-change: transform, opacity; /* Optimized: GPU acceleration */
+            will-change: transform, opacity;
         }
         
         .takeoff-plane {
@@ -182,9 +327,9 @@
             left: 0; top: 0; margin-left: -30px; margin-top: -30px;
             opacity: 0;
             animation: takeoffPlane 22s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-            animation-delay: 11s; /* Perfectly interleaves with landing */
+            animation-delay: 11s;
             filter: drop-shadow(0 15px 15px rgba(0,0,0,0.6));
-            will-change: transform, opacity; /* Optimized: GPU acceleration */
+            will-change: transform, opacity;
         }
         
         @keyframes radarSweep {
@@ -204,42 +349,12 @@
         .radar-beam {
             transform-origin: 50px 12px;
             animation: radarSweep 4s linear infinite;
-            will-change: transform; /* Optimized: GPU acceleration */
+            will-change: transform;
         }
 
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        .plane-container {
-            position: fixed;
-            top: 0; left: 0; bottom: 0; right: 0; /* Optimized: Replaced 100vw/100vh */
-            pointer-events: none;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .dotted-plane {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            fill: none;
-            stroke: rgba(255, 255, 255, 0.4);
-            stroke-width: 1.5;
-            stroke-dasharray: 6 6;
-            animation: flyPlane 18s linear infinite;
-        }
-
-        .atc-tower {
-            position: fixed;
-            bottom: 0;
-            right: 8%;
-            width: 160px;
-            height: 320px;
-            z-index: -1;
-            opacity: 0.6;
-            pointer-events: none;
         }
 
         header {
@@ -256,7 +371,6 @@
             font-size: 5.5rem;
             letter-spacing: -1px;
             text-transform: uppercase;
-            /* Experimental Gradient Text */
             background: linear-gradient(90deg, var(--text-main), var(--acid-green), var(--electric-cyan));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -286,21 +400,16 @@
             border-radius: 50px;
             padding: 6px 22px 6px 6px;
             text-decoration: none;
-            
-            /* Premium Bold Gradient Bezel Effect */
             border: 1px solid transparent;
             background-image: 
                 linear-gradient(145deg, rgba(5, 10, 15, 0.95), rgba(0, 0, 0, 1)), 
                 linear-gradient(135deg, #D4AF37 0%, #0047AB 50%, #00F0FF 100%);
             background-origin: border-box;
             background-clip: padding-box, border-box;
-            
-            /* Bezel 3D Lighting */
             box-shadow: 
                 inset 0 1px 2px rgba(212, 175, 55, 0.4), 
                 inset 0 -1px 2px rgba(0,0,0,0.8), 
                 0 5px 15px rgba(0,0,0,0.6);
-            
             backdrop-filter: blur(8px);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
@@ -360,8 +469,8 @@
             opacity: 0;
             animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
             transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
-            transform: translateZ(0); /* Optimized: Forces iOS Safari to use GPU for glassmorphism during scroll */
-            will-change: transform, opacity; /* Optimized: GPU hint */
+            transform: translateZ(0);
+            will-change: transform, opacity;
         }
 
         .section-card:nth-of-type(1) { animation-delay: 0.1s; }
@@ -396,7 +505,6 @@
             margin-bottom: 2rem;
         }
 
-        /* Cyber-punk dash next to titles */
         .section-title::after {
             content: '';
             height: 2px;
@@ -452,7 +560,6 @@
             gap: 8px;
         }
 
-        /* Overrides inline HTML styles to scale with enlarged text */
         .job-company .material-symbols-outlined {
             font-size: 1.8rem !important;
         }
@@ -470,7 +577,6 @@
             margin-top: 4px;
         }
 
-        /* Overrides inline HTML styles to scale with enlarged text */
         .job-date .material-symbols-outlined {
             font-size: 1.6rem !important;
         }
@@ -490,21 +596,16 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             cursor: default;
-            
-            /* Premium Bold Gradient Bezel Effect */
             border: 1px solid transparent;
             background-image: 
                 linear-gradient(145deg, rgba(5, 10, 15, 0.95), rgba(0, 0, 0, 1)), 
                 linear-gradient(135deg, #D4AF37 0%, #0047AB 50%, #00F0FF 100%);
             background-origin: border-box;
             background-clip: padding-box, border-box;
-            
-            /* Bezel 3D Lighting */
             box-shadow: 
                 inset 0 1px 2px rgba(212, 175, 55, 0.4), 
                 inset 0 -1px 2px rgba(0,0,0,0.8), 
                 0 5px 15px rgba(0,0,0,0.6);
-            
             backdrop-filter: blur(8px);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
@@ -557,19 +658,13 @@
         }
 
         .content li::before {
-            content: '\e5cc'; /* Material Symbols chevron_right */
+            content: '\e5cc';
             font-family: 'Material Symbols Outlined';
             color: var(--hyper-pink);
             font-size: 1.6rem;
             position: absolute;
             left: -28px;
             top: 0px;
-        }
-
-        .job-company, .job-date {
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
 
         .icon-align {
@@ -579,75 +674,12 @@
             vertical-align: bottom;
         }
 
-        .language-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.95rem;
-            background: rgba(0,0,0,0.2);
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid var(--card-border);
-        }
-
-        .language-table th {
-            background-color: rgba(255,255,255,0.03);
-            color: var(--text-main);
-            padding: 15px;
-            text-align: center;
-            font-family: var(--font-asap);
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 1px solid var(--card-border);
-        }
-
-        .language-table th:first-child {
-            border-right: 1px solid var(--card-border);
-        }
-
-        .language-table td {
-            padding: 15px;
-            text-align: center;
-            vertical-align: middle;
-            border-bottom: 1px solid rgba(255,255,255,0.02);
-            transition: background 0.3s ease;
-        }
-
-        .language-table tr:hover td {
-            background: rgba(0, 240, 255, 0.03);
-        }
-
-        .language-table td:first-child {
-            color: var(--text-main);
-            font-size: 1rem;
-            font-weight: 600;
-            border-right: 1px solid var(--card-border);
-        }
-
-        .lang-prof-main {
-            display: block;
-            font-family: var(--font-asap);
-            color: var(--text-main);
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-
-        .lang-prof-sub {
-            display: block;
-            font-family: var(--font-body);
-            color: var(--text-muted);
-            font-style: italic;
-            font-size: 0.85rem;
-        }
-
         .grid-2-col {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
         }
 
-        /* --- SKILLS GRID STYLES (Match Image) --- */
         .skills-header {
             border-bottom: 2px solid var(--electric-cyan);
             padding-bottom: 15px;
@@ -659,7 +691,7 @@
         }
 
         .skills-header .section-title::after {
-            display: none; /* Hide dash to allow full solid bottom border */
+            display: none;
         }
 
         .skills-grid {
@@ -671,7 +703,7 @@
 
         .skill-item {
             padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* Subtle divider */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .skill-item-header {
@@ -699,7 +731,7 @@
             color: var(--text-muted);
             font-family: var(--font-roboto);
             font-size: 1rem;
-            margin-left: calc(2rem + 12px); /* Perfectly indents text under the header title */
+            margin-left: calc(2rem + 12px);
         }
 
         @media (max-width: 768px) {
@@ -745,7 +777,7 @@
             }
             .job-company {
                 font-size: 1.2rem;
-                align-items: flex-start; /* Allows text to wrap neatly under the icon */
+                align-items: flex-start;
             }
             .job-company .material-symbols-outlined {
                 font-size: 1.4rem !important;
@@ -764,7 +796,7 @@
                 font-size: 2.4rem;
             }
             .contact-pill {
-                width: 100%; /* Full width for easier thumb tapping */
+                width: 100%;
                 justify-content: center;
             }
             .bezel-tag {
@@ -778,7 +810,7 @@
 
         /* --- PDF EXPORT & PRINT RULES --- */
         @media print {
-            .scenic-background {
+            .scenic-background, .theme-toggle-wrapper {
                 display: none !important;
             }
 
@@ -795,24 +827,19 @@
                 background-color: var(--bg-color) !important;
             }
 
-            /* Prevent page breaks inside cards, jobs, lists, and table rows */
             .section-card, 
             .timeline-item, 
-            .content li, 
-            .language-table tr,
-            .language-table {
+            .content li {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
 
-            /* Add a bit of space before cards if they drop to a new page */
             .section-card {
                 margin-bottom: 2rem !important;
-                box-shadow: none !important; /* Removes shadow in PDF for cleaner rendering */
+                box-shadow: none !important;
                 border: 1px solid var(--card-border) !important;
             }
 
-            /* Ensure backgrounds and gradients render */
             body::before, 
             body::after,
             header {
@@ -830,6 +857,13 @@
 </head>
 <body>
 
+    <div class="theme-toggle-wrapper">
+        <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle Light/Dark Theme" title="Toggle Theme">
+            <span class="material-symbols-outlined theme-toggle-icon icon-sun" aria-hidden="true">light_mode</span>
+            <span class="material-symbols-outlined theme-toggle-icon icon-moon" aria-hidden="true">dark_mode</span>
+        </button>
+    </div>
+
     <!-- ANIMATED BACKGROUND ELEMENTS -->
     <div class="scenic-background">
         
@@ -842,7 +876,7 @@
             <!-- Pitch Ladder -->
             <path d="M 46 35 L 54 35 M 47 30 L 53 30 M 45 45 L 55 45 M 44 50 L 56 50" stroke="rgba(166, 217, 160, 0.4)" stroke-width="0.1" stroke-dasharray="0.5 0.5" />
             
-            <!-- Telemetry Rings (Animated in CSS) -->
+            <!-- Telemetry Rings -->
             <circle class="hud-ring-slow" cx="50" cy="40" r="25" fill="none" stroke="rgba(46, 129, 185, 0.25)" stroke-width="0.1" stroke-dasharray="2 4 1 2" />
             <circle class="hud-ring-fast" cx="50" cy="40" r="30" fill="none" stroke="rgba(215, 38, 38, 0.2)" stroke-width="0.1" stroke-dasharray="5 15" />
             
@@ -850,7 +884,7 @@
             <path d="M 15 25 L 12 25 L 12 55 L 15 55" fill="none" stroke="rgba(46, 129, 185, 0.5)" stroke-width="0.2" />
             <path d="M 85 25 L 88 25 L 88 55 L 85 55" fill="none" stroke="rgba(46, 129, 185, 0.5)" stroke-width="0.2" />
             
-            <!-- Data Node Lines connecting to horizon -->
+            <!-- Data Node Lines -->
             <line x1="12" y1="40" x2="35" y2="40" stroke="rgba(46, 129, 185, 0.2)" stroke-width="0.1" stroke-dasharray="1 1" />
             <line x1="88" y1="40" x2="65" y2="40" stroke="rgba(46, 129, 185, 0.2)" stroke-width="0.1" stroke-dasharray="1 1" />
         </svg>
@@ -870,26 +904,14 @@
                     <stop offset="100%" stop-color="rgba(46, 129, 185, 0.25)"/>
                 </linearGradient>
             </defs>
-            
-            <!-- Runway Asphalt Base -->
             <polygon points="20,100 80,100 52,40 48,40" fill="url(#rw-surface)" stroke="rgba(46, 129, 185, 0.4)" stroke-width="0.1"/>
-            
-            <!-- Touchdown Zone / Threshold Blocks (Perspective simulated via Y coordinates) -->
             <polygon points="48,50 52,50 51.5,48 48.5,48" fill="rgba(166, 217, 160, 0.2)"/>
             <polygon points="46,65 54,65 53,62 47,62" fill="rgba(166, 217, 160, 0.3)"/>
             <polygon points="40,85 60,85 58,80 42,80" fill="rgba(166, 217, 160, 0.4)"/>
-            
-            <!-- Centerline (Soft Orange) -->
             <line x1="50" y1="100" x2="50" y2="40" stroke="#F5A55B" stroke-width="0.25" stroke-dasharray="1.5 2"/>
-            
-            <!-- Runway Edge Lights (Crimson Red) -->
             <line x1="20" y1="100" x2="48" y2="40" stroke="#D72626" stroke-width="0.15" stroke-dasharray="0.5 1.5" class="runway-edge-lights"/>
             <line x1="80" y1="100" x2="52" y2="40" stroke="#D72626" stroke-width="0.15" stroke-dasharray="0.5 1.5" class="runway-edge-lights"/>
-            
-            <!-- Approach Lighting System (ALS) (Mint Green Strobes) -->
             <line x1="50" y1="40" x2="50" y2="20" stroke="#A6D9A0" stroke-width="0.2" stroke-dasharray="0.5 1" class="als-lights"/>
-
-            <!-- PAPI Lights (Red & White dots near touchdown) -->
             <circle cx="47" cy="63.5" r="0.25" fill="#D72626"/>
             <circle cx="46.3" cy="63.5" r="0.25" fill="#D72626"/>
             <circle cx="45.6" cy="63.5" r="0.25" fill="#fff"/>
@@ -898,14 +920,12 @@
 
         <!-- Planes Container -->
         <div class="landing-plane">
-            <!-- Mint Green Plane Landing (Rotated to point downwards along approach path) -->
             <svg viewBox="0 0 24 24" style="transform: rotate(180deg);">
                 <path fill="#A6D9A0" d="M21,16V14L13,9V3.5A1.5,1.5 0 0,0 11.5,2A1.5,1.5 0 0,0 10,3.5V9L2,14V16L10,13.5V19L8,20.5V22L11.5,21L15,22V20.5L13,19V13.5L21,16Z" />
             </svg>
         </div>
         
         <div class="takeoff-plane">
-            <!-- Cerulean Blue Plane Taking Off (Points upwards) -->
             <svg viewBox="0 0 24 24">
                 <path fill="#2E81B9" d="M21,16V14L13,9V3.5A1.5,1.5 0 0,0 11.5,2A1.5,1.5 0 0,0 10,3.5V9L2,14V16L10,13.5V19L8,20.5V22L11.5,21L15,22V20.5L13,19V13.5L21,16Z" />
             </svg>
@@ -919,21 +939,15 @@
                     <stop offset="100%" stop-color="rgba(166, 217, 160, 0)" />
                 </linearGradient>
             </defs>
-            <!-- Radar Beam -->
             <polygon class="radar-beam" points="50,12 850,-388 850,412" fill="url(#radarGradientNew)" />
-            <!-- Base Structure -->
             <path d="M30 200 L42 70 L58 70 L70 200 Z" fill="rgba(46, 129, 185, 0.05)" stroke="rgba(46, 129, 185, 0.2)" stroke-width="1"/>
-            <!-- Cab/Control Room -->
             <polygon points="20 70, 80 70, 85 40, 15 40" fill="rgba(24, 24, 27, 0.95)" stroke="#F5A55B" stroke-width="1.5"/>
-            <!-- Windows -->
             <line x1="20" y1="70" x2="15" y2="40" stroke="#2E81B9" stroke-width="1"/>
             <line x1="80" y1="70" x2="85" y2="40" stroke="#2E81B9" stroke-width="1"/>
             <line x1="35" y1="70" x2="32" y2="40" stroke="#2E81B9" stroke-width="1"/>
             <line x1="50" y1="70" x2="50" y2="40" stroke="#2E81B9" stroke-width="1"/>
             <line x1="65" y1="70" x2="68" y2="40" stroke="#2E81B9" stroke-width="1"/>
-            <!-- Radome -->
             <path d="M25 40 Q 50 5 75 40 Z" fill="rgba(255,255,255,0.05)" stroke="#A6D9A0" stroke-width="0.5"/>
-            <!-- Beacon -->
             <circle cx="50" cy="12" r="3.5" fill="#D72626">
                 <animate attributeName="opacity" values="1;0.2;1" dur="1s" repeatCount="indefinite" />
             </circle>
@@ -945,16 +959,16 @@
         <h2>Aviation CX Strategist &nbsp;|&nbsp; Corporate Communications &nbsp;|&nbsp; Operational Excellence</h2>
         <div class="contact-info">
             <a href="mailto:ahmedelyasb@gmail.com" class="contact-pill">
-                <span class="icon-box"><span class="material-symbols-outlined">alternate_email</span></span>
+                <span class="icon-box"><span class="material-symbols-outlined" aria-hidden="true">alternate_email</span></span>
                 <span class="contact-text">Slide Into Inbox</span>
             </a>
             <a href="https://ahmadilyasb.github.io/cv/portfolio.html" target="_blank" rel="noopener noreferrer" class="contact-pill">
-                <span class="icon-box"><span class="material-symbols-outlined">folder_special</span></span>
+                <span class="icon-box"><span class="material-symbols-outlined" aria-hidden="true">folder_special</span></span>
                 <span class="contact-text">The Curated Archive</span>
             </a>
             <a href="https://www.linkedin.com/in/ahmedelyas/" target="_blank" rel="noopener noreferrer" class="contact-pill">
                 <span class="icon-box">
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-label="LinkedIn">
                         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                     </svg>
                 </span>
@@ -966,7 +980,7 @@
     <div class="container">
         
         <section class="section-card">
-            <h3 class="section-title"><span class="material-symbols-outlined" style="font-size: 2.8rem;">psychology</span> Career Summary</h3>
+            <h3 class="section-title"><span class="material-symbols-outlined" style="font-size: 2.8rem;" aria-hidden="true">psychology</span> Career Summary</h3>
             <p>Hands-on Customer Experience professional grounded in conventional principles of building a customer-centric culture. Leverages data-driven customer segmentation and meticulous journey mapping to identify and optimize every customer touchpoint. Expert in seamlessly integrating these foundational approaches with modern, innovative techniques, utilizing predictive analytics and AI-powered platforms to move beyond reactive models and drive hyper-personalization and proactive service delivery. Drives customer-centric transformations by establishing strong CX governance, fostering a culture of empathy, and building a powerful Voice of the Customer (VOC) program.</p>
             
             <div class="tag-container" style="margin-top: 25px;">
@@ -980,13 +994,13 @@
         </section>
 
         <section class="section-card">
-            <h3 class="section-title"><span class="material-symbols-outlined" style="font-size: 2.8rem;">flight_takeoff</span> Professional Experience</h3>
+            <h3 class="section-title"><span class="material-symbols-outlined" style="font-size: 2.8rem;" aria-hidden="true">flight_takeoff</span> Professional Experience</h3>
 
             <div class="timeline-item">
                 <div class="job-header">
                     <p class="job-title">Lead CX Consultant <span style="font-weight: 400;">(Advisory Role)</span></p>
-                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;">corporate_fare</span> Masterise Aviation Infrastructure JSC | Gia Binh International Airport Project</p>
-                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;">event</span> April 2026 – Present</p>
+                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;" aria-hidden="true">corporate_fare</span> Masterise Aviation Infrastructure JSC | Gia Binh International Airport Project</p>
+                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;" aria-hidden="true">event</span> April 2026 – Present</p>
                 </div>
                 <div class="bezel-tag-container">
                     <span class="bezel-tag">CX for People & Planet</span>
@@ -1011,8 +1025,8 @@
             <div class="timeline-item">
                 <div class="job-header">
                     <p class="job-title">Strategic Project Lead - Aviation <span style="font-weight: 400;"> (REMOTE)</span></p>
-                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;">corporate_farmmase</span> Mercor</p>
-                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;">event</span> Jan 2026 – Present</p>
+                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;" aria-hidden="true">corporate_fare</span> Mercor</p>
+                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;" aria-hidden="true">event</span> Jan 2026 – Present</p>
                 </div>
                 <div class="bezel-tag-container">
                     <span class="bezel-tag">Decentralized Governance & Quality Assurance</span>
@@ -1031,8 +1045,8 @@
             <div class="timeline-item">
                 <div class="job-header">
                     <p class="job-title">Customer Experience Expert - AI Enablement<span style="font-weight: 400;">  (REMOTE)</span></p>
-                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;">corporate_fare</span> micro1</p>
-                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;">event</span> Oct 2024 – Present</p>
+                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;" aria-hidden="true">corporate_fare</span> micro1</p>
+                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;" aria-hidden="true">event</span> Oct 2024 – Present</p>
                 </div>
                 <div class="bezel-tag-container">
                     <span class="bezel-tag">RLHF & LLM</span>
@@ -1054,8 +1068,8 @@
             <div class="timeline-item">
                 <div class="job-header">
                     <p class="job-title">CEO Office - Research & Analysis Chief</p>
-                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;">corporate_fare</span> Tibah Airports Operation Co. | TAV Airports (a member of Groupe ADP)</p>
-                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;">event</span> Jan 2024 – June 2024</p>
+                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;" aria-hidden="true">corporate_fare</span> Tibah Airports Operation Co. | TAV Airports (a member of Groupe ADP)</p>
+                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;" aria-hidden="true">event</span> Jan 2024 – June 2024</p>
                 </div>
                 <div class="bezel-tag-container">
                     <span class="bezel-tag">Cross-Functional Collaborations</span>
@@ -1079,8 +1093,8 @@
             <div class="timeline-item">
                 <div class="job-header">
                     <p class="job-title">Chief of Digital, Customer Experience, and Innovation</p>
-                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;">corporate_fare</span> Tibah Airports Operation Co. | TAV Airports (a member of Groupe ADP)</p>
-                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;">event</span> Nov 2021 – Aug 2024</p>
+                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;" aria-hidden="true">corporate_fare</span> Tibah Airports Operation Co. | TAV Airports (a member of Groupe ADP)</p>
+                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;" aria-hidden="true">event</span> Nov 2021 – Aug 2024</p>
                 </div>
                 <div class="bezel-tag-container">
                     <span class="bezel-tag">Customer Experience</span>
@@ -1108,8 +1122,8 @@
             <div class="timeline-item">
                 <div class="job-header">
                     <p class="job-title">Senior Specialist Corporate Communications</p>
-                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;">corporate_fare</span> Tibah Airports Operation Co. | TAV Airports (a member of Groupe ADP)</p>
-                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;">event</span> Oct 2016 – Nov 2021</p>
+                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;" aria-hidden="true">corporate_fare</span> Tibah Airports Operation Co. | TAV Airports (a member of Groupe ADP)</p>
+                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;" aria-hidden="true">event</span> Oct 2016 – Nov 2021</p>
                 </div>
                 <div class="bezel-tag-container">
                     <span class="bezel-tag">Strategic Communications</span>
@@ -1132,8 +1146,8 @@
             <div class="timeline-item">
                 <div class="job-header">
                     <p class="job-title">Corporate Communications Specialist</p>
-                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;">corporate_fare</span> Tibah Airports Operation Co. | TAV Airports (a member of Groupe ADP)</p>
-                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;">event</span> Oct 2013 – Sep 2016</p>
+                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;" aria-hidden="true">corporate_fare</span> Tibah Airports Operation Co. | TAV Airports (a member of Groupe ADP)</p>
+                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;" aria-hidden="true">event</span> Oct 2013 – Sep 2016</p>
                 </div>
                 <div class="bezel-tag-container">
                     <span class="bezel-tag">Events Management</span>
@@ -1155,8 +1169,8 @@
             <div class="timeline-item">
                 <div class="job-header">
                     <p class="job-title">Human Resources Specialist</p>
-                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;">corporate_fare</span> Tibah Airports Operation Co. | TAV Airports (a member of Groupe ADP)</p>
-                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;">event</span> Oct 2012 – Oct 2014</p>
+                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;" aria-hidden="true">corporate_fare</span> Tibah Airports Operation Co. | TAV Airports (a member of Groupe ADP)</p>
+                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;" aria-hidden="true">event</span> Oct 2012 – Oct 2014</p>
                 </div>
                 <div class="bezel-tag-container">
                     <span class="bezel-tag">Compensation & Benefits</span>
@@ -1178,8 +1192,8 @@
             <div class="timeline-item">
                 <div class="job-header">
                     <p class="job-title">Service Quality Evaluator / Customer Insight Analyst</p>
-                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;">corporate_fare</span> ISC-CX / Helion Market Research / BARE International</p>
-                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;">event</span> Jan 2010 – Dec 2012</p>
+                    <p class="job-company"><span class="material-symbols-outlined" style="font-size: 1.1rem;" aria-hidden="true">corporate_fare</span> ISC-CX / Helion Market Research / BARE International</p>
+                    <p class="job-date"><span class="material-symbols-outlined" style="font-size: 1rem;" aria-hidden="true">event</span> Jan 2010 – Dec 2012</p>
                 </div>
                 <div class="bezel-tag-container">
                     <span class="bezel-tag">Data Analytics & Interpretation</span>
@@ -1196,13 +1210,13 @@
         </section>
 
         <section class="section-card">
-            <h3 class="section-title"><span class="material-symbols-outlined" style="font-size: 2.8rem;">school</span> Education & Certifications</h3>
+            <h3 class="section-title"><span class="material-symbols-outlined" style="font-size: 2.8rem;" aria-hidden="true">school</span> Education & Certifications</h3>
 
             <div class="grid-2-col">
                 <div>
-                    <h4 style="font-family: var(--font-display); color: var(--electric-cyan); text-transform: uppercase; font-size: 1.6rem; margin-bottom: 15px;" class="icon-align"><span class="material-symbols-outlined" style="font-size: 2.2rem;">workspace_premium</span> Degree/Diploma/Course</h4>
+                    <h4 style="font-family: var(--font-display); color: var(--electric-cyan); text-transform: uppercase; font-size: 1.6rem; margin-bottom: 15px;" class="icon-align"><span class="material-symbols-outlined" style="font-size: 2.2rem;" aria-hidden="true">workspace_premium</span> Degree/Diploma/Course</h4>
                     <ul style="color: var(--text-muted);">
-                        <li style="margin-bottom: 10px;"><strong style="color: var(--text-main);">Bachelor of Science (Hons.) in Psychology</strong><br>Government College University, Lahore</li>
+                        <li style="margin-bottom: 10px;"><strong style="color: var(--text-main);">Bachelor of Aviation (Management)</strong><br>The University of New South Wales</li>
                         <li style="margin-bottom: 10px;"><strong style="color: var(--text-main);">Diploma in Project Management</strong><br>XSIQ x Alison</li>
                         <li style="margin-bottom: 10px;"><strong style="color: var(--text-main);">Arctic Peoples and Cultures</strong><br>University of Alberta</li>
                         <li style="margin-bottom: 10px;"><strong style="color: var(--text-main);">Love as a Force for Social Justice</strong><br>Stanford University</li>
@@ -1211,7 +1225,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h4 style="font-family: var(--font-display); color: var(--electric-cyan); text-transform: uppercase; font-size: 1.6rem; margin-bottom: 15px;" class="icon-align"><span class="material-symbols-outlined" style="font-size: 2.2rem;">verified</span> Key Certifications</h4>
+                    <h4 style="font-family: var(--font-display); color: var(--electric-cyan); text-transform: uppercase; font-size: 1.6rem; margin-bottom: 15px;" class="icon-align"><span class="material-symbols-outlined" style="font-size: 2.2rem;" aria-hidden="true">verified</span> Key Certifications</h4>
                     <ul style="color: var(--text-muted);">
                         <li style="margin-bottom: 10px;"><strong style="color: var(--text-main);">Airport Infrastructure Development Specialization</strong><br>Larsen & Toubro</li>
                         <li style="margin-bottom: 10px;"><strong style="color: var(--text-main);">McKinsey Forward Program</strong><br>McKinsey Academy</li>
@@ -1226,13 +1240,13 @@
         <section class="section-card">
             <div style="margin-bottom: 4rem;">
                 <div class="skills-header">
-                    <h3 class="section-title"><span class="material-symbols-outlined" style="font-size: 2.8rem;">terminal</span> Technical Skills</h3>
+                    <h3 class="section-title"><span class="material-symbols-outlined" style="font-size: 2.8rem;" aria-hidden="true">terminal</span> Technical Skills</h3>
                 </div>
                 
                 <div class="skills-grid">
                     <div class="skill-item">
                         <div class="skill-item-header">
-                            <span class="material-symbols-outlined skill-item-icon">task</span>
+                            <span class="material-symbols-outlined skill-item-icon" aria-hidden="true">task</span>
                             Productivity
                         </div>
                         <div class="skill-item-tools">
@@ -1242,7 +1256,7 @@
 
                     <div class="skill-item">
                         <div class="skill-item-header">
-                            <span class="material-symbols-outlined skill-item-icon">database</span>
+                            <span class="material-symbols-outlined skill-item-icon" aria-hidden="true">database</span>
                             ERP System
                         </div>
                         <div class="skill-item-tools">
@@ -1252,7 +1266,7 @@
 
                     <div class="skill-item">
                         <div class="skill-item-header">
-                            <span class="material-symbols-outlined skill-item-icon">laptop_mac</span>
+                            <span class="material-symbols-outlined skill-item-icon" aria-hidden="true">laptop_mac</span>
                             Core Systems
                         </div>
                         <div class="skill-item-tools">
@@ -1262,7 +1276,7 @@
 
                     <div class="skill-item">
                         <div class="skill-item-header">
-                            <span class="material-symbols-outlined skill-item-icon">support_agent</span>
+                            <span class="material-symbols-outlined skill-item-icon" aria-hidden="true">support_agent</span>
                             CRM & Service
                         </div>
                         <div class="skill-item-tools">
@@ -1272,7 +1286,7 @@
 
                     <div class="skill-item">
                         <div class="skill-item-header">
-                            <span class="material-symbols-outlined skill-item-icon">design_services</span>
+                            <span class="material-symbols-outlined skill-item-icon" aria-hidden="true">design_services</span>
                             UI/UX Design
                         </div>
                         <div class="skill-item-tools">
@@ -1282,7 +1296,7 @@
 
                     <div class="skill-item">
                         <div class="skill-item-header">
-                            <span class="material-symbols-outlined skill-item-icon">code</span>
+                            <span class="material-symbols-outlined skill-item-icon" aria-hidden="true">code</span>
                             Programming
                         </div>
                         <div class="skill-item-tools">
@@ -1293,13 +1307,13 @@
             </div>
             <div>
                 <div class="skills-header">
-                    <h3 class="section-title"><span class="material-symbols-outlined" style="font-size: 2.8rem;">translate</span> Languages</h3>
+                    <h3 class="section-title"><span class="material-symbols-outlined" style="font-size: 2.8rem;" aria-hidden="true">translate</span> Languages</h3>
                 </div>
                 
                 <div class="skills-grid">
                     <div class="skill-item">
                         <div class="skill-item-header">
-                            <span class="material-symbols-outlined skill-item-icon">forum</span>
+                            <span class="material-symbols-outlined skill-item-icon" aria-hidden="true">forum</span>
                             English
                         </div>
                         <div class="skill-item-tools">
@@ -1309,7 +1323,7 @@
 
                     <div class="skill-item">
                         <div class="skill-item-header">
-                            <span class="material-symbols-outlined skill-item-icon">forum</span>
+                            <span class="material-symbols-outlined skill-item-icon" aria-hidden="true">forum</span>
                             Arabic
                         </div>
                         <div class="skill-item-tools">
@@ -1319,7 +1333,7 @@
 
                     <div class="skill-item">
                         <div class="skill-item-header">
-                            <span class="material-symbols-outlined skill-item-icon">forum</span>
+                            <span class="material-symbols-outlined skill-item-icon" aria-hidden="true">forum</span>
                             Urdu
                         </div>
                         <div class="skill-item-tools">
@@ -1329,7 +1343,7 @@
 
                     <div class="skill-item">
                         <div class="skill-item-header">
-                            <span class="material-symbols-outlined skill-item-icon">forum</span>
+                            <span class="material-symbols-outlined skill-item-icon" aria-hidden="true">forum</span>
                             Punjabi
                         </div>
                         <div class="skill-item-tools">
@@ -1339,7 +1353,7 @@
 
                     <div class="skill-item">
                         <div class="skill-item-header">
-                            <span class="material-symbols-outlined skill-item-icon">forum</span>
+                            <span class="material-symbols-outlined skill-item-icon" aria-hidden="true">forum</span>
                             Hindi
                         </div>
                         <div class="skill-item-tools">
@@ -1349,7 +1363,7 @@
 
                     <div class="skill-item">
                         <div class="skill-item-header">
-                            <span class="material-symbols-outlined skill-item-icon">forum</span>
+                            <span class="material-symbols-outlined skill-item-icon" aria-hidden="true">forum</span>
                             Spanish
                         </div>
                         <div class="skill-item-tools">
@@ -1362,5 +1376,25 @@
 
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = document.getElementById('themeToggleBtn');
+            const htmlElement = document.documentElement;
+
+            toggleBtn.addEventListener('click', () => {
+                const currentTheme = htmlElement.getAttribute('data-theme');
+                
+                if (currentTheme === 'light') {
+                    // Switch to Dark Theme
+                    htmlElement.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    // Switch to Light Theme
+                    htmlElement.setAttribute('data-theme', 'light');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
