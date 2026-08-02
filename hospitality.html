@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmad Ilyas Butt | Premium Guest Services & Food Safety</title>
+    
+    <!-- Preconnect for ultra-fast font loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Montserrat:wght@500;600;700&family=Playfair+Display:ital,wght@0,600;0,800;1,600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Light Theme (Default) - Ivory & Deep Emerald */
+            --bg-left: #0F2922; /* Deep Hospitality Emerald */
+            --text-left: #FDFBF7;
+            --text-left-muted: #A3B8B2;
+            
+            --bg-right: #FDFBF7; /* Warm Ivory */
+            --text-right: #2C3539;
+            --text-right-muted: #5B656B;
+            
+            --card-bg: #FFFFFF;
+            --accent: #D4AF37; /* Premium Gold */
+            --accent-hover: #B5952F;
+            --border: #E8E4D9;
+            --shadow: rgba(15, 41, 34, 0.08);
+
+            /* Typography */
+            --font-heading: 'Playfair Display', serif;
+            --font-sub: 'Montserrat', sans-serif;
+            --font-body: 'Manrope', sans-serif;
+        }
+
+        /* Pure CSS Dark Mode Hack */
+        #theme-toggle {
+            display: none; /* Hidden checkbox */
+        }
+
+        #theme-toggle:checked ~ .layout-wrapper {
+            /* Dark Theme - Midnight & Gold */
+            --bg-left: #07120F; /* Almost black green */
+            --text-left: #F0F0F0;
+            --text-left-muted: #889994;
+            
+            --bg-right: #121415; /* Rich dark grey */
+            --text-right: #EAEAEA;
+            --text-right-muted: #A0AAB2;
+            
+            --card-bg: #1B1E20;
+            --border: #2C3236;
+            --shadow: rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            -webkit-font-smoothing: antialiased;
+            background-color: var(--bg-right);
+            overflow-x: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* Theme Toggle Button (Top Right) */
+        .theme-btn-container {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+
+        .theme-label {
+            background-color: var(--card-bg);
+            color: var(--text-right);
+            border: 1px solid var(--border);
+            font-family: var(--font-sub);
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px var(--shadow);
+            transition: all 0.3s ease;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-label:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .theme-label::after {
+            content: "🌓 Adjust Ambiance";
+        }
+
+        .layout-wrapper {
+            display: flex;
+            min-height: 100vh;
+            width: 100%;
+            transition: background-color 0.4s ease;
+        }
+
+        /* Left Column (Sticky Concierge Desk) */
+        .left-col {
+            width: 40%;
+            background-color: var(--bg-left);
+            color: var(--text-left);
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* Right Column (Scrollable Content) */
+        .right-col {
+            width: 60%;
+            margin-left: 40%; /* Offset for fixed left col */
+            background-color: var(--bg-right);
+            color: var(--text-right);
+            padding: 5rem 4rem;
+            min-height: 100vh;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        .left-col h1 {
+            font-family: var(--font-heading);
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .left-col h2 {
+            font-family: var(--font-sub);
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            color: var(--text-left-muted);
+        }
+
+        .left-col p {
+            font-family: var(--font-body);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            color: var(--text-left);
+            opacity: 0.9;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .btn {
+            font-family: var(--font-sub);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Funny Contact Button (Dropdown Parent) */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--bg-left);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--accent);
+        }
+
+        /* Pure CSS Dropdown logic */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 105%;
+            left: 0;
+            background-color: var(--card-bg);
+            min-width: 280px;
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px var(--shadow);
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            animation: slideUp 0.3s ease forwards;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-content a {
+            color: var(--text-right);
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-sub);
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+            transition: background-color 0.2s;
+        }
+        
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: var(--accent);
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-left);
+            border: 2px solid var(--text-left-muted);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--text-right);
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+
+        .bento-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px var(--shadow);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .bento-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        /* Timeline for Experience */
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .timeline-header h3 {
+            font-family: var(--font-sub);
+            font-size: 1.3rem;
+            color: var(--text-right);
+        }
+
+        .timeline-header .company {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .timeline-header .date {
+            font-family: var(--font-sub);
+            font-size: 0.85rem;
+            background: var(--bg-right);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            color: var(--text-right-muted);
+            font-weight: 600;
+        }
+
+        .bento-card p, .bento-card li {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-right-muted);
+        }
+
+        .bento-card ul {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .bento-card ul li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .bento-card ul li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 1.2rem;
+            top: -2px;
+        }
+
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .pill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+
+        .pill {
+            background-color: var(--bg-right);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-family: var(--font-sub);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-right);
+            transition: all 0.2s;
+        }
+
+        .pill:hover {
+            background-color: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        @media (max-width: 1024px) {
+            .layout-wrapper {
+                flex-direction: column;
+            }
+            .left-col {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 4rem 2rem;
+                text-align: center;
+                align-items: center;
+            }
+            .right-col {
+                width: 100%;
+                margin-left: 0;
+                padding: 3rem 2rem;
+            }
+            .button-group {
+                align-items: center;
+            }
+            .dropdown-content {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .dropdown:hover .dropdown-content {
+                animation: slideUpMobile 0.3s ease forwards;
+            }
+            @keyframes slideUpMobile {
+                from { opacity: 0; transform: translate(-50%, 10px); }
+                to { opacity: 1; transform: translate(-50%, 0); }
+            }
+            .grid-2-col {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- CSS-Only Theme Controller -->
+    <input type="checkbox" id="theme-toggle">
+
+    <div class="layout-wrapper">
+        
+        <!-- Theme Button -->
+        <div class="theme-btn-container">
+            <label for="theme-toggle" class="theme-label"></label>
+        </div>
+
+        <aside class="left-col">
+            <h1>Ahmad Ilyas Butt</h1>
+            <h2>Guest Experience and F&B Operations Supervisor</h2>
+            <p>I bring a unique hybrid of skills: the rigorous, process-driven mindset required for aviation and food safety, paired with the empathetic, human-centric approach of mass communication and premium guest services. My background demonstrates a proven ability to map complex user journeys, mitigate operational risks, and elevate the standard of care for every guest who walks through the door.</p>
+            
+            <div class="button-group">
+                <!-- Dropdown Contact Button -->
+                <div class="dropdown">
+                    <div class="btn btn-primary">🛎️ Summon the Concierge (Contact) ▾</div>
+                    <div class="dropdown-content">
+                        <a href="mailto:ahmedelyasb@gmail.com">✉️ Dispatch a Telegram (Email)</a>
+                        <a href="https://wa.me/923394437609" target="_blank">💬 Send Carrier Pigeon (WhatsApp)</a>
+                    </div>
+                </div>
+                
+                <!-- LinkedIn Button -->
+                <a href="https://www.linkedin.com/in/ahmadilyasb/" target="_blank" class="btn btn-secondary">👔 Inspect my LinkedIn Profile</a>
+            </div>
+        </aside>
+
+        <main class="right-col">
+            
+            <!-- Professional Experience Section -->
+            <h2 class="section-title">Professional Journey</h2>
+
+            <div class="bento-card">
+                <div class="timeline-header">
+                    <div>
+                        <h3>Guest Experience and F&B Operations Supervisor</h3>
+                        <span class="company">Faletti’s Hotel, Lahore (Historic 38-Room Luxury Property)</span>
+                    </div>
+                    <span class="date">Sept 2024 - Present</span>
+                </div>
+                
+                <p><strong>Food & Beverage Operations & Culinary Coordination</strong></p>
+                <ul>
+                    <li>Supervised, coordinated, and scheduled 10+ culinary and service staff across both on-site restaurants, overseeing all food preparation, portioning, and table service; optimized kitchen line assignments and shift rotations to maintain 100% staffing coverage during peak occupancy and reduced overtime labor costs by 18%.</li>
+                    <li>Established comprehensive work schedules, opening/closing procedures, and kitchen line protocols, tightly synchronizing restaurant operations with room check-in/check-out cycles; reduced guest complaint-to-resolution time for F&B issues by 40% and achieved a 4.8/5 average dining review score across both outlets.</li>
+                    <li>Participated in the selection and onboarding of food service personnel, interviewing and hiring 6+ kitchen and banquet staff within 12 months; co-authored the F&B operations manual, hygiene SOPs, plating standards, and quarterly budget forecasts, aligning culinary costs with the property’s overarching revenue targets.</li>
+                </ul>
+
+                <p style="margin-top: 1.5rem;"><strong>Food Safety & Quality Control</strong></p>
+                <ul>
+                    <li>Enforced rigorous food safety and quality control standards, conducting daily pre-service briefings, weekly hygiene audits, and monthly vendor compliance checks.</li>
+                    <li>Maintained zero critical violations across all health inspections and implemented a digital temperature-logging system with full batch traceability.</li>
+                </ul>
+
+                <p style="margin-top: 1.5rem;"><strong>Revenue Management & Distribution Strategy</strong></p>
+                <ul>
+                    <li>Managed dynamic pricing for 38 rooms and suites across Shopify, Hostaway, Airbnb, Booking.com, and Expedia, optimizing rate parity between inventory tiers ($150–$800/night).</li>
+                    <li>Drove 28% RevPAR growth and reached 95% peak-season occupancy by integrating restaurant and banquet demand into room-rate forecasting.</li>
+                </ul>
+                
+                <p style="margin-top: 1.5rem;"><strong>Event, Venue & Cross-Departmental Coordination</strong></p>
+                <ul>
+                    <li>Coordinated logistics for 4 banquet halls (150–500 guests), directly supervising banquet food service tempo, plating timelines, and buffet replenishment schedules; ensured 100% on-time service delivery for weddings and diplomatic events.</li>
+                    <li>Supervised 3 board rooms with dedicated catering setups, enforcing confidentiality protocols and premium refreshment standards for C-suite clients.</li>
+                    <li>Oversaw end-to-end guest experience for 500+ monthly room nights, coordinating seamlessly with restaurant teams to deliver in-room dining, breakfast service, and VIP banquet catering. Managed check-in protocols for named historic suites with dedicated F&B amenity programming, contributing to a 35% repeat guest rate.</li>
+                </ul>
+
+                <p style="margin-top: 1.5rem;"><strong>Budget, Vendor & Inventory Control</strong></p>
+                <ul>
+                    <li>Forecasted and procured $8,000–$12,000 monthly in ingredients, dry goods, and specialty supplies; negotiated contracts with 18+ local and international vendors, reducing food costs by 14%.</li>
+                    <li>Managed a combined monthly operational budget exceeding $45,000 across rooms, F&B, and events; achieved 15% year-over-year cost savings by consolidating vendor contracts.</li>
+                    <li>Reduced stock discrepancies by 90% and food wastage by 22% through an integrated digital inventory system linking restaurant pars to room occupancy forecasts.</li>
+                </ul>
+
+                <p style="margin-top: 1.5rem;"><strong>Property Systems & Technology Administration</strong></p>
+                <ul>
+                    <li>Administered integrated PMS and CRM platforms supporting 38 rooms, 2 restaurants, and 4 banquet halls, ensuring 99.5% system uptime.</li>
+                    <li>Developed automated F&B upsell workflows (breakfast add-ons, in-room dining, late-checkout packages) that generated an incremental $4,000 monthly in ancillary revenue.</li>
+                </ul>
+            </div>
+
+            <div class="bento-card">
+                <div class="timeline-header">
+                    <div>
+                        <h3>Chief of Customer Experience & Innovation</h3>
+                        <span class="company">Tibah Airports / Madinah Airport</span>
+                    </div>
+                    <span class="date">Oct 2012 - Aug 2024</span>
+                </div>
+                <p>Managed comprehensive B2B and B2C portfolios, successfully leading large-scale corporate event operations and standardizing high-end hospitality procedures.</p>
+                <ul>
+                    <li>Spearheaded major operational workflows for VIP events, including opening ceremonies in 2015.</li>
+                    <li>Utilized data-driven CRM systems (Salesforce, HubSpot) to elevate standard operating procedures and track guest preferences.</li>
+                    <li>Managed the systematic deployment of quarterly ACI ASQ Departure Surveys, transforming raw passenger telemetry into an actionable blueprint for continuous service refinement; championed cross-functional collaboration to drive measurable, quarter-over-quarter elevations in overarching CSAT and targeted CX sentiment scores.</li>
+                    <li>Spearheaded rigorous on-the-ground internal audits preceding Skytrax evaluations, actively transforming critical intelligence into tangible CAPEX projects that enhanced infrastructure and refined service quality.</li>
+                    <li>Championed dual-channel voting campaigns for the Skytrax World Airport Awards, driving strategic improvements that elevated PMIA's global ranking from #111 to the top 50, secured consecutive 4-Star ratings, and captured "Best Regional Airport in the Middle East" six times.</li>
+                </ul>
+            </div>
+            
+            <div class="bento-card">
+                <div class="timeline-header">
+                    <div>
+                        <h3>Premium Evaluator & Mystery Shopper</h3>
+                        <span class="company">ISC-CX (Global Customer Experience Agency)</span>
+                    </div>
+                    <span class="date">Freelance</span>
+                </div>
+                <p>Specialized in the discrete assessment of end-to-end customer journeys and brand experiences, conducting comprehensive and confidential evaluations of customer service protocols and operational efficiency across a diverse range of industries.</p>
+                <ul>
+                    <li><strong>Global QSR Audits (McDonald's):</strong> Conducted proprietary experiential audits for McDonald's, performing time-based validation of waiting and ordering metrics alongside comprehensive sensory analysis of core culinary offerings. This hands-on exposure to a global giant ingrained a deep understanding of hyper-efficient, high-volume service mechanics and scaling quality control.</li>
+                    <li><strong>Strategic Journey Mapping:</strong> Provided precise reporting and qualitative observations that offered invaluable insights into critical touchpoints and potential service gaps, directly contributing to clients' strategic understanding of customer sentiment and data-driven market improvements.</li>
+                    <li><strong>Operational Excellence:</strong> Delivered objective findings and actionable recommendations instrumental in empowering international brands to refine customer-facing processes. The derived insights enabled deep analytical synthesis of journey nuances, helping clients elevate operational excellence and achieve a sustained competitive advantage.</li>
+                </ul>
+            </div>
+
+            <div class="grid-2-col">
+                <div>
+                    <h2 class="section-title">Education</h2>
+                    <div class="bento-card">
+                        <div class="timeline-header">
+                            <div>
+                                <h3>Associate Degree</h3>
+                                <span class="company">Mass Communication</span>
+                            </div>
+                        </div>
+                        <p style="margin-top: 10px;"><strong>Punjab University</strong><br>Focused on public relations, corporate communication, and empathetic human-centric messaging—skills deeply utilized in modern hospitality.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="section-title">Credentials</h2>
+                    <div class="bento-card">
+                        <div class="timeline-header">
+                            <div>
+                                <h3>Certified CX Specialist</h3>
+                                <span class="company">ACI (Airports Council Int.)</span>
+                            </div>
+                        </div>
+                        <p style="margin-top: 10px; margin-bottom: 2rem;">Advanced certification in curating end-to-end user journeys, managing VIP expectations, and implementing global service standards.</p>
+
+                        <div class="timeline-header">
+                            <div>
+                                <h3>Food Safety & Quality</h3>
+                                <span class="company">Professional Certifications</span>
+                            </div>
+                        </div>
+                        <ul style="margin-top: 10px;">
+                            <li><strong>ISO 22000:2018</strong> (Internal Auditor)</li>
+                            <li><strong>FSSC 22000</strong> — Fundamentals of Food Safety System</li>
+                            <li><strong>Diploma in Food Safety</strong></li>
+                            <li><strong>Food Safety Training</strong> — Safe Practices and Procedures</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title" style="margin-top: 1rem;">The Arsenal</h2>
+            
+            <div class="bento-card">
+                <div class="timeline-header">
+                    <h3>Hospitality Operations & Management</h3>
+                </div>
+                <div class="pill-list">
+                    <span class="pill">Guest Services & Coordination</span>
+                    <span class="pill">Revenue Management & Yield Strategy</span>
+                    <span class="pill">Channel Distribution & OTA</span>
+                    <span class="pill">PMS & CRM Systems</span>
+                    <span class="pill">Banquet & Event Operations</span>
+                    <span class="pill">Cross-Departmental Budgeting</span>
+                    <span class="pill">Vendor Negotiation</span>
+                    <span class="pill">Performance Dashboards & KPIs</span>
+                </div>
+
+                <div class="timeline-header" style="margin-top: 2.5rem;">
+                    <h3>Food Service & Culinary Safety</h3>
+                </div>
+                <div class="pill-list">
+                    <span class="pill">Kitchen & Staff Supervision</span>
+                    <span class="pill">Supply Chain Forecasting</span>
+                    <span class="pill">HACCP & Food Safety</span>
+                    <span class="pill">Quality Auditing</span>
+                    <span class="pill">Menu Costing & Budgeting</span>
+                    <span class="pill">Labor Cost Control</span>
+                    <span class="pill">Cross-Contamination Prevention</span>
+                </div>
+
+                <div class="timeline-header" style="margin-top: 2.5rem;">
+                    <h3>Languages</h3>
+                </div>
+                <div class="pill-list">
+                    <span class="pill">English (Professional)</span>
+                    <span class="pill">Arabic (Operational)</span>
+                    <span class="pill">Urdu (Native)</span>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+</body>
+</html>
