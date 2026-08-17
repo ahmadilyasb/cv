@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ahmad M. Ilyas - Aviation CX Strategist & Corporate Communications Professional">
+    
+    <!-- Dynamic Theme Colors for Mobile Browsers -->
+    <meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
+    
     <title>Ahmad M. Ilyas - Interactive CV</title>
     
     <script>
@@ -10,16 +16,15 @@
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'light') {
             document.documentElement.setAttribute('data-theme', 'light');
+            document.querySelector('meta[name="theme-color"]').setAttribute("content", "#f8fafc");
         }
     </script>
 
+    <!-- Consolidated Font Loading (1 Request instead of 5 for faster load times) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Bangers&family=Orbit&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Unica+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Bangers&family=Orbit&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=Share+Tech&family=Unica+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
     
     <style>
         :root {
@@ -42,11 +47,10 @@
             /* Typography */
             --font-display: 'Orbit', sans-serif;
             --font-unica: 'Unica One', sans-serif;
-            --font-body: 'Google Sans Flex', 'Google Sans', 'Roboto', sans-serif;
+            --font-body: 'Roboto', sans-serif;
             --font-asap: 'Asap', sans-serif;
             --font-bangers: 'Bangers', cursive;
             --font-sharetech: 'Share Tech', sans-serif;
-            --font-roboto: 'Roboto', sans-serif;
         }
 
         /* --- LIGHT (MINIMALIST) THEME OVERRIDES --- */
@@ -68,12 +72,10 @@
         }
 
         /* --- LIGHT MODE BACKGROUND ADJUSTMENTS --- */
-        /* Hide only the deep dark glowing gradients */
         html[data-theme='light'] body::before {
             display: none !important;
         }
         
-        /* Convert the radar grid from white lines to faint dark lines */
         html[data-theme='light'] body::after {
             background-image: 
                 radial-gradient(circle at center, transparent 49%, rgba(46, 129, 185, 0.2) 50%, transparent 51%),
@@ -82,12 +84,10 @@
                 linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
         }
 
-        /* Invert clouds to faint dark grey so they show up on white */
         html[data-theme='light'] .cloud {
             fill: rgba(0, 0, 0, 0.06);
         }
 
-        /* Change HUD blend mode to ensure colored graphics pop on white */
         html[data-theme='light'] .hud-overlay {
             opacity: 0.7;
             mix-blend-mode: multiply;
@@ -104,7 +104,7 @@
         }
         
         html[data-theme='light'] .section-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-4px) translateZ(0);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             border-color: #cbd5e1;
         }
@@ -122,7 +122,7 @@
         html[data-theme='light'] .bezel-tag:hover,
         html[data-theme='light'] .tag:hover {
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transform: translateY(-2px);
+            transform: translateY(-2px) translateZ(0);
             background-image: linear-gradient(145deg, #ffffff, #f8fafc);
         }
         
@@ -135,7 +135,7 @@
         html[data-theme='light'] .contact-pill:hover .icon-box {
             background: #bae6fd;
             color: #0369a1;
-            transform: scale(1.1);
+            transform: scale(1.1) translateZ(0);
         }
         
         body, .section-card, h1, h2, h3, p, span, .contact-pill, .bezel-tag, header {
@@ -168,7 +168,7 @@
         }
 
         .theme-toggle-btn:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) translateZ(0);
             box-shadow: 0 6px 16px rgba(0, 240, 255, 0.2);
         }
 
@@ -181,13 +181,9 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
-        .theme-toggle-icon {
-            font-size: 1.5rem !important;
-        }
-
+        .theme-toggle-icon { font-size: 1.5rem !important; }
         .icon-moon { display: none; }
         .icon-sun { display: block; }
-        
         html[data-theme='light'] .icon-moon { display: block; }
         html[data-theme='light'] .icon-sun { display: none; }
 
@@ -242,6 +238,7 @@
             z-index: -1;
             pointer-events: none;
             overflow: hidden;
+            transform: translateZ(0); /* Hardware acceleration */
         }
 
         /* HUD Graphics */
@@ -251,17 +248,19 @@
             opacity: 0.55;
             mix-blend-mode: screen;
         }
+        
         @keyframes rotateHUD {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from { transform: rotate(0deg) translateZ(0); }
+            to { transform: rotate(360deg) translateZ(0); }
         }
-        .hud-ring-slow { transform-origin: 50px 40px; animation: rotateHUD 40s linear infinite; }
-        .hud-ring-fast { transform-origin: 50px 40px; animation: rotateHUD 20s linear infinite reverse; }
+        
+        .hud-ring-slow { transform-origin: 50px 40px; animation: rotateHUD 40s linear infinite; will-change: transform; }
+        .hud-ring-fast { transform-origin: 50px 40px; animation: rotateHUD 20s linear infinite reverse; will-change: transform; }
 
         /* Clouds */
         @keyframes driftCloud {
-            from { transform: translateX(-15vw); }
-            to { transform: translateX(115vw); }
+            from { transform: translateX(-15vw) translateZ(0); }
+            to { transform: translateX(115vw) translateZ(0); }
         }
         .cloud {
             position: absolute;
@@ -294,47 +293,39 @@
 
         /* Plane Flight Sequences */
         @keyframes landPlane {
-            0% { transform: translate(49.5vw, 20vh) scale(0.01) rotate(0deg); opacity: 0; }
+            0% { transform: translate3d(49.5vw, 20vh, 0) scale(0.01) rotate(0deg); opacity: 0; }
             5% { opacity: 1; filter: drop-shadow(0 2px 2px rgba(166, 217, 160, 0.8)); }
-            60% { transform: translate(49.5vw, 65vh) scale(0.8) rotate(0deg); }
-            80% { transform: translate(49.5vw, 85vh) scale(1.3) rotate(0deg); }
-            90% { transform: translate(55vw, 95vh) scale(1.5) rotate(-45deg); opacity: 1; }
-            95% { transform: translate(60vw, 105vh) scale(1.6) rotate(-45deg); opacity: 0; }
+            60% { transform: translate3d(49.5vw, 65vh, 0) scale(0.8) rotate(0deg); }
+            80% { transform: translate3d(49.5vw, 85vh, 0) scale(1.3) rotate(0deg); }
+            90% { transform: translate3d(55vw, 95vh, 0) scale(1.5) rotate(-45deg); opacity: 1; }
+            95% { transform: translate3d(60vw, 105vh, 0) scale(1.6) rotate(-45deg); opacity: 0; }
             100% { opacity: 0; }
         }
 
         @keyframes takeoffPlane {
-            0% { transform: translate(35vw, 105vh) scale(1.6) rotate(45deg); opacity: 0; }
-            5% { transform: translate(40vw, 95vh) scale(1.5) rotate(45deg); opacity: 1; }
-            15% { transform: translate(49.5vw, 85vh) scale(1.3) rotate(0deg); }
-            40% { transform: translate(49.5vw, 65vh) scale(0.8) rotate(0deg); }
-            90% { transform: translate(49.5vw, 25vh) scale(0.02) rotate(0deg); filter: drop-shadow(0 2px 2px rgba(46, 129, 185, 0.8)); opacity: 1; }
-            95% { transform: translate(49.5vw, 20vh) scale(0.01); opacity: 0; }
+            0% { transform: translate3d(35vw, 105vh, 0) scale(1.6) rotate(45deg); opacity: 0; }
+            5% { transform: translate3d(40vw, 95vh, 0) scale(1.5) rotate(45deg); opacity: 1; }
+            15% { transform: translate3d(49.5vw, 85vh, 0) scale(1.3) rotate(0deg); }
+            40% { transform: translate3d(49.5vw, 65vh, 0) scale(0.8) rotate(0deg); }
+            90% { transform: translate3d(49.5vw, 25vh, 0) scale(0.02) rotate(0deg); filter: drop-shadow(0 2px 2px rgba(46, 129, 185, 0.8)); opacity: 1; }
+            95% { transform: translate3d(49.5vw, 20vh, 0) scale(0.01); opacity: 0; }
             100% { opacity: 0; }
         }
 
-        .landing-plane {
+        .landing-plane, .takeoff-plane {
             position: absolute; width: 60px; height: 60px;
             left: 0; top: 0; margin-left: -30px; margin-top: -30px;
             opacity: 0;
-            animation: landPlane 22s cubic-bezier(0.4, 0, 0.6, 1) infinite;
             filter: drop-shadow(0 15px 15px rgba(0,0,0,0.6));
             will-change: transform, opacity;
         }
-        
-        .takeoff-plane {
-            position: absolute; width: 60px; height: 60px;
-            left: 0; top: 0; margin-left: -30px; margin-top: -30px;
-            opacity: 0;
-            animation: takeoffPlane 22s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-            animation-delay: 11s;
-            filter: drop-shadow(0 15px 15px rgba(0,0,0,0.6));
-            will-change: transform, opacity;
-        }
+
+        .landing-plane { animation: landPlane 22s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        .takeoff-plane { animation: takeoffPlane 22s cubic-bezier(0.4, 0, 0.6, 1) infinite; animation-delay: 11s; }
         
         @keyframes radarSweep {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% { transform: rotate(0deg) translateZ(0); }
+            100% { transform: rotate(360deg) translateZ(0); }
         }
         
         .atc-tower-enhanced {
@@ -353,8 +344,20 @@
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(40px) translateZ(0); }
+            to { opacity: 1; transform: translateY(0) translateZ(0); }
+        }
+
+        /* --- REDUCED MOTION PREFERENCE (Performance/Battery Saver) --- */
+        @media (prefers-reduced-motion: reduce) {
+            .cloud, .landing-plane, .takeoff-plane, .radar-beam, .hud-ring-slow, .hud-ring-fast, .als-lights, .runway-edge-lights {
+                animation: none !important;
+            }
+            .section-card {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
         }
 
         header {
@@ -415,7 +418,7 @@
         }
 
         .contact-pill:hover {
-            transform: translateY(-4px) scale(1.02);
+            transform: translateY(-4px) scale(1.02) translateZ(0);
             box-shadow: 
                 inset 0 1px 2px rgba(212, 175, 55, 0.8), 
                 inset 0 -1px 2px rgba(0,0,0,0.8), 
@@ -439,7 +442,7 @@
         .contact-pill:hover .icon-box {
             color: #00F0FF;
             box-shadow: inset 0 0 15px rgba(0, 240, 255, 0.8);
-            transform: rotate(15deg) scale(1.1);
+            transform: rotate(15deg) scale(1.1) translateZ(0);
         }
 
         .contact-pill .contact-text {
@@ -469,7 +472,6 @@
             opacity: 0;
             animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
             transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
-            transform: translateZ(0);
             will-change: transform, opacity;
         }
 
@@ -479,7 +481,7 @@
         .section-card:nth-of-type(4) { animation-delay: 0.55s; }
 
         .section-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-8px) translateZ(0);
             box-shadow: 0 30px 60px rgba(0, 240, 255, 0.15);
             border-color: rgba(0, 240, 255, 0.3);
         }
@@ -560,9 +562,7 @@
             gap: 8px;
         }
 
-        .job-company .material-symbols-outlined {
-            font-size: 1.8rem !important;
-        }
+        .job-company .material-symbols-outlined { font-size: 1.8rem !important; }
 
         .job-date {
             font-family: var(--font-sharetech);
@@ -577,9 +577,7 @@
             margin-top: 4px;
         }
 
-        .job-date .material-symbols-outlined {
-            font-size: 1.6rem !important;
-        }
+        .job-date .material-symbols-outlined { font-size: 1.6rem !important; }
 
         .bezel-tag-container {
             display: flex;
@@ -611,28 +609,16 @@
         }
 
         .bezel-tag:hover, .tag:hover {
-            transform: translateY(-3px);
+            transform: translateY(-3px) translateZ(0);
             box-shadow: 
                 inset 0 1px 2px rgba(212, 175, 55, 0.8), 
                 inset 0 -1px 2px rgba(0,0,0,0.8), 
                 0 8px 20px rgba(0, 240, 255, 0.4);
         }
 
-        .bezel-tag {
-            padding: 6px 14px;
-            font-size: 0.75rem;
-        }
-
-        .tag-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .tag {
-            padding: 8px 16px;
-            font-size: 0.8rem;
-        }
+        .bezel-tag { padding: 6px 14px; font-size: 0.75rem; }
+        .tag-container { display: flex; flex-wrap: wrap; gap: 10px; }
+        .tag { padding: 8px 16px; font-size: 0.8rem; }
 
         .content {
             padding: 20px 20px 20px 30px;
@@ -640,7 +626,7 @@
             border-left: 2px solid var(--electric-cyan);
             margin-top: 10px;
             margin-left: 10px;
-            font-family: var(--font-roboto);
+            font-family: var(--font-body);
             font-size: 1.05rem;
             line-height: 1.7;
         }
@@ -685,14 +671,8 @@
             padding-bottom: 15px;
             margin-bottom: 30px;
         }
-
-        .skills-header .section-title {
-            margin-bottom: 0;
-        }
-
-        .skills-header .section-title::after {
-            display: none;
-        }
+        .skills-header .section-title { margin-bottom: 0; }
+        .skills-header .section-title::after { display: none; }
 
         .skills-grid {
             display: grid;
@@ -723,130 +703,70 @@
         }
 
         .skill-item:hover .skill-item-icon {
-            transform: scale(1.2) translateY(-2px);
+            transform: scale(1.2) translateY(-2px) translateZ(0);
             color: var(--acid-green);
         }
 
         .skill-item-tools {
             color: var(--text-muted);
-            font-family: var(--font-roboto);
+            font-family: var(--font-body);
             font-size: 1rem;
             margin-left: calc(2rem + 12px);
         }
 
         @media (max-width: 768px) {
-            .grid-2-col, .skills-grid {
-                grid-template-columns: 1fr;
-            }
-            header {
-                padding: 3rem 1rem 2rem;
-            }
-            header h1 {
-                font-size: clamp(2.5rem, 8vw, 3.2rem);
-            }
-            header h2 {
-                font-size: clamp(1rem, 4vw, 1.2rem);
-            }
-            .contact-info {
-                gap: 12px;
-            }
-            .contact-pill {
-                padding: 4px 16px 4px 4px;
-            }
-            .contact-pill .icon-box {
-                width: 30px;
-                height: 30px;
-                margin-right: 8px;
-            }
-            .contact-pill .contact-text {
-                font-size: 0.95rem;
-            }
-            .section-card {
-                padding: 1.5rem;
-                margin-bottom: 2rem;
-            }
-            .section-title {
-                font-size: 1.6rem;
-                gap: 10px;
-            }
-            .section-title span.material-symbols-outlined {
-                font-size: 2.2rem !important;
-            }
-            .job-title {
-                font-size: 1.2rem;
-            }
-            .job-company {
-                font-size: 1.2rem;
-                align-items: flex-start;
-            }
-            .job-company .material-symbols-outlined {
-                font-size: 1.4rem !important;
-                margin-top: 3px;
-            }
-            .content {
-                padding: 10px 10px 10px 20px;
-            }
-            .content li::before {
-                left: -20px;
-            }
+            .grid-2-col, .skills-grid { grid-template-columns: 1fr; }
+            header { padding: 3rem 1rem 2rem; }
+            header h1 { font-size: clamp(2.5rem, 8vw, 3.2rem); }
+            header h2 { font-size: clamp(1rem, 4vw, 1.2rem); }
+            .contact-info { gap: 12px; }
+            .contact-pill { padding: 4px 16px 4px 4px; }
+            .contact-pill .icon-box { width: 30px; height: 30px; margin-right: 8px; }
+            .contact-pill .contact-text { font-size: 0.95rem; }
+            .section-card { padding: 1.5rem; margin-bottom: 2rem; }
+            .section-title { font-size: 1.6rem; gap: 10px; }
+            .section-title span.material-symbols-outlined { font-size: 2.2rem !important; }
+            .job-title { font-size: 1.2rem; }
+            .job-company { font-size: 1.2rem; align-items: flex-start; }
+            .job-company .material-symbols-outlined { font-size: 1.4rem !important; margin-top: 3px; }
+            .content { padding: 10px 10px 10px 20px; }
+            .content li::before { left: -20px; }
         }
 
         @media (max-width: 480px) {
-            header h1 {
-                font-size: 2.4rem;
-            }
-            .contact-pill {
-                width: 100%;
-                justify-content: center;
-            }
-            .bezel-tag {
-                font-size: 0.7rem;
-                padding: 5px 10px;
-            }
-            .tag-container, .bezel-tag-container {
-                gap: 8px;
-            }
+            header h1 { font-size: 2.4rem; }
+            .contact-pill { width: 100%; justify-content: center; }
+            .bezel-tag { font-size: 0.7rem; padding: 5px 10px; }
+            .tag-container, .bezel-tag-container { gap: 8px; }
         }
 
         /* --- PDF EXPORT & PRINT RULES --- */
         @media print {
-            .scenic-background, .theme-toggle-wrapper {
-                display: none !important;
-            }
-
+            .scenic-background, .theme-toggle-wrapper { display: none !important; }
             .section-card, .contact-pill, .bezel-tag, .tag {
                 animation: none !important;
                 transition: none !important;
                 transform: none !important;
                 opacity: 1 !important;
             }
-
             body {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 background-color: var(--bg-color) !important;
             }
-
-            .section-card, 
-            .timeline-item, 
-            .content li {
+            .section-card, .timeline-item, .content li {
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
             }
-
             .section-card {
                 margin-bottom: 2rem !important;
                 box-shadow: none !important;
                 border: 1px solid var(--card-border) !important;
             }
-
-            body::before, 
-            body::after,
-            header {
+            body::before, body::after, header {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            
             .container {
                 margin: 0 auto !important;
                 padding: 0 !important;
@@ -981,7 +901,7 @@
         
         <section class="section-card">
             <h3 class="section-title"><span class="material-symbols-outlined" style="font-size: 2.8rem;" aria-hidden="true">psychology</span> Career Summary</h3>
-            <p>I specialize in transforming airport and airline operations to meet the world’s most demanding industry standards. I hold a proven track record of guiding airports to achieve Skytrax 4-Star and 5-Star Ratings, securing placements in the Skytrax World’s Top 100 Airports, and advancing through all five levels of the ACI Customer Experience Accreditation. This includes the successful deployment of ASQ programs for both Departures and Arrivals to optimize the end-to-end passenger journey. I achieve this through a strategic fusion of advanced AI, predictive analytics, and empathy-driven design thinking. This involves embedding human-centric journey mapping directly into the early infrastructure development stage and carrying it through to complex operational transformations. Rooted in empathy for both people & planet, this framework shifts operations toward proactive, hyper-personalized service, perfectly harmonizing technical efficiency with a deeply empathetic travel experience.</p>
+            <p>I specialize in transforming airport and airline operations to meet the world's most demanding industry standards. I hold a proven track record of guiding airports to achieve Skytrax 4-Star and 5-Star Ratings, securing placements in the Skytrax World's Top 100 Airports, and advancing through all five levels of the ACI Customer Experience Accreditation. This includes the successful deployment of ASQ programs for both Departures and Arrivals to optimize the end-to-end passenger journey. I achieve this through a strategic fusion of advanced AI, predictive analytics, and empathy-driven design thinking. This involves embedding human-centric journey mapping directly into the early infrastructure development stage and carrying it through to complex operational transformations. Rooted in empathy for both people & planet, this framework shifts operations toward proactive, hyper-personalized service, perfectly harmonizing technical efficiency with a deeply empathetic travel experience.</p>
             
             <div class="tag-container" style="margin-top: 25px;">
                 <span class="tag">Crisis Communications</span>
@@ -1380,6 +1300,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const toggleBtn = document.getElementById('themeToggleBtn');
             const htmlElement = document.documentElement;
+            const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 
             toggleBtn.addEventListener('click', () => {
                 const currentTheme = htmlElement.getAttribute('data-theme');
@@ -1388,10 +1309,12 @@
                     // Switch to Dark Theme
                     htmlElement.removeAttribute('data-theme');
                     localStorage.setItem('theme', 'dark');
+                    if (themeColorMeta) themeColorMeta.setAttribute("content", "#09090b");
                 } else {
                     // Switch to Light Theme
                     htmlElement.setAttribute('data-theme', 'light');
                     localStorage.setItem('theme', 'light');
+                    if (themeColorMeta) themeColorMeta.setAttribute("content", "#f8fafc");
                 }
             });
         });
